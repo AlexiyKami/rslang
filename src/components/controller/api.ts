@@ -2,9 +2,10 @@ import settings from '../settings';
 import {
   CreateUserData,
   CreateUserErrors,
-  DeleteUserData,
+  DeleteUserWordData,
   GetUpdateUserData,
   GetUserTokensData,
+  UserWordData,
   Word,
 } from '../types/types';
 
@@ -191,7 +192,7 @@ export class Api {
     }
   }
 
-  public async deleteUser(userId: string, token: string): Promise<DeleteUserData> {
+  public async deleteUser(userId: string, token: string): Promise<DeleteUserWordData> {
     try {
       const response = await fetch(`${this.usersUrl}/${userId}`, {
         method: 'DELETE',
@@ -208,7 +209,7 @@ export class Api {
       } else if (response.status === 401) {
         responseData = 'Access token is missing or invalid';
       } else {
-        responseData = `Can't update User`;
+        responseData = `Can't delete User`;
       }
       return {
         code: response.status,
@@ -249,6 +250,193 @@ export class Api {
       return {
         code: 0,
         data: `Can't get User Token (Server Error)`,
+      };
+    }
+  }
+
+  // USERS/WORDS
+
+  // TODO return type
+  public async getAllUserWords(userId: string, token: string) {
+    try {
+      const response = await fetch(`${this.usersUrl}/${userId}/words`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 401) {
+        responseData = 'Unauthorized';
+      } else if (response.status === 402) {
+        responseData = 'Access token is missing or invalid';
+      } else {
+        responseData = `Can't get All User Words`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't get All User Words (Server Error)`,
+      };
+    }
+  }
+
+  // TODO optional type
+  public async createUserWord(
+    userId: string,
+    wordId: string,
+    difficulty: string,
+    optional: Record<string, unknown>,
+    token: string
+  ): Promise<UserWordData> {
+    try {
+      const params = {
+        difficulty,
+        optional,
+      };
+      const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 400) {
+        responseData = 'Bad request';
+      } else if (response.status === 401) {
+        responseData = 'Access token is missing or invalid';
+      } else {
+        responseData = `Can't create User Word`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't create User Word (Server Error)`,
+      };
+    }
+  }
+
+  public async getsUserWord(userId: string, wordId: string, token: string): Promise<UserWordData> {
+    try {
+      const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 400) {
+        responseData = 'Bad request';
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else {
+        responseData = `Can't get User Word`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't get User Word (Server Error)`,
+      };
+    }
+  }
+
+  public async updateUserWord(
+    userId: string,
+    wordId: string,
+    difficulty: string,
+    optional: Record<string, unknown>,
+    token: string
+  ): Promise<UserWordData> {
+    try {
+      const params = {
+        difficulty,
+        optional,
+      };
+      const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 400) {
+        responseData = 'Bad request';
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else {
+        responseData = `Can't update User Word`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't update User Word (Server Error)`,
+      };
+    }
+  }
+
+  public async deleteUserWord(userId: string, wordId: string, token: string): Promise<DeleteUserWordData> {
+    try {
+      const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      let responseData;
+      if (response.status === 204) {
+        responseData = 'The user word has been deleted';
+      } else if (response.status === 401) {
+        responseData = 'Access token is missing or invalid';
+      } else {
+        responseData = `Can't delete User Word`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't delete User Word (Server Error)`,
       };
     }
   }

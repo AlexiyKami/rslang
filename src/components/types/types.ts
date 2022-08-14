@@ -32,6 +32,12 @@ export interface Auth {
   name: string;
 }
 
+interface UserWord {
+  difficulty: string;
+  id: string;
+  wordId: string;
+}
+
 export interface CreateUserError {
   path: string[];
   message: string;
@@ -54,10 +60,14 @@ export interface GetUpdateUserData extends ApiMethodsData {
   data: User | string;
 }
 
-export interface DeleteUserData extends ApiMethodsData {
+export interface DeleteUserWordData extends ApiMethodsData {
   data: string;
 }
 
 export interface GetUserTokensData extends ApiMethodsData {
   data: Auth | string;
+}
+
+export interface UserWordData extends ApiMethodsData {
+  data: UserWord | string;
 }

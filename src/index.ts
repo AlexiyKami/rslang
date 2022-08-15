@@ -2,6 +2,10 @@ import { Api } from './components/controller/api';
 
 const a = new Api();
 
+(async () => {
+  console.log(await a.getWords(0, 0));
+})();
+
 // (async () => {
 //   console.log(await a.createUser('TestUser11', 'test1testmail.con', 'password'));
 // })();
@@ -91,12 +95,42 @@ const a = new Api();
 //   );
 // })();
 
-(async () => {
-  console.log(
-    await a.deleteUserWord(
-      '62f90aa40ebed300162e203d',
-      '5e9f5ee35eb9e72bc21af4a2',
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjkwYWE0MGViZWQzMDAxNjJlMjAzZCIsImlhdCI6MTY2MDUxMDUyMSwiZXhwIjoxNjYwNTI0OTIxfQ.WL1IIo2beWLg9SI5suP-OI1XNawxbhhcNvLkZnksn-0'
-    )
-  );
-})();
+// (async () => {
+//   console.log(
+//     await a.deleteUserWord(
+//       '62f90aa40ebed300162e203d',
+//       '5e9f5ee35eb9e72bc21af4a2',
+//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjkwYWE0MGViZWQzMDAxNjJlMjAzZCIsImlhdCI6MTY2MDUxMDUyMSwiZXhwIjoxNjYwNTI0OTIxfQ.WL1IIo2beWLg9SI5suP-OI1XNawxbhhcNvLkZnksn-0'
+//     )
+//   );
+// })();
+
+// (async () => {
+//   console.log(
+//     await a.getUserAggregatedWord(
+//       '62f90aa40ebed300162e203d',
+//       '5e9f5ee35eb9e72bc21af4a2',
+//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjkwYWE0MGViZWQzMDAxNjJlMjAzZCIsImlhdCI6MTY2MDU1MjczNiwiZXhwIjoxNjYwNTY3MTM2fQ.pcBmdsG0TgD96w3sbX8ufFOaWJUQV086xWUsNjkqNPo'
+//     )
+//   );
+// })();
+
+// (async () => {
+//   console.log(
+//     await a.getStatistics(
+//       '62f90aa40ebed300162e203d',
+//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjkwYWE0MGViZWQzMDAxNjJlMjAzZCIsImlhdCI6MTY2MDU2ODUyNiwiZXhwIjoxNjYwNTgyOTI2fQ.iU4wN9bni-9hRl2n0sTuHK9iUF7rZoYTwqiGIgZPvQA'
+//     )
+//   );
+// })();
+
+// (async () => {
+//   console.log(
+//     await a.upsertStatistics(
+//       '62f90aa40ebed300162e203d',
+//       101,
+//       { qwe: 'asd' },
+//       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZjkwYWE0MGViZWQzMDAxNjJlMjAzZCIsImlhdCI6MTY2MDU2ODUyNiwiZXhwIjoxNjYwNTgyOTI2fQ.iU4wN9bni-9hRl2n0sTuHK9iUF7rZoYTwqiGIgZPvQA'
+//     )
+//   );
+// })();

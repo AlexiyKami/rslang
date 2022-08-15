@@ -3,8 +3,11 @@ import {
   CreateUserData,
   CreateUserErrors,
   DeleteUserWordData,
+  GetUpsertStatistics,
   GetUpdateUserData,
+  GetUserAggregatedWord,
   GetUserTokensData,
+  Optional,
   UserWordData,
   Word,
 } from '../types/types';
@@ -294,7 +297,7 @@ export class Api {
     userId: string,
     wordId: string,
     difficulty: string,
-    optional: Record<string, unknown>,
+    optional: Optional,
     token: string
   ): Promise<UserWordData> {
     try {
@@ -370,7 +373,7 @@ export class Api {
     userId: string,
     wordId: string,
     difficulty: string,
-    optional: Record<string, unknown>,
+    optional: Optional,
     token: string
   ): Promise<UserWordData> {
     try {
@@ -437,6 +440,117 @@ export class Api {
       return {
         code: 0,
         data: `Can't delete User Word (Server Error)`,
+      };
+    }
+  }
+
+  // USERS/AggregatedWords
+
+  public async getUserAggregatedWord(userId: string, wordId: string, token: string): Promise<GetUserAggregatedWord> {
+    try {
+      const response = await fetch(`${this.usersUrl}/${userId}/aggregatedWords/${wordId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else if (response.status === 404) {
+        responseData = `User's word not found`;
+      } else {
+        responseData = `Can't get User Aggregated Word`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't get User Aggregated Word (Server Error)`,
+      };
+    }
+  }
+
+  // USERS/STATISTIC
+
+  public async getStatistics(userId: string, token: string): Promise<GetUpsertStatistics> {
+    try {
+      const response = await fetch(`${this.usersUrl}/${userId}/statistics`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else if (response.status === 404) {
+        responseData = `Statistics not found`;
+      } else {
+        responseData = `Can't get Statistics`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't get Statistics (Server Error)`,
+      };
+    }
+  }
+
+  public async upsertStatistics(
+    userId: string,
+    learnedWords: number,
+    optional: Optional,
+    token: string
+  ): Promise<GetUpsertStatistics> {
+    try {
+      const params = {
+        learnedWords,
+        optional,
+      };
+      const response = await fetch(`${this.usersUrl}/${userId}/statistics`, {
+        method: 'PUT',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(params),
+      });
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = await response.json();
+      } else if (response.status === 400) {
+        responseData = 'Bad request';
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else {
+        responseData = `Can't upsert Statistics`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't upsert Statistics (Server Error)`,
       };
     }
   }

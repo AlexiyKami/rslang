@@ -1,7 +1,8 @@
 // API
 
 export interface Word {
-  id: string;
+  id?: string;
+  _id?: string;
   group: number;
   page: number;
   word: string;
@@ -38,6 +39,12 @@ interface UserWord {
   wordId: string;
 }
 
+interface StatisticsData {
+  id: string;
+  learnedWords: number;
+  optional?: Optional;
+}
+
 export interface CreateUserError {
   path: string[];
   message: string;
@@ -47,6 +54,8 @@ export interface CreateUserErrors {
   status: string;
   errors: CreateUserError[];
 }
+
+export type Optional = Record<string, unknown>;
 
 interface ApiMethodsData {
   code: number;
@@ -70,4 +79,12 @@ export interface GetUserTokensData extends ApiMethodsData {
 
 export interface UserWordData extends ApiMethodsData {
   data: UserWord | string;
+}
+
+export interface GetUserAggregatedWord extends ApiMethodsData {
+  data: Word[] | string;
+}
+
+export interface GetUpsertStatistics extends ApiMethodsData {
+  data: StatisticsData | string;
 }

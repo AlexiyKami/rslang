@@ -10,6 +10,9 @@ import {
   Optional,
   UserWordData,
   Word,
+  GetAllUserAggregatedWordsData,
+  GetAllUserAggregatedWords,
+  GetAllUserWordsData,
 } from '../types/types';
 
 export class Api {
@@ -47,7 +50,7 @@ export class Api {
 
   // SIGN IN
 
-  public async userSingIn(email: string, password: string) {
+  public async userSignIn(email: string, password: string) {
     try {
       const params = {
         email,
@@ -259,8 +262,7 @@ export class Api {
 
   // USERS/WORDS
 
-  // TODO return type
-  public async getAllUserWords(userId: string, token: string) {
+  public async getAllUserWords(userId: string, token: string): Promise<GetAllUserWordsData> {
     try {
       const response = await fetch(`${this.usersUrl}/${userId}/words`, {
         headers: {
@@ -292,7 +294,6 @@ export class Api {
     }
   }
 
-  // TODO optional type
   public async createUserWord(
     userId: string,
     wordId: string,
@@ -445,6 +446,47 @@ export class Api {
   }
 
   // USERS/AggregatedWords
+
+  public async getAllUserAggregatedWords(
+    userId: string,
+    page: number,
+    wordsPerPage: number,
+    filter: string,
+    token: string,
+    group?: number
+  ): Promise<GetAllUserAggregatedWords> {
+    try {
+      const groupParams = group !== undefined ? `group=${group}&` : ``;
+      const response = await fetch(
+        `${this.usersUrl}/${userId}/aggregatedWords?${groupParams}page=${page}&wordsPerPage=${wordsPerPage}&filter=${filter}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: 'application/json',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
+
+      let responseData;
+      if (response.status === 200) {
+        responseData = ((await response.json()) as GetAllUserAggregatedWordsData[])[0];
+      } else if (response.status === 401) {
+        responseData = `Access token is missing or invalid`;
+      } else {
+        responseData = `Can't get All User Aggregated Words`;
+      }
+      return {
+        code: response.status,
+        data: responseData,
+      };
+    } catch {
+      return {
+        code: 0,
+        data: `Can't get get All User Aggregated Words (Server Error)`,
+      };
+    }
+  }
 
   public async getUserAggregatedWord(userId: string, wordId: string, token: string): Promise<GetUserAggregatedWord> {
     try {

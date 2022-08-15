@@ -12,6 +12,10 @@ Test User
 Run userSignIn to get tokens
 */
 
+// import { Api } from './components/controller/api';
+//
+// const a = new Api();
+
 // (async () => {
 //   console.log(await a.userSignIn('test1@testmail.con', 'password'));
 // })();

@@ -229,7 +229,6 @@ export class Api {
     }
   }
 
-  // TODO Check getUserTokens after Auth interface check
   public async getUserTokens(userId: string, refreshToken: string): Promise<GetUserTokensData> {
     try {
       const response = await fetch(`${this.usersUrl}/${userId}/tokens`, {

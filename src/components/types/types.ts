@@ -30,13 +30,9 @@ export interface User {
   password: string;
 }
 
-// TODO Check Auth structure in current database version (now present only token, refreshToken)
 export interface Auth {
-  message: string;
   token: string;
   refreshToken: string;
-  userId: string;
-  name: string;
 }
 
 interface UserWord {

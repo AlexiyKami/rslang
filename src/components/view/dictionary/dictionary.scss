@@ -1,0 +1,145 @@
+.dictionary {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.dictionary-pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  height: 1.5rem;
+  button {
+    cursor: pointer;
+  }
+}
+
+.dictionary-words {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.dictionary-groups {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  & > span {
+    font-weight: 700;
+  }
+
+  .group-buttons {
+    display: flex;
+    gap: 10px;
+  }
+
+  button {
+    height: 32px;
+    width: 32px;
+    border-radius: 50%;
+    border-style: solid;
+    transition: all 0.3s;
+    cursor: pointer;
+  }
+
+  .group-1 {
+    border-color: rgb(202, 43, 43);
+  }
+
+  .group-2 {
+    border-color: rgb(255, 141, 47);
+  }
+
+  .group-3 {
+    border-color: rgb(184, 64, 124);
+  }
+
+  .group-4 {
+    border-color: rgb(63, 199, 204);
+  }
+
+  .group-5 {
+    border-color: rgb(116, 83, 158);
+  }
+
+  .group-6 {
+    border-color: rgb(92, 158, 83);
+  }
+
+  button:hover {
+    transform: scale(1.2);
+  }
+
+  button:disabled {
+    border-width: 5px;
+    transform: scale(1.2);
+    background-color: white;
+    color: black;
+    cursor: auto;
+  }
+}
+
+.word-card {
+  position: relative;
+  display: flex;
+  padding: 20px;
+  box-shadow: gray 0px 0px 15px;
+  gap: 25px;
+  border-radius: 5px;
+
+  & > .audio-image {
+    position: absolute;
+    right: 20px;
+    cursor: pointer;
+    height: 30px;
+    width: 30px;
+  }
+
+  & > .description {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 10px;
+  }
+
+  & .title {
+    font-size: 20px;
+    height: 3em;
+    border-left: 3px solid rgb(255, 203, 34);
+    padding-left: 15px;
+  }
+
+  & .word {
+    font-weight: 700;
+  }
+
+  & .translation {
+    padding-top: 10px;
+  }
+
+  & > .image {
+    object-fit: cover;
+    object-position: center center;
+    width: 260px;
+    height: 260px;
+  }
+
+  .text-example, .text-meaning {
+    display: flex;
+    flex-direction: column;
+    p {
+      margin: 0;
+      padding: 0;
+    }
+    & > .translation {
+      color: gray;
+    }
+  }
+}

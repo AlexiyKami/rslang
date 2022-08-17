@@ -1,5 +1,6 @@
 import Controller from '../controller/controller';
 import Dictionary from './dictionary/dictionary';
+import Navigation from './navigation/navigation';
 
 class View {
   private controller: Controller;
@@ -9,6 +10,7 @@ class View {
     this.controller = controller;
     this.dictionary = new Dictionary(this.controller);
     this.dictionary.draw();
+    new Navigation();
   }
 }
 

@@ -34,7 +34,7 @@ class Dictionary {
       
       </div>
     </div>`;
-    document.body?.insertAdjacentHTML('beforeend', wrapper);
+    (document.querySelector('main') as HTMLElement)?.insertAdjacentHTML('beforeend', wrapper);
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
       elem.addEventListener('click', () => {
         this.controller.setDictionaryGroup(+(elem.textContent as string) - 1);

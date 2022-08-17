@@ -1,0 +1,67 @@
+.page-nav {
+  position: sticky;
+  top: 0;
+  width: 40px;
+  height: 100vh;
+  white-space: nowrap;
+  overflow: hidden;
+  background-color: #5b67ed ;
+  color: white;
+  transition: .3s;
+  
+  &:hover {
+    width: 140px;
+  }
+
+  label {
+    display: block; 
+    cursor: pointer;
+    user-select: none;
+    height: calc(24px + 1rem);
+    line-height: calc(24px + 1rem);
+    transition: .3s;
+
+    &::before {
+      line-height: normal;
+      display: inline-block;
+      vertical-align: middle;
+      margin: 0 .5rem;
+    }
+
+    &[for="button-login"]::before {
+      content: url('/src/assets/icons/key.svg');
+    }
+
+    &[for="radio-home"]::before {
+      content: url('/src/assets/icons/home.svg');
+    }
+
+    &[for="radio-book"]::before {
+      content: url('/src/assets/icons/book.svg');
+    }
+
+    &[for="radio-games"]::before {
+      content: url('/src/assets/icons/game.svg');
+    }
+
+    &[for="radio-stat"]::before {
+      content: url('/src/assets/icons/stat.svg');
+    }
+
+    &:hover {
+      background-color: #757fec;
+    }
+
+    &:active {
+      background-color: #9ea4e7;
+    }
+  }
+
+  input {
+    display: none;
+
+    &:checked + label {
+      background-color: #4754e9;
+    }
+  }
+}

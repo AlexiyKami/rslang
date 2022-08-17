@@ -1,0 +1,38 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+
+  .main-wrapper {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    min-height: 100vh;
+
+    header {
+      display: flex;
+      margin: 0;
+      background-color: cadetblue;
+      height: calc(24px + 1rem);
+      
+      h1 {
+        font-size: 24px;
+        margin: .5rem;
+        align-self: center;
+      }
+    }
+
+    main {
+      flex-grow: 1;
+    }
+
+    footer {
+      background-color: aqua;   
+    }
+  }
+}

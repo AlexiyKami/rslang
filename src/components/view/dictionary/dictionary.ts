@@ -28,6 +28,7 @@ class Dictionary {
           <button class='group-4'>4</button>
           <button class='group-5'>5</button>
           <button class='group-6'>6</button>
+          <button class='group-7'>7</button>
         </div>
       </div>
       <div class='dictionary-words'>

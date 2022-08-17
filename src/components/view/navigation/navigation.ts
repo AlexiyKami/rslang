@@ -1,4 +1,4 @@
-import './styles/navigation.scss';
+import './navigation.scss';
 
 export default class Navigation {
   private readonly btnIdLabel = ['button-login', 'Login'];

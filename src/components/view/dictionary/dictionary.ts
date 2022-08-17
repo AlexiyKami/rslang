@@ -38,9 +38,11 @@ class Dictionary {
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
       elem.addEventListener('click', () => {
         this.controller.setDictionaryGroup(+(elem.textContent as string) - 1);
-      })
+      });
     });
-    (document.querySelector('.dictionary-pagination') as HTMLElement).addEventListener('click', (e) => this.onPaginationClick(e));
+    (document.querySelector('.dictionary-pagination') as HTMLElement).addEventListener('click', (e) =>
+      this.onPaginationClick(e)
+    );
     this.updatePagination();
     this.updateGroupButtons();
     this.updateWords();
@@ -52,9 +54,9 @@ class Dictionary {
     if (typeof words === 'string') {
       items = words;
     } else {
-      items = (words as unknown as Word[]).map((word) => {
-        return (
-          `<div class='word-card'>
+      items = (words as unknown as Word[])
+        .map((word) => {
+          return `<div class='word-card'>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
               <div class='title'>
@@ -77,16 +79,17 @@ class Dictionary {
               <audio></audio>
               <audio></audio>
             </div>
-          </div>`)
-      }).join('');
+          </div>`;
+        })
+        .join('');
     }
     document.querySelector('.dictionary-words')?.insertAdjacentHTML('beforeend', items as string);
     document.querySelectorAll('.audio-image').forEach((elem) => {
       elem.addEventListener('click', (e: Event) => {
         const currTarget = e.currentTarget as Element;
         (currTarget.querySelector('audio') as HTMLAudioElement).play();
-      })
-    })
+      });
+    });
   }
 
   private updateGroupButtons() {
@@ -95,7 +98,7 @@ class Dictionary {
       if (+(elem.textContent as string) === this.controller.getDictionaryGroup() + 1) {
         (elem as HTMLButtonElement).disabled = true;
       }
-    })
+    });
   }
 
   private onPaginationClick(e: Event) {
@@ -120,9 +123,11 @@ class Dictionary {
     if (this.controller.getDictionaryPage() === this.controller.getMaxDictionaryPage()) {
       next.disabled = true;
     }
-    (document.querySelector('.dictionary-page-number') as Element).innerHTML = `${this.controller.getDictionaryPage() + 1} / ${this.controller.getMaxDictionaryPage() + 1}`;
+    (document.querySelector('.dictionary-page-number') as Element).innerHTML = `${
+      this.controller.getDictionaryPage() + 1
+    } / ${this.controller.getMaxDictionaryPage() + 1}`;
   }
-  
+
   clear(): void {
     document.querySelector('.dictionary')?.remove();
   }

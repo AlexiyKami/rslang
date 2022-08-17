@@ -4,6 +4,7 @@ import Navigation from './navigation/navigation';
 
 class View {
   private controller: Controller;
+
   private dictionary: Dictionary;
 
   constructor(controller: Controller) {

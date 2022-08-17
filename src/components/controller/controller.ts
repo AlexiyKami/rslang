@@ -29,7 +29,7 @@ class Controller {
   public updateDictionary() {
     this.onDictionaryUpdate.forEach((fn) => {
       fn();
-    })
+    });
   }
 
   public setDictionaryPage(value: number) {

@@ -1,6 +1,7 @@
 import { Api } from './api';
 import AppModel from '../app/app';
 import { CallbackFunction } from '../types/types';
+import settings from '../settings';
 
 class Controller {
   private model: AppModel;
@@ -10,8 +11,6 @@ class Controller {
   private dictionaryPage = 0;
 
   private dictionaryGroup = 0;
-
-  private maxDictionaryPage = 29;
 
   public onDictionaryUpdate: CallbackFunction[];
 
@@ -35,8 +34,8 @@ class Controller {
   public setDictionaryPage(value: number) {
     if (value < 0) {
       this.dictionaryPage = 0;
-    } else if (value > this.maxDictionaryPage) {
-      this.dictionaryPage = this.maxDictionaryPage;
+    } else if (value > settings.MAX_DICTIONARY_PAGES) {
+      this.dictionaryPage = settings.MAX_DICTIONARY_PAGES;
     } else {
       this.dictionaryPage = value;
     }
@@ -48,7 +47,7 @@ class Controller {
   }
 
   public getMaxDictionaryPage() {
-    return this.maxDictionaryPage;
+    return settings.MAX_DICTIONARY_PAGES;
   }
 
   public setDictionaryGroup(value: number) {

@@ -20,6 +20,10 @@ module.exports = {
                 test: /\.[tj]s$/,
                 use: 'ts-loader',
                 exclude: /node_modules/,
+            },
+            {
+                test: /\.svg$/,
+                loader: 'svg-inline-loader'
             }
         ],
     },

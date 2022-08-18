@@ -2,6 +2,7 @@ import { Api } from './api';
 import AppModel from '../app/app';
 import { CallbackFunction } from '../types/types';
 import settings from '../settings';
+import { getElement } from '../utils/utils';
 
 class Controller {
   private model: AppModel;
@@ -18,6 +19,17 @@ class Controller {
     this.model = model;
     this.api = new Api();
     this.onDictionaryUpdate = [];
+  }
+
+  public playStopAudio(fileName: string, startPlay = true) {
+    const audio = getElement('app-audio') as HTMLAudioElement;
+    if (startPlay) {
+      audio.src = `${settings.DATABASE_URL}/files/${fileName}`;
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
   }
 
   public async getWords() {

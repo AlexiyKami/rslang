@@ -3,6 +3,7 @@ import AppModel from '../app/app';
 import { CallbackFunction } from '../types/types';
 import settings from '../settings';
 import { getElement } from '../utils/utils';
+import AudioChallengeController from './audioChallengeController/audioChallengeController';
 
 class Controller {
   private model: AppModel;
@@ -15,9 +16,12 @@ class Controller {
 
   public onDictionaryUpdate: CallbackFunction[];
 
+  public audioChallengeController: AudioChallengeController;
+
   constructor(model: AppModel) {
     this.model = model;
     this.api = new Api();
+    this.audioChallengeController = new AudioChallengeController(this, this.model);
     this.onDictionaryUpdate = [];
   }
 
@@ -33,7 +37,7 @@ class Controller {
   }
 
   public async getWords() {
-    const response = await this.api.getWords(this.dictionaryPage, this.dictionaryGroup);
+    const response = await this.api.getWords(this.dictionaryGroup, this.dictionaryPage);
     return response;
   }
 

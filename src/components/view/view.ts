@@ -1,14 +1,14 @@
 import Controller from '../controller/controller';
 import Dictionary from './dictionary/dictionary';
 import Navigation from './navigation/navigation';
-import AudioChallenge from './audioChallenge/audioChallenge';
+import AudioChallengeView from './audioChallenge/audioChallengeView';
 
 class View {
   private controller: Controller;
 
   private dictionary: Dictionary;
 
-  private audioChallenge: AudioChallenge;
+  private audioChallenge: AudioChallengeView;
 
   private navigation: Navigation;
 
@@ -16,11 +16,12 @@ class View {
     this.controller = controller;
     this.navigation = new Navigation();
     this.dictionary = new Dictionary(this.controller);
-    this.audioChallenge = new AudioChallenge(this.controller);
+    this.audioChallenge = new AudioChallengeView(this.controller, this);
   }
 
   public initRender() {
     this.dictionary.draw();
+    this.audioChallenge.renderAudioChallengeStartPage();
   }
 }
 

@@ -30,7 +30,7 @@ export class Api {
 
   // WORDS
 
-  public async getWords(pageNumber: number, groupNumber: number): Promise<Word[] | string> {
+  public async getWords(groupNumber: number, pageNumber = 0): Promise<Word[] | string> {
     try {
       const response = await fetch(`${this.wordsUrl}?page=${pageNumber}&group=${groupNumber}`);
       return await response.json();

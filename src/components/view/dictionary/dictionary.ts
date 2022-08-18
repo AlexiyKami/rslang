@@ -1,8 +1,7 @@
 import settings from '../../settings';
-import { Word } from './../../types/types';
+import { Word } from '../../types/types';
 import Controller from '../../controller/controller';
 import './dictionary.scss';
-import audioSVG from '../../../assets/icons/audio.svg';
 
 class Dictionary {
   controller: Controller;
@@ -74,8 +73,7 @@ class Dictionary {
                 <p class='translation'>${word.textMeaningTranslate}</p>
               </div>
             </div>
-            <div class='audio-image'}>
-              ${audioSVG}
+            <div class='audio-image'>
               <audio src=${settings.DATABASE_URL}/${word.audio}></audio>
               <audio></audio>
               <audio></audio>

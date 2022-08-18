@@ -7,11 +7,16 @@ class View {
 
   private dictionary: Dictionary;
 
+  private navigation: Navigation;
+
   constructor(controller: Controller) {
     this.controller = controller;
+    this.navigation = new Navigation();
     this.dictionary = new Dictionary(this.controller);
+  }
+
+  public initRender() {
     this.dictionary.draw();
-    new Navigation();
   }
 }
 

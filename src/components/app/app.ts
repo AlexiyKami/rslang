@@ -10,6 +10,10 @@ class AppModel {
     this.controller = new Controller(this);
     this.view = new View(this.controller);
   }
+
+  initApp() {
+    this.view.initRender();
+  }
 }
 
 export default AppModel;

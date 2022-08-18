@@ -107,3 +107,5 @@ export interface GetUpsertStatistics extends ApiMethodsData {
 export interface GetAllUserAggregatedWords extends ApiMethodsData {
   data: GetAllUserAggregatedWordsData | string;
 }
+
+export type CallbackFunction = () => void;

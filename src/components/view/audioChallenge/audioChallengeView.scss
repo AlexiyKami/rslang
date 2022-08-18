@@ -1,0 +1,25 @@
+.audio-main {
+  width: 100%;
+  height: 100vh;
+}
+
+.audio-challenge {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.audio-challenge__main-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.audio-challenge__difficulty-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}

@@ -17,9 +17,11 @@ class AudioChallengeController {
       const page = getRandomNumber(0, settings.MAX_DICTIONARY_PAGES);
       const words = await this.controller.api.getWords(group, page);
       console.log(typeof words, 'WORDS:', words);
-      if (typeof words == 'string') {
+      if (typeof words === 'string') {
         console.log(this);
         this.model.audioChallengeModel.onWordsLoadError(words);
+      } else {
+        this.model.audioChallengeModel.onWordsLoad(words);
       }
     }
   }

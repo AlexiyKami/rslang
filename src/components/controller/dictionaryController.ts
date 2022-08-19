@@ -14,7 +14,7 @@ class DictionaryController {
   }
 
   public async getWords() {
-    const response = await this.baseController.getWords(this.dictionaryPage, this.dictionaryGroup);
+    const response = await this.baseController.getWords(this.dictionaryGroup, this.dictionaryPage);
     return response;
   }
 

@@ -26,8 +26,8 @@ class Controller {
     }
   }
 
-  public async getWords(page: number, group: number) {
-    const response = await this.api.getWords(page, group);
+  public async getWords(group: number, page: number) {
+    const response = await this.api.getWords(group, page);
     return response;
   }
 }

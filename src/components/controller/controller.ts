@@ -3,6 +3,7 @@ import AppModel from '../app/app';
 import settings from '../settings';
 import { getElement } from '../utils/utils';
 import DictionaryController from './dictionaryController';
+import { CallbackFunction } from '../types/types';
 
 class Controller {
   private model: AppModel;
@@ -24,6 +25,11 @@ class Controller {
       audio.pause();
       audio.currentTime = 0;
     }
+  }
+
+  public onAudioEnded(cb: CallbackFunction) {
+    const audio = getElement('app-audio') as HTMLAudioElement;
+    audio.onended = cb;
   }
 
   public async getWords(group: number, page: number) {

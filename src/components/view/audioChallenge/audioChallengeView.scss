@@ -24,3 +24,25 @@
   justify-content: center;
   gap: 30px;
 }
+
+.audio-challenge__word-image-block {
+  width: 260px;
+  height: 260px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background: url('/src/assets/icons/question.svg') no-repeat center;
+  background-size: contain;
+}
+
+.audio-challenge__word-image {
+  flex-shrink: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.audio-challenge__select-buttons-block {
+  display: flex;
+  gap: 30px;
+}

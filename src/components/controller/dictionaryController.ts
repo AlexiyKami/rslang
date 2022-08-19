@@ -45,6 +45,7 @@ class DictionaryController {
 
   public setDictionaryGroup(value: number) {
     this.dictionaryGroup = value;
+    this.dictionaryPage = 0;
     this.updateDictionary();
   }
 

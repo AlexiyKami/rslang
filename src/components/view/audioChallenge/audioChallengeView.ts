@@ -1,4 +1,4 @@
-import { getElement } from '../../utils/utils';
+import { createElement, getElement } from '../../utils/utils';
 import Controller from '../../controller/controller';
 import View from '../view';
 import settings from '../../settings';
@@ -33,7 +33,14 @@ class AudioChallengeView {
     `;
 
     const buttonsBlock = getElement('audio-challenge__difficulty-buttons') as HTMLElement;
-    buttonsBlock.addEventListener('click', this.controller.audioChallengeController.startPageHandler);
+    buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
+  }
+
+  public renderOnWordsLoadError(errorMessage: string) {
+    const audioChallengeBlock = getElement('audio-challenge__main-page');
+    const errorMessageBlock = createElement('p', 'audio-challenge__error-message');
+    errorMessageBlock.innerHTML = `${errorMessage}<br>Please try again`;
+    if (audioChallengeBlock) audioChallengeBlock.append(errorMessageBlock);
   }
 }
 

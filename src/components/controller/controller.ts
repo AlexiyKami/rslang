@@ -8,7 +8,7 @@ import AudioChallengeController from './audioChallengeController/audioChallengeC
 class Controller {
   private model: AppModel;
 
-  private api: Api;
+  public api: Api;
 
   private dictionaryPage = 0;
 

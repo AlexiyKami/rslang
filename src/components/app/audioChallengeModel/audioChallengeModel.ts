@@ -19,7 +19,7 @@ class AudioChallengeModel {
 
   onWordsLoadError(errorMessage: string) {
     this.resetState();
-    this.view.audioChallenge.renderOnWordsLoadError(errorMessage);
+    this.view.audioChallenge.renderOnWordsLoadErrorMessage(errorMessage);
   }
 }
 

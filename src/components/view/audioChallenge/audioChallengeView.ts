@@ -36,7 +36,13 @@ class AudioChallengeView {
     buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
   }
 
-  public renderOnWordsLoadError(errorMessage: string) {
+  private removeOnWordsLoadErrorMessage(): void {
+    const errorMessageBlock = getElement('audio-challenge__error-message');
+    if (errorMessageBlock) errorMessageBlock.remove();
+  }
+
+  public renderOnWordsLoadErrorMessage(errorMessage: string): void {
+    this.removeOnWordsLoadErrorMessage();
     const audioChallengeBlock = getElement('audio-challenge__main-page');
     const errorMessageBlock = createElement('p', 'audio-challenge__error-message');
     errorMessageBlock.innerHTML = `${errorMessage}<br>Please try again`;

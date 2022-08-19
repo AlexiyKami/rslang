@@ -8,7 +8,11 @@ class Dictionary {
 
   constructor(controller: Controller) {
     this.controller = controller;
-    this.controller.onDictionaryUpdate.push(this.clear.bind(this), this.draw.bind(this));
+    this.controller.onDictionaryUpdate.push(
+      this.clear.bind(this),
+      this.draw.bind(this),
+      this.controller.playStopAudio.bind(controller, '', false)
+    );
   }
 
   draw(): void {
@@ -73,11 +77,12 @@ class Dictionary {
                 <p class='translation'>${word.textMeaningTranslate}</p>
               </div>
             </div>
-            <div class='audio-image'>
-              <audio src=${settings.DATABASE_URL}/${word.audio}></audio>
-              <audio></audio>
-              <audio></audio>
-            </div>
+            <div
+              class='audio-image'
+              audio='/${word.audio}'
+              audio-example='/${word.audioExample}'
+              audio-meaning='/${word.audioMeaning}'
+            ></div>
           </div>`;
         })
         .join('');
@@ -85,10 +90,36 @@ class Dictionary {
     document.querySelector('.dictionary-words')?.insertAdjacentHTML('beforeend', items as string);
     document.querySelectorAll('.audio-image').forEach((elem) => {
       elem.addEventListener('click', (e: Event) => {
-        const currTarget = e.currentTarget as Element;
-        (currTarget.querySelector('audio') as HTMLAudioElement).play();
+        const currTarget = e.currentTarget as HTMLElement;
+        const audioURL = [
+          currTarget.getAttribute('audio'),
+          currTarget.getAttribute('audio-example'),
+          currTarget.getAttribute('audio-meaning'),
+        ];
+        let current = 0;
+        this.audioHandler(currTarget, audioURL[current] as string);
+        this.controller.onAudioEnded(() => {
+          current++;
+          if (!(current >= audioURL.length)) {
+            currTarget.classList.remove('playing');
+            this.audioHandler(currTarget, audioURL[current] as string);
+          } else {
+            currTarget.classList.remove('playing');
+          }
+        });
       });
     });
+  }
+
+  private audioHandler(currTarget: HTMLElement, audioFile: string) {
+    if (!currTarget.classList.contains('playing')) {
+      this.controller.playStopAudio(audioFile as string);
+      document.querySelectorAll('.audio-image.playing').forEach((img) => img.classList.remove('playing'));
+      currTarget.classList.add('playing');
+    } else {
+      this.controller.playStopAudio('', false);
+      currTarget.classList.remove('playing');
+    }
   }
 
   private updateGroupButtons() {

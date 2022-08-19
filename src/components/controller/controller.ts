@@ -32,6 +32,11 @@ class Controller {
     }
   }
 
+  public onAudioEnded(cb: CallbackFunction) {
+    const audio = getElement('app-audio') as HTMLAudioElement;
+    audio.onended = cb;
+  }
+
   public async getWords() {
     const response = await this.api.getWords(this.dictionaryPage, this.dictionaryGroup);
     return response;

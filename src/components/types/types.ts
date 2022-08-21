@@ -109,3 +109,13 @@ export interface GetAllUserAggregatedWords extends ApiMethodsData {
 }
 
 export type CallbackFunction = () => void;
+
+export interface AudioChallengeModelState {
+  currentWords: Word[];
+  currentWordIndex: number;
+  currentGuessingWords: Word[];
+  rightWords: Word[];
+  wrongWords: Word[];
+  currentRightWordsInRow: number;
+  maxRightWordsInRow: number;
+}

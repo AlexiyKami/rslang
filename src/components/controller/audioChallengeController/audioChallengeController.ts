@@ -11,19 +11,16 @@ class AudioChallengeController {
   }
 
   async startPageHandler(e: Event) {
-    // TODO implement
-    console.log(e.target);
-    console.log(this);
-    console.log(this.controller);
+    const buttons = document.querySelectorAll('.audio-challenge__difficulty-button');
+    buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));
     const target = e.target as HTMLElement;
     if (target.classList.contains('audio-challenge__difficulty-button')) {
       const group = +(target.dataset.group || 0);
       const page = getRandomNumber(0, settings.MAX_DICTIONARY_PAGES);
       const words = await this.controller.api.getWords(group, page);
-      console.log(typeof words, 'WORDS:', words);
       if (typeof words === 'string') {
-        console.log(this);
         this.model.audioChallengeModel.onWordsLoadError(words);
+        buttons.forEach((button) => ((button as HTMLButtonElement).disabled = false));
       } else {
         this.model.audioChallengeModel.onWordsLoad(words);
       }

@@ -6,6 +6,10 @@ import settings from '../../settings';
 class AudioChallengeController {
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
 
+  public initAudioChallengeGame() {
+    this.model.audioChallengeModel.initAudioChallengeGame();
+  }
+
   async startPageHandler(e: Event) {
     // TODO implement
     console.log(e.target);
@@ -39,8 +43,10 @@ class AudioChallengeController {
   }
 
   audioChallengeGamePageNextButtonHandler() {
+    const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
-    const nextButtonText = nextButton.textContent;
+    const nextButtonText =
+      state.currentWordIndex < state.currentWords.length - 1 ? nextButton.textContent : 'Show results';
     this.model.audioChallengeModel.onNextButtonClick(nextButtonText);
   }
 }

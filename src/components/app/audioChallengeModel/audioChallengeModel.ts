@@ -13,7 +13,14 @@ class AudioChallengeModel {
       currentGuessingWords: [],
       rightWords: [],
       wrongWords: [],
+      currentRightWordsInRow: 0,
+      maxRightWordsInRow: 0,
     };
+  }
+
+  public initAudioChallengeGame() {
+    this.resetState();
+    this.view.audioChallenge.renderAudioChallengeStartPage();
   }
 
   private shuffleWords<T>(array: T[]) {
@@ -40,6 +47,8 @@ class AudioChallengeModel {
     this.state.currentWords.length = 0;
     this.state.rightWords.length = 0;
     this.state.wrongWords.length = 0;
+    this.state.currentRightWordsInRow = 0;
+    this.state.maxRightWordsInRow = 0;
   }
 
   public onWordsLoadError(errorMessage: string): void {
@@ -58,13 +67,33 @@ class AudioChallengeModel {
   public onWordSelected(word: Word, isRightAnswer: boolean) {
     const rightOrWrong = isRightAnswer ? 'rightWords' : 'wrongWords';
     this.state[rightOrWrong].push(word);
+    if (isRightAnswer) {
+      this.state.currentRightWordsInRow++;
+      if (this.state.maxRightWordsInRow < this.state.currentRightWordsInRow)
+        this.state.maxRightWordsInRow = this.state.currentRightWordsInRow;
+    } else {
+      this.state.currentRightWordsInRow = 0;
+    }
     this.view.audioChallenge.updatePageOnWordSelect(this.state, isRightAnswer);
   }
 
   public onNextButtonClick(nextButtonText: string | null) {
-    console.log(nextButtonText, this.state.currentWordIndex);
-    this.state.currentWordIndex++;
-    console.log(this.state.currentWordIndex);
+    if (nextButtonText === `Show results`) {
+      this.view.audioChallenge.renderAudioChallengeResultsPage(this.state);
+      // console.log(`
+      // Всего слов: ${this.state.rightWords.length + this.state.wrongWords.length}; \t
+      // Правильно: ${this.state.rightWords.length}; \t
+      // Неправильно: ${this.state.wrongWords.length}; \t
+      // Подряд: ${this.state.rightWordsInRow}
+      // `);
+    } else {
+      if (nextButtonText === `I don't know`) this.state.currentRightWordsInRow = 0;
+      console.log(nextButtonText, this.state.currentWordIndex);
+      this.state.currentWordIndex++;
+      this.getThreeRandomWords();
+      console.log(this.state.rightWords, this.state.wrongWords, this.state.currentRightWordsInRow);
+      this.view.audioChallenge.updateAudioChallengeGamePage(this.state);
+    }
   }
 }
 

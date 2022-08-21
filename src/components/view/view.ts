@@ -16,7 +16,7 @@ class View {
 
   public initRender() {
     this.dictionary.draw();
-    this.audioChallenge.renderAudioChallengeStartPage();
+    this.controller.audioChallengeController.initAudioChallengeGame();
   }
 }
 

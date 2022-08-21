@@ -116,4 +116,6 @@ export interface AudioChallengeModelState {
   currentGuessingWords: Word[];
   rightWords: Word[];
   wrongWords: Word[];
+  currentRightWordsInRow: number;
+  maxRightWordsInRow: number;
 }

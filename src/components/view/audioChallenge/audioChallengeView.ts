@@ -1,4 +1,4 @@
-import { createElement, getElement } from '../../utils/utils';
+import { createElement, getElement, playStopAudio } from '../../utils/utils';
 import Controller from '../../controller/controller';
 import View from '../view';
 import settings from '../../settings';
@@ -51,6 +51,7 @@ class AudioChallengeView {
   }
 
   public renderAudioChallengeGamePage(state: AudioChallengeModelState) {
+    const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
       buttonsHTML += `<button class="audio-challenge__select-button button" type="button">${state.currentGuessingWords[i].word}</button>`;
@@ -60,15 +61,13 @@ class AudioChallengeView {
     <div class="audio-challenge">
     <div class="audio-challenge__game-page">
       <h2 class="audio-challenge__progress">Progress: <span class="audio-challenge__progress-count">${
-        state.currentWordIndex
+        state.currentWordIndex + 1
       }</span> / <span
         class="audio-challenge__progress-max">${state.currentWords.length}</span></h2>
       <div class="audio-challenge__word-image-block">
-        <img class="audio-challenge__word-image" src="${settings.DATABASE_URL}/${
-      state.currentWords[state.currentWordIndex].image
-    }" alt="Word image">
+        <img class="audio-challenge__word-image" src="${settings.DATABASE_URL}/${currentWord.image}" alt="Word image">
       </div>
-      <p class="audio-challenge__word">${state.currentWords[state.currentWordIndex].word}</p>
+      <p class="audio-challenge__word">${currentWord.word}</p>
       <button class="audio-challenge__play-button button" type="button">Play</button>
       <div class="audio-challenge__select-buttons-block">
         ${buttonsHTML}
@@ -77,6 +76,8 @@ class AudioChallengeView {
     </div>
   </div>
     `;
+
+    playStopAudio(currentWord.audio);
   }
 }
 

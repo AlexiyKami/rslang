@@ -4,18 +4,19 @@
 }
 
 .audio-challenge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100%;
   height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-image: linear-gradient(rgb(24, 90, 157) 0%, rgb(67, 206, 162) 100%);
 }
 
 .audio-challenge__main-page,
 .audio-challenge__game-page {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   gap: 20px;
 }
 
@@ -26,12 +27,12 @@
 }
 
 .audio-challenge__word-image-block {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  justify-content: center;
   width: 260px;
   height: 260px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  overflow: hidden;
   background: url('/src/assets/icons/question.svg') no-repeat center;
   background-size: contain;
 }
@@ -40,9 +41,17 @@
   flex-shrink: 0;
   min-width: 100%;
   min-height: 100%;
+  opacity: 0;
+  transition: 0.3s;
 }
 
 .audio-challenge__select-buttons-block {
   display: flex;
   gap: 30px;
+}
+
+.audio-challenge__word {
+  opacity: 0;
+  user-select: none;
+  transition: 0.3s;
 }

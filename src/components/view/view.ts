@@ -5,9 +5,7 @@ import AudioChallengeView from './audioChallenge/audioChallengeView';
 
 class View {
   private dictionary: Dictionary;
-
   audioChallenge: AudioChallengeView;
-
   private navigation: Navigation;
 
   constructor(private readonly controller: Controller) {

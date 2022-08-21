@@ -4,9 +4,7 @@ import AudioChallengeModel from './audioChallengeModel/audioChallengeModel';
 
 class AppModel {
   public controller: Controller;
-
   public view: View;
-
   public audioChallengeModel: AudioChallengeModel;
 
   constructor() {

@@ -7,15 +7,10 @@ import AudioChallengeController from './audioChallengeController/audioChallengeC
 
 class Controller {
   private model: AppModel;
-
   public api: Api;
-
   private dictionaryPage = 0;
-
   private dictionaryGroup = 0;
-
   public onDictionaryUpdate: CallbackFunction[];
-
   public audioChallengeController: AudioChallengeController;
 
   constructor(model: AppModel) {
@@ -28,7 +23,7 @@ class Controller {
   public playStopAudio(fileName: string, startPlay = true) {
     const audio = getElement('app-audio') as HTMLAudioElement;
     if (startPlay) {
-      audio.src = `${settings.DATABASE_URL}/files/${fileName}`;
+      audio.src = `${settings.DATABASE_URL}/${fileName}`;
       audio.play();
     } else {
       audio.pause();

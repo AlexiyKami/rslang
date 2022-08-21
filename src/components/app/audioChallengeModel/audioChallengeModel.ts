@@ -60,7 +60,6 @@ class AudioChallengeModel {
     this.state.currentWords = words;
     this.shuffleWords(this.state.currentWords);
     this.getThreeRandomWords();
-    console.log(this.state.currentWords[this.state.currentWordIndex], this.state.currentGuessingWords);
     this.view.audioChallenge.renderAudioChallengeGamePage(this.state);
   }
 
@@ -80,18 +79,10 @@ class AudioChallengeModel {
   public onNextButtonClick(nextButtonText: string | null) {
     if (nextButtonText === `Show results`) {
       this.view.audioChallenge.renderAudioChallengeResultsPage(this.state);
-      // console.log(`
-      // Всего слов: ${this.state.rightWords.length + this.state.wrongWords.length}; \t
-      // Правильно: ${this.state.rightWords.length}; \t
-      // Неправильно: ${this.state.wrongWords.length}; \t
-      // Подряд: ${this.state.rightWordsInRow}
-      // `);
     } else {
       if (nextButtonText === `I don't know`) this.state.currentRightWordsInRow = 0;
-      console.log(nextButtonText, this.state.currentWordIndex);
       this.state.currentWordIndex++;
       this.getThreeRandomWords();
-      console.log(this.state.rightWords, this.state.wrongWords, this.state.currentRightWordsInRow);
       this.view.audioChallenge.updateAudioChallengeGamePage(this.state);
     }
   }

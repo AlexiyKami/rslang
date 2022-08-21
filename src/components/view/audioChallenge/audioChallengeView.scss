@@ -51,7 +51,9 @@
 }
 
 .audio-challenge__word {
+  font-size: 40px;
+  font-weight: 700;
   opacity: 0;
-  user-select: none;
   transition: 0.3s;
+  user-select: none;
 }

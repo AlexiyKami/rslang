@@ -54,7 +54,9 @@ class AudioChallengeView {
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
-      buttonsHTML += `<button class="audio-challenge__select-button button" type="button">${state.currentGuessingWords[i].word}</button>`;
+      buttonsHTML += `<button class="audio-challenge__select-button button" type="button" data-word=${
+        state.currentGuessingWords[i].word
+      }>${i + 1}. ${state.currentGuessingWords[i].word}</button>`;
     }
 
     this.mainWindow.innerHTML = `
@@ -67,17 +69,44 @@ class AudioChallengeView {
       <div class="audio-challenge__word-image-block">
         <img class="audio-challenge__word-image" src="${settings.DATABASE_URL}/${currentWord.image}" alt="Word image">
       </div>
-      <p class="audio-challenge__word">${currentWord.word}</p>
+      <p class="audio-challenge__word">&#10004;  ${currentWord.word}</p>
       <button class="audio-challenge__play-button button" type="button">Play</button>
       <div class="audio-challenge__select-buttons-block">
         ${buttonsHTML}
       </div>
-      <button class="audio-challenge__submit-button button" type="button">NEXT WORD</button>
+      <button class="audio-challenge__submit-button button" type="button">I don't know</button>
     </div>
   </div>
     `;
 
+    (getElement('audio-challenge__play-button') as HTMLButtonElement).addEventListener('click', () =>
+      playStopAudio(currentWord.audio)
+    );
+    (getElement('audio-challenge__select-buttons-block') as HTMLElement).addEventListener('click', (e) =>
+      this.controller.audioChallengeController.audioChallengeGamePageWordsHandler(e)
+    );
+    // TODO заменить проигрывание аудио
+    (getElement('audio-challenge__submit-button') as HTMLButtonElement).addEventListener('click', () =>
+      this.controller.audioChallengeController.audioChallengeGamePageNextButtonHandler()
+    );
+
     playStopAudio(currentWord.audio);
+  }
+
+  public updatePageOnWordSelect(state: AudioChallengeModelState, isRightAnswer: boolean) {
+    const wordHTML = getElement('audio-challenge__word') as HTMLElement;
+    const buttons = document.querySelectorAll('.audio-challenge__select-button');
+    buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));
+    if (isRightAnswer) {
+      (getElement('audio-challenge__word-image') as HTMLElement).style.opacity = '1';
+      wordHTML.style.color = `#008000`;
+    } else {
+      wordHTML.innerHTML = `&#10008;  wrong`;
+      wordHTML.style.color = `#ff0000`;
+    }
+
+    wordHTML.style.opacity = '1';
+    (getElement('audio-challenge__submit-button') as HTMLButtonElement).textContent = 'Next word';
   }
 }
 

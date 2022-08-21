@@ -4,12 +4,11 @@ import View from '../../view/view';
 import { getRandomNumber } from '../../utils/utils';
 
 class AudioChallengeModel {
-  private state: AudioChallengeModelState;
+  state: AudioChallengeModelState;
 
   constructor(private readonly view: View, private readonly model: AppModel) {
     this.state = {
       currentWords: [],
-      currentWordPlayedCount: 0,
       currentWordIndex: 0,
       currentGuessingWords: [],
       rightWords: [],
@@ -36,7 +35,6 @@ class AudioChallengeModel {
   }
 
   private resetState(): void {
-    this.state.currentWordPlayedCount = 0;
     this.state.currentWordIndex = 0;
     this.state.currentGuessingWords.length = 0;
     this.state.currentWords.length = 0;
@@ -55,6 +53,18 @@ class AudioChallengeModel {
     this.getThreeRandomWords();
     console.log(this.state.currentWords[this.state.currentWordIndex], this.state.currentGuessingWords);
     this.view.audioChallenge.renderAudioChallengeGamePage(this.state);
+  }
+
+  public onWordSelected(word: Word, isRightAnswer: boolean) {
+    const rightOrWrong = isRightAnswer ? 'rightWords' : 'wrongWords';
+    this.state[rightOrWrong].push(word);
+    this.view.audioChallenge.updatePageOnWordSelect(this.state, isRightAnswer);
+  }
+
+  public onNextButtonClick(nextButtonText: string | null) {
+    console.log(nextButtonText, this.state.currentWordIndex);
+    this.state.currentWordIndex++;
+    console.log(this.state.currentWordIndex);
   }
 }
 

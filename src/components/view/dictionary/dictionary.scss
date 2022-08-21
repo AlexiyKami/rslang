@@ -109,6 +109,10 @@
     background-size: contain;
   }
 
+  & > .audio-image.playing {
+    background: url('/src/assets/icons/stop.svg') no-repeat center;
+  }
+
   & > .description {
     display: flex;
     flex-direction: column;

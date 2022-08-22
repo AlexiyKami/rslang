@@ -15,6 +15,9 @@ class DictionaryController {
 
   public async getWords() {
     const response = await this.baseController.getWords(this.dictionaryGroup, this.dictionaryPage);
+    if (typeof response === 'string') {
+      return `<p class='message'>${response}</p>`;
+    }
     return response;
   }
 

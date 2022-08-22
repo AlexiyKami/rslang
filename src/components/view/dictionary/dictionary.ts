@@ -44,6 +44,11 @@ class Dictionary {
       <div class='dictionary-words'>
       
       </div>
+      <div class='dictionary-pagination'>
+        <button class='rounded-button prev' disabled>Prev</button>
+        <h4 class="dictionary-page-number">1</h4>
+        <button class='rounded-button next'>Next</button>
+      </div>
     </div>
     `;
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
@@ -51,9 +56,9 @@ class Dictionary {
         this.dictionaryController.setDictionaryGroup(+(elem.textContent as string) - 1);
       });
     });
-    (document.querySelector('.dictionary-pagination') as HTMLElement).addEventListener('click', (e) =>
-      this.onPaginationClick(e)
-    );
+    document
+      .querySelectorAll('.dictionary-pagination')
+      .forEach((item) => item.addEventListener('click', (e) => this.onPaginationClick(e)));
     this.updatePagination();
     this.updateGroupButtons();
     this.updateWords();
@@ -150,19 +155,24 @@ class Dictionary {
   }
 
   private updatePagination() {
-    const prev = document.querySelector('.dictionary-pagination .prev') as HTMLButtonElement;
-    const next = document.querySelector('.dictionary-pagination .next') as HTMLButtonElement;
-    prev.disabled = false;
-    next.disabled = false;
+    const prev = document.querySelectorAll('.dictionary-pagination .prev');
+    const next = document.querySelectorAll('.dictionary-pagination .next');
+    prev.forEach((item) => ((item as HTMLButtonElement).disabled = false));
+    next.forEach((item) => ((item as HTMLButtonElement).disabled = false));
     if (this.dictionaryController.getDictionaryPage() <= 0) {
-      prev.disabled = true;
+      prev.forEach((item) => ((item as HTMLButtonElement).disabled = true));
     }
     if (this.dictionaryController.getDictionaryPage() === this.dictionaryController.getMaxDictionaryPage()) {
-      next.disabled = true;
+      next.forEach((item) => ((item as HTMLButtonElement).disabled = true));
     }
-    (document.querySelector('.dictionary-page-number') as Element).innerHTML = `${
-      this.dictionaryController.getDictionaryPage() + 1
-    } / ${this.dictionaryController.getMaxDictionaryPage() + 1}`;
+    document
+      .querySelectorAll('.dictionary-page-number')
+      .forEach(
+        (item) =>
+          (item.innerHTML = `${this.dictionaryController.getDictionaryPage() + 1} / ${
+            this.dictionaryController.getMaxDictionaryPage() + 1
+          }`)
+      );
   }
 }
 

@@ -27,6 +27,11 @@
   max-width: 800px;
   width: 100%;
   min-height: 100vh;
+  & .message {
+    text-align: center;
+    font-weight: 700;
+    font-size: 32px;
+  }
 }
 
 .dictionary-groups {

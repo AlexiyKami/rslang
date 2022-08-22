@@ -25,20 +25,20 @@ class Dictionary {
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
     <div class='dictionary'>
       <div class='dictionary-pagination'>
-        <button class='prev' disabled>Prev</button>
+        <button class='rounded-button prev' disabled>Prev</button>
         <h4 class="dictionary-page-number">1</h4>
-        <button class='next'>Next</button>
+        <button class='rounded-button next'>Next</button>
       </div>
       <div class='dictionary-groups'>
         <span>Difficulty</span>
         <div class='group-buttons'>
-          <button class='group-1'>1</button>
-          <button class='group-2'>2</button>
-          <button class='group-3'>3</button>
-          <button class='group-4'>4</button>
-          <button class='group-5'>5</button>
-          <button class='group-6'>6</button>
-          <button class='group-7'>7</button>
+          <button class='round-button group-1'>1</button>
+          <button class='round-button group-2'>2</button>
+          <button class='round-button group-3'>3</button>
+          <button class='round-button group-4'>4</button>
+          <button class='round-button group-5'>5</button>
+          <button class='round-button group-6'>6</button>
+          <button class='round-button group-7'>7</button>
         </div>
       </div>
       <div class='dictionary-words'>

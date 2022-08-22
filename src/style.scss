@@ -1,3 +1,5 @@
+$transition-delay: 0.25s;
+$disabled-color: rgb(180, 180, 180);
 * {
   margin: 0;
   padding: 0;
@@ -32,7 +34,90 @@ body {
     }
 
     footer {
-      background-color: aqua;   
+      background-color: aqua;
     }
+  }
+}
+
+.flat-button {
+  padding: 5px 15px;
+  border: 2px solid black;
+  color: white;
+  background-color: black;
+  transition: all $transition-delay;
+  &:hover:not(:disabled) {
+    background-color: lighten($color: black, $amount: 10);
+  }
+  &:disabled {
+    background-color: transparent;
+    border-color: $disabled-color;
+    color: $disabled-color;
+  }
+}
+
+.rounded-button {
+  padding: 5px 15px;
+  border: 2px solid rgb(0, 0, 0);
+  color: rgb(0, 0, 0);
+  border-radius: 15px;
+  transition: all $transition-delay;
+  &:hover:not(:disabled) {
+    border-color: orange;
+    color: orange;
+  }
+  &:disabled {
+    color: $disabled-color;
+    border-color: $disabled-color;
+    background-color: initial;
+    cursor: auto;
+  }
+}
+
+.round-button {
+  height: 32px;
+  width: 32px;
+  border-radius: 50%;
+  border-style: solid;
+  transition: all $transition-delay;
+  border-color: black;
+  cursor: pointer;
+
+  &.group-1 {
+    border-color: rgb(202, 43, 43);
+  }
+
+  &.group-2 {
+    border-color: rgb(255, 141, 47);
+  }
+
+  &.group-3 {
+    border-color: rgb(63, 199, 204);
+  }
+
+  &.group-4 {
+    border-color: rgb(184, 64, 124);
+  }
+
+  &.group-5 {
+    border-color: rgb(116, 83, 158);
+  }
+
+  &.group-6 {
+    border-color: rgb(92, 158, 83);
+  }
+
+  &.group-7 {
+    display: none;
+    border-color: rgb(217, 255, 47);
+  }
+  &:hover:not(:disabled) {
+    transform: scale(1.2);
+  }
+  &:disabled {
+    border-width: 5px;
+    transform: scale(1.2);
+    background-color: white;
+    color: black;
+    cursor: auto;
   }
 }

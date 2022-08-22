@@ -1,8 +1,8 @@
 import './navigation.scss';
+import View from '../view';
 
 export default class Navigation {
   private readonly btnIdLabel = ['button-login', 'Login'];
-
   private readonly radioIdLabelMap = new Map<string, string>([
     ['radio-home', 'Home'],
     ['radio-book', 'Textbook'],
@@ -10,13 +10,14 @@ export default class Navigation {
     ['radio-stat', 'Statistics'],
   ]);
 
-  constructor() {
+  constructor(private readonly view: View) {
     const navEl = document.createElement('nav');
     navEl.classList.add('page-nav');
 
     const btnEl = document.createElement('input');
     btnEl.type = 'button';
     btnEl.id = this.btnIdLabel[0];
+    btnEl.addEventListener('click', this.view.authorization.draw.bind(this.view.authorization));
 
     const btnLabelEl = document.createElement('label');
     btnLabelEl.setAttribute('for', this.btnIdLabel[0]);
@@ -34,6 +35,14 @@ export default class Navigation {
       const radioLabelEl = document.createElement('label');
       radioLabelEl.setAttribute('for', entry[0]);
       radioLabelEl.innerText = entry[1];
+
+      if (entry[1] === 'Textbook')
+        radioLabelEl.addEventListener('click', this.view.dictionary.draw.bind(this.view.dictionary));
+      else if (entry[1] === 'Minigames')
+        radioLabelEl.addEventListener(
+          'click',
+          this.view.MinigamesPage.renderMinigamesPage.bind(this.view.MinigamesPage)
+        );
 
       navEl.append(radioEl, radioLabelEl);
     }

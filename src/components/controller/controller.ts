@@ -5,18 +5,21 @@ import { getElement } from '../utils/utils';
 import DictionaryController from './dictionaryController';
 import { CallbackFunction } from '../types/types';
 import AudioChallengeController from './audioChallengeController/audioChallengeController';
+import AuthorizationController from './authorizationController';
 
 class Controller {
   private model: AppModel;
   public dictionary: DictionaryController;
   public api: Api;
   public audioChallengeController: AudioChallengeController;
+  public authorizationController: AuthorizationController;
 
   constructor(model: AppModel) {
     this.model = model;
     this.api = new Api();
     this.audioChallengeController = new AudioChallengeController(this, this.model);
     this.dictionary = new DictionaryController(this);
+    this.authorizationController = new AuthorizationController(this);
   }
 
   public playStopAudio(fileName: string, startPlay = true) {

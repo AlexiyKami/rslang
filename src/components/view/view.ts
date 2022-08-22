@@ -11,7 +11,7 @@ class View {
   public audioChallenge: AudioChallengeView;
   private navigation: Navigation;
   public authorization: Authorization;
-  private MinigamesPage: MinigamesPageView;
+  public MinigamesPage: MinigamesPageView;
 
   constructor(private readonly controller: Controller) {
     this.authorization = new Authorization(this.controller);
@@ -22,9 +22,9 @@ class View {
   }
 
   public initRender() {
-    // // this.dictionary.draw();
+    // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();
-    this.MinigamesPage.renderMinigamesPage();
+    // this.MinigamesPage.renderMinigamesPage();
     // this.authorization.draw();
   }
 

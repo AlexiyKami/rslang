@@ -41,7 +41,7 @@ export default class Navigation {
       else if (entry[1] === 'Minigames')
         radioLabelEl.addEventListener(
           'click',
-          this.view.audioChallenge.renderAudioChallengeStartPage.bind(this.view.audioChallenge)
+          this.view.MinigamesPage.renderMinigamesPage.bind(this.view.MinigamesPage)
         );
 
       navEl.append(radioEl, radioLabelEl);

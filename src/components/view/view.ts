@@ -13,7 +13,7 @@ class View {
 
   constructor(private readonly controller: Controller) {
     this.navigation = new Navigation();
-    this.dictionary = new Dictionary(this.controller);
+    this.dictionary = new Dictionary(this.controller, this);
     this.audioChallenge = new AudioChallengeView(this.controller, this);
     this.MinigamesPage = new MinigamesPageView(this.controller, this);
   }

@@ -3,6 +3,7 @@ import Dictionary from './dictionary/dictionary';
 import Navigation from './navigation/navigation';
 import Authorization from './authorization/authorization';
 import AudioChallengeView from './audioChallenge/audioChallengeView';
+import { getElement } from '../utils/utils';
 
 class View {
   public dictionary: Dictionary;
@@ -21,6 +22,10 @@ class View {
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();
     // this.authorization.draw();
+  }
+
+  public changeAppTitle(title: string): void {
+    (getElement('app-title') as HTMLTitleElement).textContent = title;
   }
 }
 

@@ -3,23 +3,27 @@ import { Word } from '../../types/types';
 import './dictionary.scss';
 import DictionaryController from '../../controller/dictionaryController';
 import Controller from '../../controller/controller';
+import View from '../view';
 
 class Dictionary {
   dictionaryController: DictionaryController;
   baseController: Controller;
+  view: View;
 
-  constructor(controller: Controller) {
+  constructor(controller: Controller, view: View) {
     this.baseController = controller;
+    this.view = view;
     this.dictionaryController = controller.dictionary;
     this.dictionaryController.onDictionaryUpdate.push(
-      this.clear.bind(this),
       this.draw.bind(this),
       this.baseController.playStopAudio.bind(controller, '', false)
     );
   }
 
   draw(): void {
-    const wrapper = `<div class='dictionary'>
+    this.view.changeAppTitle('Dictionary');
+    (document.querySelector('.main-window') as HTMLElement).innerHTML = `
+    <div class='dictionary'>
       <div class='dictionary-pagination'>
         <button class='rounded-button prev' disabled>Prev</button>
         <h4 class="dictionary-page-number">1</h4>
@@ -40,8 +44,8 @@ class Dictionary {
       <div class='dictionary-words'>
       
       </div>
-    </div>`;
-    (document.querySelector('main') as HTMLElement)?.insertAdjacentHTML('beforeend', wrapper);
+    </div>
+    `;
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
       elem.addEventListener('click', () => {
         this.dictionaryController.setDictionaryGroup(+(elem.textContent as string) - 1);
@@ -159,10 +163,6 @@ class Dictionary {
     (document.querySelector('.dictionary-page-number') as Element).innerHTML = `${
       this.dictionaryController.getDictionaryPage() + 1
     } / ${this.dictionaryController.getMaxDictionaryPage() + 1}`;
-  }
-
-  clear(): void {
-    document.querySelector('.dictionary')?.remove();
   }
 }
 

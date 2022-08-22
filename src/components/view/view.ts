@@ -15,13 +15,17 @@ class View {
     this.navigation = new Navigation();
     this.dictionary = new Dictionary(this.controller);
     this.audioChallenge = new AudioChallengeView(this.controller, this);
-    this.MinigamesPage = new MinigamesPageView(this.controller);
+    this.MinigamesPage = new MinigamesPageView(this.controller, this);
   }
 
   public initRender() {
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();
     this.MinigamesPage.renderMinigamesPage();
+  }
+
+  public changeAppTitle(title: string): void {
+    (getElement('app-title') as HTMLTitleElement).textContent = title;
   }
 }
 

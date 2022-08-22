@@ -3,14 +3,17 @@ import { getElement } from '../../utils/utils';
 import './../../../assets/images/sprint.png';
 import './../../../assets/images/audioChallenge.png';
 import Controller from '../../controller/controller';
+import View from '../view';
 
 class MinigamesPageView {
   private mainWindow: HTMLElement;
 
-  constructor(private readonly controller: Controller) {
+  constructor(private readonly controller: Controller, private readonly view: View) {
     this.mainWindow = getElement('main-window') as HTMLElement;
   }
   public renderMinigamesPage() {
+    this.view.changeAppTitle('Games');
+
     this.mainWindow.innerHTML = `
     <div class="minigames-page">
       <div class="minigames-page__games-block">

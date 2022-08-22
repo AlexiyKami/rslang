@@ -13,6 +13,8 @@ class AudioChallengeView {
   }
 
   public renderAudioChallengeStartPage() {
+    this.view.changeAppTitle('Audio Challenge');
+
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
       buttonsHTML += `<button class="audio-challenge__difficulty-button audio-challenge__difficulty-button_group-${i} button" type="button" data-group="${i}">${

@@ -103,11 +103,14 @@ class Dictionary {
     document.querySelectorAll('.audio-image').forEach((elem) => {
       elem.addEventListener('click', (e: Event) => {
         const currTarget = e.currentTarget as HTMLElement;
-        const audioURL = [
+        let audioURL = [
           currTarget.getAttribute('audio'),
           currTarget.getAttribute('audio-example'),
           currTarget.getAttribute('audio-meaning'),
         ];
+        if (currTarget.classList.contains('playing')) {
+          audioURL = [];
+        }
         let current = 0;
         this.audioHandler(currTarget, audioURL[current] as string);
         this.baseController.onAudioEnded(() => {

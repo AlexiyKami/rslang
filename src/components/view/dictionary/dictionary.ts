@@ -82,9 +82,9 @@ class Dictionary {
             </div>
             <div
               class='audio-image'
-              audio='/${word.audio}'
-              audio-example='/${word.audioExample}'
-              audio-meaning='/${word.audioMeaning}'
+              audio='${word.audio}'
+              audio-example='${word.audioExample}'
+              audio-meaning='${word.audioMeaning}'
             ></div>
           </div>`;
         })

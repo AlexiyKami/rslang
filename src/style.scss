@@ -1,5 +1,5 @@
 $transition-delay: 0.25s;
-
+$disabled-color: rgb(180, 180, 180);
 * {
   margin: 0;
   padding: 0;
@@ -45,8 +45,13 @@ body {
   color: white;
   background-color: black;
   transition: all $transition-delay;
-  &:hover {
+  &:hover:not(:disabled) {
     background-color: lighten($color: black, $amount: 10);
+  }
+  &:disabled {
+    background-color: transparent;
+    border-color: $disabled-color;
+    color: $disabled-color;
   }
 }
 
@@ -56,9 +61,15 @@ body {
   color: rgb(0, 0, 0);
   border-radius: 15px;
   transition: all $transition-delay;
-  &:hover {
+  &:hover:not(:disabled) {
     border-color: orange;
     color: orange;
+  }
+  &:disabled {
+    color: $disabled-color;
+    border-color: $disabled-color;
+    background-color: initial;
+    cursor: auto;
   }
 }
 
@@ -99,16 +110,14 @@ body {
     display: none;
     border-color: rgb(217, 255, 47);
   }
-}
-
-.round-button:hover {
-  transform: scale(1.2);
-}
-
-.round-button:disabled {
-  border-width: 5px;
-  transform: scale(1.2);
-  background-color: white;
-  color: black;
-  cursor: auto;
+  &:hover:not(:disabled) {
+    transform: scale(1.2);
+  }
+  &:disabled {
+    border-width: 5px;
+    transform: scale(1.2);
+    background-color: white;
+    color: black;
+    cursor: auto;
+  }
 }

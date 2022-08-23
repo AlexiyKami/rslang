@@ -3,7 +3,7 @@ import Controller from '../../controller/controller';
 import View from '../view';
 import settings from '../../settings';
 import './audioChallengeView.scss';
-import { AudioChallengeModelState } from '../../types/types';
+import { AudioChallengeModelState, Word } from '../../types/types';
 
 class AudioChallengeView {
   private mainWindow: HTMLElement;
@@ -149,6 +149,19 @@ class AudioChallengeView {
     this.controller.playStopAudio(currentWord.audio);
   }
 
+  private generateResultsAudioBlock(words: Word[]): string {
+    let audioBlok = '';
+    words.forEach((word) => {
+      audioBlok += `
+      <div class="audio-challenge__results-audio">
+            <button class="audio-challenge__play-button button" type="button" data-audiolink=${word.audio}></button>
+            <p class="audio-challenge__results-word">${word.word}</p>
+          </div>
+      `;
+    });
+    return audioBlok;
+  }
+
   public renderAudioChallengeResultsPage(state: AudioChallengeModelState) {
     this.mainWindow.innerHTML = `
     <div class="audio-challenge">
@@ -183,36 +196,14 @@ class AudioChallengeView {
 
         <p class="audio-challenge__results-right-answers green">Right answers:</p>
         <div class="audio-challenge__results-audio-block">
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
+          ${this.generateResultsAudioBlock(state.rightWords)}
         </div>
 
         <div class="line"></div>
 
         <p class="audio-challenge__results-wrong-answers red">Wrong answers:</p>
         <div class="audio-challenge__results-audio-block">
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
-          <div class="audio-challenge__results-audio">
-            <button class="audio-challenge__play-button button" type="button" data-audiolink="0.mp3"></button>
-            <p class="audio-challenge__results-word">Word</p>
-          </div>
+          ${this.generateResultsAudioBlock(state.wrongWords)}
         </div>
         
         </div>
@@ -222,6 +213,10 @@ class AudioChallengeView {
       </div>
     </div>
     `;
+
+    (getElement('audio-challenge__results-page') as HTMLElement).addEventListener('click', (e) =>
+      this.controller.audioChallengeController.audioChallengeGameResultsHandler(e)
+    );
 
     (getElement('audio-challenge__results-button') as HTMLButtonElement).addEventListener('click', () =>
       this.controller.audioChallengeController.initAudioChallengeGame()

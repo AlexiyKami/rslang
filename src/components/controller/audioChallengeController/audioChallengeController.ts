@@ -10,7 +10,7 @@ class AudioChallengeController {
     this.model.audioChallengeModel.initAudioChallengeGame();
   }
 
-  async startPageHandler(e: Event) {
+  public async startPageHandler(e: Event) {
     const buttons = document.querySelectorAll('.audio-challenge__difficulty-button');
     buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));
     const target = e.target as HTMLElement;
@@ -27,7 +27,7 @@ class AudioChallengeController {
     }
   }
 
-  audioChallengeGamePageWordsHandler(e: Event) {
+  public audioChallengeGamePageWordsHandler(e: Event) {
     const audioChallengeModel = this.model.audioChallengeModel;
     const audioChallengeModelState = audioChallengeModel.state;
     if ((e.target as HTMLElement).classList.contains('audio-challenge__select-button')) {
@@ -39,12 +39,19 @@ class AudioChallengeController {
     }
   }
 
-  audioChallengeGamePageNextButtonHandler() {
+  public audioChallengeGamePageNextButtonHandler() {
     const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
     const nextButtonText =
       state.currentWordIndex < state.currentWords.length - 1 ? nextButton.textContent : 'Show results';
     this.model.audioChallengeModel.onNextButtonClick(nextButtonText);
+  }
+
+  public audioChallengeGameResultsHandler(e: Event) {
+    if ((e.target as HTMLElement).classList.contains('audio-challenge__play-button')) {
+      const audioLink = (e.target as HTMLButtonElement).dataset.audiolink || '';
+      this.controller.playStopAudio(audioLink);
+    }
   }
 }
 

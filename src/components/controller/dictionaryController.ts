@@ -36,18 +36,15 @@ class DictionaryController {
   }
 
   public async getUserWords() {
-    const userId = (localStorage.getItem('userId') as string) || '62fa864b28e48300161fb57f';
-    const token =
-      (localStorage.getItem('token') as string) ||
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmE4NjRiMjhlNDgzMDAxNjFmYjU3ZiIsImlhdCI6MTY2MTIwNzI2OSwiZXhwIjoxNjYxMjIxNjY5fQ.ZTzMtv0HouxnJkrPMslzM4zTU2gqsIt8Eir3O3utx78';
+    const userId = (localStorage.getItem('userId') as string) || settings.USER_ID; //should remove
+    const token = (localStorage.getItem('token') as string) || settings.TOKEN; //should remove
     const response = await this.baseController.api.getAllUserWords(userId, token);
     return response.data;
   }
 
   public async updateUserWord(wordId: string, difficulty: string) {
-    const userId = '62fa864b28e48300161fb57f';
-    const token =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmE4NjRiMjhlNDgzMDAxNjFmYjU3ZiIsImlhdCI6MTY2MTIwNzI2OSwiZXhwIjoxNjYxMjIxNjY5fQ.ZTzMtv0HouxnJkrPMslzM4zTU2gqsIt8Eir3O3utx78';
+    const userId = (localStorage.getItem('userId') as string) || settings.USER_ID; //should remove
+    const token = (localStorage.getItem('token') as string) || settings.TOKEN; //should remove
     let response;
     if ((await this.baseController.api.getsUserWord(userId, wordId, token)).code === 404) {
       if (this.getDictionaryGroup() !== 6) {

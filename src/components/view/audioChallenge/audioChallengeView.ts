@@ -208,8 +208,8 @@ class AudioChallengeView {
         
         </div>
       <div class="audio-challenge__results-buttons-block">
-          <button class="audio-challenge__results-button button" type="button">Play again</button>
-          <button class="audio-challenge__results-button button" type="button">Back to games</button>
+          <button class="audio-challenge__results-button-play flat-button" type="button">Play again</button>
+          <button class="audio-challenge__results-button-back flat-button" type="button">Back to games</button>
       </div>
     </div>
     `;
@@ -218,8 +218,12 @@ class AudioChallengeView {
       this.controller.audioChallengeController.audioChallengeGameResultsHandler(e)
     );
 
-    (getElement('audio-challenge__results-button') as HTMLButtonElement).addEventListener('click', () =>
+    (getElement('audio-challenge__results-button-play') as HTMLButtonElement).addEventListener('click', () =>
       this.controller.audioChallengeController.initAudioChallengeGame()
+    );
+
+    (getElement('audio-challenge__results-button-back') as HTMLButtonElement).addEventListener('click', () =>
+      this.view.MinigamesPage.renderMinigamesPage()
     );
   }
 }

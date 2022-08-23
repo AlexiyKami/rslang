@@ -272,3 +272,28 @@
 .audio-challenge__results-word {
   font-size: 25px;
 }
+
+.audio-challenge__results-buttons-block {
+  display: flex;
+  gap: 20px;
+}
+
+.audio-challenge__results-button-play {
+  border-color: #0252ccff;
+  background-color: #0252ccff;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #0252ccff, $amount: 10);
+    background-color: lighten($color: #0252ccff, $amount: 10);
+  }
+}
+
+.audio-challenge__results-button-back {
+  border-color: #02cc9d;
+  background-color: #02cc9d;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #02cc9d, $amount: 10);
+    background-color: lighten($color: #02cc9d, $amount: 10);
+  }
+}

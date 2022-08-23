@@ -254,3 +254,21 @@
   width: 100%;
   background-color: rgba(0, 0, 0, 0.1);
 }
+
+.audio-challenge__results-audio-block {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: start;
+  width: 100%;
+}
+
+.audio-challenge__results-audio {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.audio-challenge__results-word {
+  font-size: 25px;
+}

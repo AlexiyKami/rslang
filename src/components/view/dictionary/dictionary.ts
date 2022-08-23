@@ -48,6 +48,22 @@ class Dictionary {
           ${groupBtns}
         </div>
       </div>
+      ${
+        this.dictionaryController.getDictionaryGroup() !== 6
+          ? `
+      <div class='dictionary-minigame-links'>
+        <div class='sprint-link'>
+          <img src="./../../../assets/images/sprint.png" alt="Sprint game">
+          <h2>Sprint</h2>
+        </div>
+        <div class='audio-challenge-link'>
+          <img src="./../../../assets/images/audioChallenge.png" alt="Audio Challenge game">
+          <h2>Audio challenge</h2>
+        </div>
+      </div>
+      `
+          : ''
+      }
       <div class='dictionary-words'>
       
       </div>
@@ -59,9 +75,23 @@ class Dictionary {
         this.dictionaryController.setDictionaryGroup(+(elem.textContent as string) - 1);
       });
     });
+
     document
       .querySelectorAll('.dictionary-pagination')
       .forEach((item) => item.addEventListener('click', (e) => this.onPaginationClick(e)));
+
+    if (this.dictionaryController.getDictionaryGroup() !== 6) {
+      (document.querySelector('.sprint-link') as HTMLElement).addEventListener('click', () => {
+        console.log('Sprint is started!');
+      });
+      (document.querySelector('.audio-challenge-link') as HTMLElement).addEventListener('click', () => {
+        console.log('Audio challenge is started!');
+        this.baseController.audioChallengeController.initGameByGroupPage(
+          this.dictionaryController.getDictionaryGroup(),
+          this.dictionaryController.getDictionaryPage()
+        );
+      });
+    }
     this.updatePagination();
     this.updateGroupButtons();
     this.updateWords();

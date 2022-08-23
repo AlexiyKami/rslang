@@ -6,11 +6,20 @@ import settings from '../../settings';
 class AudioChallengeController {
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
 
-  public initAudioChallengeGame() {
-    this.model.audioChallengeModel.initAudioChallengeGame();
+  public initGame() {
+    this.model.audioChallengeModel.initGame();
   }
 
-  async startPageHandler(e: Event) {
+  public async initGameByGroupPage(group: number, page: number) {
+    const words = await this.controller.api.getWords(group, page);
+    if (typeof words === 'string') {
+      this.initGame();
+    } else {
+      this.model.audioChallengeModel.onWordsLoad(words);
+    }
+  }
+
+  public async startPageHandler(e: Event) {
     const buttons = document.querySelectorAll('.audio-challenge__difficulty-button');
     buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));
     const target = e.target as HTMLElement;
@@ -27,7 +36,7 @@ class AudioChallengeController {
     }
   }
 
-  audioChallengeGamePageWordsHandler(e: Event) {
+  public gamePageWordsHandler(e: Event) {
     const audioChallengeModel = this.model.audioChallengeModel;
     const audioChallengeModelState = audioChallengeModel.state;
     if ((e.target as HTMLElement).classList.contains('audio-challenge__select-button')) {
@@ -39,12 +48,19 @@ class AudioChallengeController {
     }
   }
 
-  audioChallengeGamePageNextButtonHandler() {
+  public gamePageNextButtonHandler() {
     const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
     const nextButtonText =
       state.currentWordIndex < state.currentWords.length - 1 ? nextButton.textContent : 'Show results';
     this.model.audioChallengeModel.onNextButtonClick(nextButtonText);
+  }
+
+  public gameResultsHandler(e: Event) {
+    if ((e.target as HTMLElement).classList.contains('audio-challenge__play-button')) {
+      const audioLink = (e.target as HTMLButtonElement).dataset.audiolink || '';
+      this.controller.playStopAudio(audioLink);
+    }
   }
 }
 

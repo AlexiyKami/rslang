@@ -18,7 +18,7 @@ class View {
     this.dictionary = new Dictionary(this.controller, this);
     this.audioChallenge = new AudioChallengeView(this.controller, this);
     this.MinigamesPage = new MinigamesPageView(this.controller, this);
-    this.navigation = new Navigation(this);
+    this.navigation = new Navigation(this.controller, this);
   }
 
   public initRender() {

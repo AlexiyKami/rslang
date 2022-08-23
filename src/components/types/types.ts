@@ -35,7 +35,7 @@ export interface Auth {
   refreshToken: string;
 }
 
-interface UserWord {
+export interface UserWord {
   difficulty: string;
   id: string;
   wordId: string;

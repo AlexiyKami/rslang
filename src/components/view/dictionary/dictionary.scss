@@ -58,6 +58,14 @@
   gap: 25px;
   border-radius: 5px;
 
+  &.learned {
+    background-color: rgb(230, 255, 231);
+  }
+
+  &.difficult {
+    background-color: rgb(255, 244, 230);
+  }
+
   & > .audio-image {
     position: absolute;
     right: 20px;
@@ -79,6 +87,7 @@
     flex-direction: column;
     justify-content: space-between;
     padding: 10px;
+    width: 445px;
   }
 
   & .title {
@@ -100,7 +109,7 @@
     object-fit: cover;
     object-position: center center;
     width: 260px;
-    height: 260px;
+    height: 300px;
   }
 
   .text-example, .text-meaning {
@@ -112,6 +121,30 @@
     }
     & > .translation {
       color: gray;
+    }
+  }
+
+  .buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .add-difficult-button {
+    width: fit-content;
+    background-color: orange;
+    color: black;
+    border-color: lighten($color: orange, $amount: 10);
+    &:hover {
+      background-color: lighten($color: orange, $amount: 10);
+    }
+  }
+
+  .add-learned-button {
+    background-color: lightgreen;
+    color: black;
+    border-color: lighten($color: lightgreen, $amount: 10);
+    &:hover {
+      background-color: lighten($color: lightgreen, $amount: 10);
     }
   }
 }

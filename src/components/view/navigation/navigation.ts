@@ -1,5 +1,6 @@
 import './navigation.scss';
 import View from '../view';
+import Controller from '../../controller/controller';
 
 export default class Navigation {
   private readonly btnIdLabel = ['button-login', 'Login'];
@@ -10,7 +11,7 @@ export default class Navigation {
     ['radio-stat', 'Statistics'],
   ]);
 
-  constructor(private readonly view: View) {
+  constructor(private readonly controller: Controller, private readonly view: View) {
     const navEl = document.createElement('nav');
     navEl.classList.add('page-nav');
 
@@ -37,12 +38,15 @@ export default class Navigation {
       radioLabelEl.innerText = entry[1];
 
       if (entry[1] === 'Textbook')
-        radioLabelEl.addEventListener('click', this.view.dictionary.draw.bind(this.view.dictionary));
+        radioLabelEl.addEventListener('click', () => {
+          this.controller.playStopAudio('', false);
+          this.view.dictionary.draw();
+        });
       else if (entry[1] === 'Minigames')
-        radioLabelEl.addEventListener(
-          'click',
-          this.view.MinigamesPage.renderMinigamesPage.bind(this.view.MinigamesPage)
-        );
+        radioLabelEl.addEventListener('click', () => {
+          this.controller.playStopAudio('', false);
+          this.view.MinigamesPage.renderMinigamesPage();
+        });
 
       navEl.append(radioEl, radioLabelEl);
     }

@@ -1,3 +1,4 @@
+import { UserWord } from './../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -22,33 +23,35 @@ class Dictionary {
 
   draw(): void {
     this.view.changeAppTitle('Dictionary');
-    (document.querySelector('.main-window') as HTMLElement).innerHTML = `
-    <div class='dictionary'>
+    const groupBtns = new Array(settings.MAX_DIFFICULTY_LEVEL + 2)
+      .fill('')
+      .map((item, index) => `<button class='round-button group-${index + 1}'>${index + 1}</button>`)
+      .join('');
+    let pagination: string;
+    if (this.dictionaryController.getDictionaryGroup() === 6) {
+      pagination = '';
+    } else {
+      pagination = `
       <div class='dictionary-pagination'>
         <button class='rounded-button prev' disabled>Prev</button>
         <h4 class="dictionary-page-number">1</h4>
         <button class='rounded-button next'>Next</button>
       </div>
+    `;
+    }
+    (document.querySelector('.main-window') as HTMLElement).innerHTML = `
+    <div class='dictionary'>
+      ${pagination}
       <div class='dictionary-groups'>
         <span>Difficulty</span>
         <div class='group-buttons'>
-          <button class='round-button group-1'>1</button>
-          <button class='round-button group-2'>2</button>
-          <button class='round-button group-3'>3</button>
-          <button class='round-button group-4'>4</button>
-          <button class='round-button group-5'>5</button>
-          <button class='round-button group-6'>6</button>
-          <button class='round-button group-7'>7</button>
+          ${groupBtns}
         </div>
       </div>
       <div class='dictionary-words'>
       
       </div>
-      <div class='dictionary-pagination'>
-        <button class='rounded-button prev' disabled>Prev</button>
-        <h4 class="dictionary-page-number">1</h4>
-        <button class='rounded-button next'>Next</button>
-      </div>
+      ${pagination}
     </div>
     `;
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
@@ -66,13 +69,14 @@ class Dictionary {
 
   async updateWords() {
     const words = await this.dictionaryController.getWords();
+    const userWords = await this.dictionaryController.getUserWords();
     let items;
     if (typeof words === 'string') {
       items = words;
     } else {
       items = (words as unknown as Word[])
         .map((word) => {
-          return `<div class='word-card'>
+          return `<div class='word-card' data-id=${word.id}>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
               <div class='title'>
@@ -87,6 +91,16 @@ class Dictionary {
               <div class='text-meaning'>
                 <p>${word.textMeaning}</p>
                 <p class='translation'>${word.textMeaningTranslate}</p>
+              </div>
+              <div class='buttons'>
+                <button class='add-difficult-button flat-button'>${
+                  this.dictionaryController.getDictionaryGroup() !== 6 ? `Difficult` : 'Remove from Difficult'
+                }</button>
+              ${
+                this.dictionaryController.getDictionaryGroup() !== 6
+                  ? `<button class='add-learned-button flat-button'>Learned</button>`
+                  : ''
+              }
               </div>
             </div>
             <div
@@ -122,6 +136,30 @@ class Dictionary {
             currTarget.classList.remove('playing');
           }
         });
+      });
+    });
+
+    document.querySelectorAll('.word-card').forEach((card) => {
+      (userWords as UserWord[]).forEach((userWord) => {
+        if (card.getAttribute('data-id') === userWord.wordId) {
+          card.classList.add(`${userWord.difficulty}`);
+        }
+      });
+      card.addEventListener('click', async (e: Event) => {
+        const target = e.target as HTMLElement;
+        const currTarget = e.currentTarget as HTMLElement;
+        if (target.classList.contains('add-difficult-button')) {
+          const id = currTarget.getAttribute('data-id') as string;
+          this.dictionaryController.updateUserWord(id, 'difficult');
+          currTarget.classList.remove('learned');
+          currTarget.classList.add('difficult');
+        }
+        if (target.classList.contains('add-learned-button')) {
+          const id = currTarget.getAttribute('data-id') as string;
+          this.dictionaryController.updateUserWord(id, 'learned');
+          currTarget.classList.remove('difficult');
+          currTarget.classList.add('learned');
+        }
       });
     });
   }

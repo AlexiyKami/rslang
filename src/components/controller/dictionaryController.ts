@@ -1,5 +1,5 @@
 import settings from '../settings';
-import { CallbackFunction } from '../types/types';
+import { CallbackFunction, Word } from '../types/types';
 import Controller from './controller';
 
 class DictionaryController {
@@ -14,9 +14,54 @@ class DictionaryController {
   }
 
   public async getWords() {
+    if (this.dictionaryGroup === 6) {
+      const result: Word[] = [];
+      const userWordsResponse = await this.getUserWords();
+      if (typeof userWordsResponse === 'string') {
+        return `<p class='message'>This group is empty.${userWordsResponse}</p>`;
+      }
+      for (const userWord of userWordsResponse) {
+        if (userWord.difficulty === 'difficult') {
+          const word = (await this.baseController.api.getWord(userWord.wordId)) as Word;
+          result.push(word);
+        }
+      }
+      return result.length !== 0 ? result : `<p class='message'>This group is empty.</p>`;
+    }
     const response = await this.baseController.getWords(this.dictionaryGroup, this.dictionaryPage);
     if (typeof response === 'string') {
       return `<p class='message'>${response}</p>`;
+    }
+    return response;
+  }
+
+  public async getUserWords() {
+    const userId = (localStorage.getItem('userId') as string) || '62fa864b28e48300161fb57f';
+    const token =
+      (localStorage.getItem('token') as string) ||
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmE4NjRiMjhlNDgzMDAxNjFmYjU3ZiIsImlhdCI6MTY2MTIwNzI2OSwiZXhwIjoxNjYxMjIxNjY5fQ.ZTzMtv0HouxnJkrPMslzM4zTU2gqsIt8Eir3O3utx78';
+    const response = await this.baseController.api.getAllUserWords(userId, token);
+    return response.data;
+  }
+
+  public async updateUserWord(wordId: string, difficulty: string) {
+    const userId = '62fa864b28e48300161fb57f';
+    const token =
+      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZmE4NjRiMjhlNDgzMDAxNjFmYjU3ZiIsImlhdCI6MTY2MTIwNzI2OSwiZXhwIjoxNjYxMjIxNjY5fQ.ZTzMtv0HouxnJkrPMslzM4zTU2gqsIt8Eir3O3utx78';
+    let response;
+    if ((await this.baseController.api.getsUserWord(userId, wordId, token)).code === 404) {
+      if (this.getDictionaryGroup() !== 6) {
+        response = (await this.baseController.api.createUserWord(userId, wordId, difficulty, {}, token)).data;
+        console.log(response);
+      }
+    } else {
+      if (this.getDictionaryGroup() !== 6) {
+        response = (await this.baseController.api.updateUserWord(userId, wordId, difficulty, {}, token)).data;
+        console.log(response);
+      } else {
+        await this.baseController.api.deleteUserWord(userId, wordId, token);
+        this.updateDictionary();
+      }
     }
     return response;
   }

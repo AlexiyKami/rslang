@@ -36,15 +36,17 @@ class DictionaryController {
   }
 
   public async getUserWords() {
-    const userId = (localStorage.getItem('userId') as string) || settings.USER_ID; //should remove
-    const token = (localStorage.getItem('token') as string) || settings.TOKEN; //should remove
+    const state = this.baseController.getState();
+    const userId = state.userId as string;
+    const token = state.token as string;
     const response = await this.baseController.api.getAllUserWords(userId, token);
     return response.data;
   }
 
   public async updateUserWord(wordId: string, difficulty: string) {
-    const userId = (localStorage.getItem('userId') as string) || settings.USER_ID; //should remove
-    const token = (localStorage.getItem('token') as string) || settings.TOKEN; //should remove
+    const state = this.baseController.getState();
+    const userId = state.userId as string;
+    const token = state.token as string;
     let response;
     if ((await this.baseController.api.getsUserWord(userId, wordId, token)).code === 404) {
       if (this.getDictionaryGroup() !== 6) {

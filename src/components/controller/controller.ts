@@ -3,7 +3,7 @@ import AppModel from '../app/app';
 import settings from '../settings';
 import { getElement } from '../utils/utils';
 import DictionaryController from './dictionaryController';
-import { CallbackFunction } from '../types/types';
+import { AppState, CallbackFunction } from '../types/types';
 import AudioChallengeController from './audioChallengeController/audioChallengeController';
 import AuthorizationController from './authorizationController';
 
@@ -41,6 +41,10 @@ class Controller {
   public async getWords(group: number, page: number) {
     const response = await this.api.getWords(group, page);
     return response;
+  }
+
+  public getState(): AppState {
+    return this.model.state;
   }
 }
 

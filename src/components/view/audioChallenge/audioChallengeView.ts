@@ -152,21 +152,47 @@ class AudioChallengeView {
   public renderAudioChallengeResultsPage(state: AudioChallengeModelState) {
     this.mainWindow.innerHTML = `
     <div class="audio-challenge">
-    <div class="audio-challenge__results-page">
       <h2 class="audio-challenge__results-title">Game results</h2>
-      <p>Words were repeated: ${state.rightWords.length + state.wrongWords.length}</p>
-      <p>Right answers: ${state.rightWords.length}</p>
-      <p>Wrong answers: ${state.wrongWords.length}</p>
-      <p>Right answers in a row: ${state.maxRightWordsInRow}</p>
-      <p>Accuracy: ${
-        Math.round((state.rightWords.length * 100) / (state.rightWords.length + state.wrongWords.length)) || 0
-      }%</p>
+
+      <div class="audio-challenge__results-page">
+        <div class="audio-challenge__results-block">
+          <div class="audio-challenge__results-string">
+            <p class="audio-challenge__results-word">Words were repeated:</p>
+            <p class="audio-challenge__results-value value-1">${state.rightWords.length + state.wrongWords.length}</p>
+          </div>
+          <div class="audio-challenge__results-string">
+            <p class="audio-challenge__results-word">Right answers:</p>
+            <p class="audio-challenge__results-value value-2">${state.rightWords.length}</p>
+          </div>
+          <div class="audio-challenge__results-string">
+            <p class="audio-challenge__results-word">Wrong answers:</p>
+            <p class="audio-challenge__results-value value-3">${state.wrongWords.length}</p>
+          </div>
+          <div class="audio-challenge__results-string">
+            <p class="audio-challenge__results-word">Right answers in a row:</p>
+            <p class="audio-challenge__results-value value-4">${state.maxRightWordsInRow}</p>
+          </div>
+        </div>
+
+        <p class="audio-challenge__results-accuracy">Accuracy:</p>
+        <p class="audio-challenge__results-accuracy-value">${
+          Math.round((state.rightWords.length * 100) / (state.rightWords.length + state.wrongWords.length)) || 0
+        }%</p>
+        
+        <div class="line"></div>
+
+        <p class="audio-challenge__results-right-answers green">Right answers:</p>
+
+        <div class="line"></div>
+
+        <p class="audio-challenge__results-wrong-answers red">Wrong answers:</p>
+        
+        </div>
       <div class="audio-challenge__results-buttons-block">
-        <button class="audio-challenge__results-button button" type="button">Play again</button>
-        <button class="audio-challenge__results-button button" type="button">Back to games</button>
+          <button class="audio-challenge__results-button button" type="button">Play again</button>
+          <button class="audio-challenge__results-button button" type="button">Back to games</button>
       </div>
     </div>
-  </div>
     `;
 
     (getElement('audio-challenge__results-button') as HTMLButtonElement).addEventListener('click', () =>

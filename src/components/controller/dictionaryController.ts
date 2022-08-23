@@ -18,7 +18,7 @@ class DictionaryController {
       const result: Word[] = [];
       const userWordsResponse = await this.getUserWords();
       if (typeof userWordsResponse === 'string') {
-        return `<p class='message'>This group is empty.${userWordsResponse}</p>`;
+        return `<p class='message'>${userWordsResponse}</p>`;
       }
       for (const userWord of userWordsResponse) {
         if (userWord.difficulty === 'difficult') {

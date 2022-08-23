@@ -10,6 +10,15 @@ class AudioChallengeController {
     this.model.audioChallengeModel.initAudioChallengeGame();
   }
 
+  public async initAudioChallengeGameByGroupPage(group: number, page: number) {
+    const words = await this.controller.api.getWords(group, page);
+    if (typeof words === 'string') {
+      this.initAudioChallengeGame();
+    } else {
+      this.model.audioChallengeModel.onWordsLoad(words);
+    }
+  }
+
   public async startPageHandler(e: Event) {
     const buttons = document.querySelectorAll('.audio-challenge__difficulty-button');
     buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));

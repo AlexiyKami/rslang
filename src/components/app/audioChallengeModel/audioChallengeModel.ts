@@ -57,6 +57,7 @@ class AudioChallengeModel {
   }
 
   public onWordsLoad(words: Word[]) {
+    this.resetState();
     this.state.currentWords = words;
     this.shuffleWords(this.state.currentWords);
     this.getThreeRandomWords();

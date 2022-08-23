@@ -93,11 +93,9 @@ class Dictionary {
                 <p class='translation'>${word.textMeaningTranslate}</p>
               </div>
               <div class='buttons'>
-              ${
-                this.dictionaryController.getDictionaryGroup() !== 6
-                  ? `<button class='add-difficult-button flat-button'>Difficult</button>`
-                  : `<button class='add-difficult-button flat-button'>Remove from Difficult</button>`
-              }
+                <button class='add-difficult-button flat-button'>${
+                  this.dictionaryController.getDictionaryGroup() !== 6 ? `Difficult` : 'Remove from Difficult'
+                }</button>
               ${
                 this.dictionaryController.getDictionaryGroup() !== 6
                   ? `<button class='add-learned-button flat-button'>Learned</button>`

@@ -46,6 +46,10 @@ class Controller {
   public getState(): AppState {
     return this.model.state;
   }
+
+  public isAuthorized(): boolean {
+    return !!this.model.state.token;
+  }
 }
 
 export default Controller;

@@ -32,8 +32,9 @@
         width: 100%;
         padding-bottom: 5px;
         cursor: pointer;
-        margin: 5px 5px 0;
-        padding: 5px;
+        margin: 10px 10px 0;
+        padding: 10px;
+        color: white;
 
         &.active {
           background-color: #9ea4e7;
@@ -44,14 +45,14 @@
     .tab-content {
       background-color: #9ea4e7;
       padding: 5px;
-      margin: 0 5px;
+      margin: 0 10px;
       border-radius: 0 0 2px 2px;
       display: flex;
       flex-direction: column;
 
       .authorization-input {
         margin: 5px;
-        padding: 5px;
+        padding: 10px;
         border: none;
         outline: none;  
       }
@@ -70,7 +71,7 @@
 
     .sign-btn {
       width: fit-content;
-      margin: 5px 0;
+      margin: 10px 0;
       align-self: center;
     }
   }

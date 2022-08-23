@@ -1,8 +1,3 @@
-.main-window {
-  width: 100%;
-  min-height: 100vh;
-}
-
 .minigames-page {
   display: flex;
   align-items: center;
@@ -14,9 +9,9 @@
 
 .minigames-page__games-block {
   display: flex;
-  gap: 40px;
   flex-wrap: wrap;
   justify-content: center;
+  gap: 40px;
 }
 
 .minigames-page__game-card {
@@ -47,4 +42,24 @@
 
 .minigames-page__game-card-button {
   margin-top: 20px;
+}
+
+.minigames-page__game-card-button_audiochallenge {
+  border-color: #fa5833ff;
+  background-color: #fa5833ff;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #fa5833ff, $amount: 10);
+    background-color: lighten($color: #fa5833ff, $amount: 10);
+  }
+}
+
+.minigames-page__game-card-button_sprint {
+  border-color: #0252ccff;
+  background-color: #0252ccff;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #0252ccff, $amount: 10);
+    background-color: lighten($color: #0252ccff, $amount: 10);
+  }
 }

@@ -1,9 +1,12 @@
 .dictionary {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: space-between;
   flex-direction: column;
   gap: 40px;
+  min-height: 100vh;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .dictionary-pagination {
@@ -12,7 +15,6 @@
   align-items: center;
   gap: 10px;
   height: 2rem;
-  margin-top: 10px;
   button {
     cursor: pointer;
   }
@@ -24,6 +26,12 @@
   gap: 40px;
   max-width: 800px;
   width: 100%;
+  min-height: 100vh;
+  & .message {
+    text-align: center;
+    font-weight: 700;
+    font-size: 32px;
+  }
 }
 
 .dictionary-groups {
@@ -38,7 +46,7 @@
 
   .group-buttons {
     display: flex;
-    gap: 10px;
+    gap: 15px;
   }
 }
 

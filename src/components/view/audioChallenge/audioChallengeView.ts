@@ -17,9 +17,9 @@ class AudioChallengeView {
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
-      buttonsHTML += `<button class="audio-challenge__difficulty-button audio-challenge__difficulty-button_group-${i} button" type="button" data-group="${i}">${
+      buttonsHTML += `<button class="audio-challenge__difficulty-button group-${
         i + 1
-      }</button>`;
+      } round-button" type="button" data-group="${i + 1}">${i + 1}</button>`;
     }
 
     this.mainWindow.innerHTML = `
@@ -30,13 +30,17 @@ class AudioChallengeView {
       <div class="audio-challenge__difficulty-buttons">
         ${buttonsHTML}
       </div>
-      <button class="audio-challenge__back-to-games-button button" type="button">Back to Games</button>
+      <button class="audio-challenge__back-to-games-button flat-button" type="button">Back to Games</button>
     </div>
   </div>
     `;
 
     const buttonsBlock = getElement('audio-challenge__difficulty-buttons') as HTMLElement;
     buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
+
+    (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () =>
+      this.view.MinigamesPage.renderMinigamesPage()
+    );
   }
 
   private removeOnWordsLoadErrorMessage(): void {
@@ -56,9 +60,11 @@ class AudioChallengeView {
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
-      buttonsHTML += `<button class="audio-challenge__select-button button" type="button" data-word=${
+      buttonsHTML += `<button class="audio-challenge__select-button group-${
+        i + 1
+      } flat-button" type="button" data-word=${state.currentGuessingWords[i].word}>${i + 1}. ${
         state.currentGuessingWords[i].word
-      }>${i + 1}. ${state.currentGuessingWords[i].word}</button>`;
+      }</button>`;
     }
 
     this.mainWindow.innerHTML = `
@@ -71,12 +77,12 @@ class AudioChallengeView {
       <div class="audio-challenge__word-image-block">
         <img class="audio-challenge__word-image" src="${settings.DATABASE_URL}/${currentWord.image}" alt="Word image">
       </div>
-      <p class="audio-challenge__word">&#10004;  ${currentWord.word}</p>
-      <button class="audio-challenge__play-button button" type="button">Play</button>
+      <p class="audio-challenge__word">&#10004;</p>
+      <button class="audio-challenge__play-button button" type="button"></button>
       <div class="audio-challenge__select-buttons-block">
         ${buttonsHTML}
       </div>
-      <button class="audio-challenge__submit-button button" type="button">I don't know</button>
+      <button class="audio-challenge__submit-button flat-button" type="button">I don't know</button>
     </div>
   </div>
     `;
@@ -102,7 +108,10 @@ class AudioChallengeView {
 
   public updatePageOnWordSelect(state: AudioChallengeModelState, isRightAnswer: boolean) {
     this.disableEnableWordsButtons();
+    const currentWord = state.currentWords[state.currentWordIndex];
+    const wordPrefix = isRightAnswer ? `&#10004;` : `&#10008;`;
     const wordHTML = getElement('audio-challenge__word') as HTMLElement;
+    wordHTML.innerHTML = `${wordPrefix}  ${currentWord.word}`;
     wordHTML.style.color = isRightAnswer ? `#008000` : `#ff0000`;
     wordHTML.style.transition = '0.3s';
     wordHTML.style.opacity = '1';

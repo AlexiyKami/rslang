@@ -9,19 +9,20 @@ body {
   display: flex;
   margin: 0;
   padding: 0;
+  min-height: 100vh;
 
   .main-wrapper {
     display: flex;
     flex-direction: column;
     width: 100%;
-    min-height: 100vh;
+    min-height: 100%;
 
     header {
       display: flex;
       margin: 0;
       background-color: cadetblue;
       height: calc(24px + 1rem);
-      
+
       h1 {
         font-size: 24px;
         margin: .5rem;
@@ -40,14 +41,17 @@ body {
 }
 
 .flat-button {
-  padding: 5px 15px;
+  padding: 10px 35px;
   border: 2px solid black;
   color: white;
   background-color: black;
+  cursor: pointer;
   transition: all $transition-delay;
+
   &:hover:not(:disabled) {
     background-color: lighten($color: black, $amount: 10);
   }
+
   &:disabled {
     background-color: transparent;
     border-color: $disabled-color;
@@ -70,10 +74,12 @@ body {
   color: rgb(0, 0, 0);
   border-radius: 15px;
   transition: all $transition-delay;
+
   &:hover:not(:disabled) {
     border-color: orange;
     color: orange;
   }
+
   &:disabled {
     color: $disabled-color;
     border-color: $disabled-color;
@@ -83,8 +89,8 @@ body {
 }
 
 .round-button {
-  height: 32px;
-  width: 32px;
+  height: 40px;
+  width: 40px;
   border-radius: 50%;
   border-style: solid;
   transition: all $transition-delay;
@@ -119,9 +125,11 @@ body {
     display: none;
     border-color: rgb(217, 255, 47);
   }
+
   &:hover:not(:disabled) {
     transform: scale(1.2);
   }
+
   &:disabled {
     border-width: 5px;
     transform: scale(1.2);

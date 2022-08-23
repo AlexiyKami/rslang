@@ -150,16 +150,16 @@ class AudioChallengeView {
   }
 
   private generateResultsAudioBlock(words: Word[]): string {
-    let audioBlok = '';
+    let audioBlock = '';
     words.forEach((word) => {
-      audioBlok += `
+      audioBlock += `
       <div class="audio-challenge__results-audio">
             <button class="audio-challenge__play-button button" type="button" data-audiolink=${word.audio}></button>
             <p class="audio-challenge__results-word">${word.word}</p>
           </div>
       `;
     });
-    return audioBlok;
+    return audioBlock;
   }
 
   public renderResultsPage(state: AudioChallengeModelState) {

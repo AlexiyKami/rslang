@@ -155,7 +155,7 @@ class AudioChallengeView {
       audioBlock += `
       <div class="audio-challenge__results-audio">
             <button class="audio-challenge__play-button button" type="button" data-audiolink=${word.audio}></button>
-            <p class="audio-challenge__results-word">${word.word}</p>
+            <p class="audio-challenge__results-word">${word.word} - ${word.wordTranslate}</p>
           </div>
       `;
     });

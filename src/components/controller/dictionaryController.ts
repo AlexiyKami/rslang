@@ -50,15 +50,15 @@ class DictionaryController {
     let response;
     if ((await this.baseController.api.getsUserWord(userId, wordId, token)).code === 404) {
       if (this.getDictionaryGroup() !== 6) {
-        response = (await this.baseController.api.createUserWord(userId, wordId, difficulty, {}, token)).data;
+        response = await this.baseController.api.createUserWord(userId, wordId, difficulty, {}, token);
         console.log(response);
       }
     } else {
       if (this.getDictionaryGroup() !== 6) {
-        response = (await this.baseController.api.updateUserWord(userId, wordId, difficulty, {}, token)).data;
+        response = await this.baseController.api.updateUserWord(userId, wordId, difficulty, {}, token);
         console.log(response);
       } else {
-        await this.baseController.api.deleteUserWord(userId, wordId, token);
+        response = await this.baseController.api.updateUserWord(userId, wordId, 'easy', {}, token);
         this.updateDictionary();
       }
     }

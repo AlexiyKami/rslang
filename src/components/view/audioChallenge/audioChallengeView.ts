@@ -12,7 +12,7 @@ class AudioChallengeView {
     this.mainWindow = getElement('main-window') as HTMLElement;
   }
 
-  public renderAudioChallengeStartPage() {
+  public renderStartPage() {
     this.view.changeAppTitle('Audio Challenge');
 
     let buttonsHTML = '';
@@ -56,7 +56,7 @@ class AudioChallengeView {
     if (audioChallengeBlock) audioChallengeBlock.append(errorMessageBlock);
   }
 
-  public renderAudioChallengeGamePage(state: AudioChallengeModelState) {
+  public renderGamePage(state: AudioChallengeModelState) {
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
@@ -91,11 +91,11 @@ class AudioChallengeView {
       this.controller.playStopAudio(state.currentWords[state.currentWordIndex].audio)
     );
     (getElement('audio-challenge__select-buttons-block') as HTMLElement).addEventListener('click', (e) =>
-      this.controller.audioChallengeController.audioChallengeGamePageWordsHandler(e)
+      this.controller.audioChallengeController.gamePageWordsHandler(e)
     );
 
     (getElement('audio-challenge__submit-button') as HTMLButtonElement).addEventListener('click', () =>
-      this.controller.audioChallengeController.audioChallengeGamePageNextButtonHandler()
+      this.controller.audioChallengeController.gamePageNextButtonHandler()
     );
 
     this.controller.playStopAudio(currentWord.audio);
@@ -124,7 +124,7 @@ class AudioChallengeView {
       state.currentWordIndex < state.currentWords.length - 1 ? 'Next word' : 'Show results';
   }
 
-  public updateAudioChallengeGamePage(state: AudioChallengeModelState) {
+  public updateGamePage(state: AudioChallengeModelState) {
     const currentWord = state.currentWords[state.currentWordIndex];
     (getElement('audio-challenge__progress-count') as HTMLElement).textContent = `${state.currentWordIndex + 1}`;
 
@@ -162,7 +162,7 @@ class AudioChallengeView {
     return audioBlok;
   }
 
-  public renderAudioChallengeResultsPage(state: AudioChallengeModelState) {
+  public renderResultsPage(state: AudioChallengeModelState) {
     this.mainWindow.innerHTML = `
     <div class="audio-challenge">
       <h2 class="audio-challenge__results-title">Game results</h2>
@@ -215,11 +215,11 @@ class AudioChallengeView {
     `;
 
     (getElement('audio-challenge__results-page') as HTMLElement).addEventListener('click', (e) =>
-      this.controller.audioChallengeController.audioChallengeGameResultsHandler(e)
+      this.controller.audioChallengeController.gameResultsHandler(e)
     );
 
     (getElement('audio-challenge__results-button-play') as HTMLButtonElement).addEventListener('click', () =>
-      this.controller.audioChallengeController.initAudioChallengeGame()
+      this.controller.audioChallengeController.initGame()
     );
 
     (getElement('audio-challenge__results-button-back') as HTMLButtonElement).addEventListener('click', () =>

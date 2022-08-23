@@ -38,7 +38,7 @@ class MinigamesPageView {
     `;
 
     (getElement('minigames-page__game-card-button_audiochallenge') as HTMLButtonElement).addEventListener('click', () =>
-      this.controller.audioChallengeController.initAudioChallengeGame()
+      this.controller.audioChallengeController.initGame()
     );
   }
 }

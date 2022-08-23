@@ -18,9 +18,9 @@ class AudioChallengeModel {
     };
   }
 
-  public initAudioChallengeGame() {
+  public initGame() {
     this.resetState();
-    this.view.audioChallenge.renderAudioChallengeStartPage();
+    this.view.audioChallenge.renderStartPage();
   }
 
   private shuffleWords<T>(array: T[]) {
@@ -61,7 +61,7 @@ class AudioChallengeModel {
     this.state.currentWords = words;
     this.shuffleWords(this.state.currentWords);
     this.getThreeRandomWords();
-    this.view.audioChallenge.renderAudioChallengeGamePage(this.state);
+    this.view.audioChallenge.renderGamePage(this.state);
   }
 
   public onWordSelected(word: Word, isRightAnswer: boolean) {
@@ -79,12 +79,12 @@ class AudioChallengeModel {
 
   public onNextButtonClick(nextButtonText: string | null) {
     if (nextButtonText === `Show results`) {
-      this.view.audioChallenge.renderAudioChallengeResultsPage(this.state);
+      this.view.audioChallenge.renderResultsPage(this.state);
     } else {
       if (nextButtonText === `I don't know`) this.state.currentRightWordsInRow = 0;
       this.state.currentWordIndex++;
       this.getThreeRandomWords();
-      this.view.audioChallenge.updateAudioChallengeGamePage(this.state);
+      this.view.audioChallenge.updateGamePage(this.state);
     }
   }
 }

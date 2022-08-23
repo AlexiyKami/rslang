@@ -6,14 +6,14 @@ import settings from '../../settings';
 class AudioChallengeController {
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
 
-  public initAudioChallengeGame() {
-    this.model.audioChallengeModel.initAudioChallengeGame();
+  public initGame() {
+    this.model.audioChallengeModel.initGame();
   }
 
-  public async initAudioChallengeGameByGroupPage(group: number, page: number) {
+  public async initGameByGroupPage(group: number, page: number) {
     const words = await this.controller.api.getWords(group, page);
     if (typeof words === 'string') {
-      this.initAudioChallengeGame();
+      this.initGame();
     } else {
       this.model.audioChallengeModel.onWordsLoad(words);
     }
@@ -36,7 +36,7 @@ class AudioChallengeController {
     }
   }
 
-  public audioChallengeGamePageWordsHandler(e: Event) {
+  public gamePageWordsHandler(e: Event) {
     const audioChallengeModel = this.model.audioChallengeModel;
     const audioChallengeModelState = audioChallengeModel.state;
     if ((e.target as HTMLElement).classList.contains('audio-challenge__select-button')) {
@@ -48,7 +48,7 @@ class AudioChallengeController {
     }
   }
 
-  public audioChallengeGamePageNextButtonHandler() {
+  public gamePageNextButtonHandler() {
     const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
     const nextButtonText =
@@ -56,7 +56,7 @@ class AudioChallengeController {
     this.model.audioChallengeModel.onNextButtonClick(nextButtonText);
   }
 
-  public audioChallengeGameResultsHandler(e: Event) {
+  public gameResultsHandler(e: Event) {
     if ((e.target as HTMLElement).classList.contains('audio-challenge__play-button')) {
       const audioLink = (e.target as HTMLButtonElement).dataset.audiolink || '';
       this.controller.playStopAudio(audioLink);

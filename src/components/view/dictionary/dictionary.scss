@@ -20,6 +20,33 @@
   }
 }
 
+.dictionary-minigame-links {
+  display: flex;
+  gap: 50px;
+  text-align: center;
+  .audio-challenge-link, .sprint-link {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 80px;
+    height: 80px;
+    cursor: pointer;
+    background-color: rgb(240, 240, 240);
+    border: 3px solid rgb(253, 253, 253);
+    border-radius: 50%;
+    padding: 20px;
+  }
+  img {
+    height: 32px;
+    width: 32px;
+  }
+  h2 {
+    font-size: 18px;
+    height: 42px;
+  }
+}
+
 .dictionary-words {
   display: flex;
   flex-direction: column;
@@ -47,6 +74,9 @@
   .group-buttons {
     display: flex;
     gap: 15px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    border-radius: 10px;
+    padding: 20px;
   }
 }
 

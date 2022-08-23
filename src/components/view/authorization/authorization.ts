@@ -38,6 +38,7 @@ export default class Authorization {
     this.loginBtn.innerText = 'Login';
 
     this.regBtn.classList.add('tab-btn');
+    this.regBtn.classList.remove('active');
     this.regBtn.innerText = 'Registration';
     tabsEl.append(this.loginBtn, this.regBtn);
 
@@ -59,7 +60,17 @@ export default class Authorization {
     this.loginPassInp.placeholder = 'Password';
     this.loginPassInp.value = '';
 
-    loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
+    const authorizedUserEl = document.createElement('div');
+    authorizedUserEl.classList.add('authorized-user');
+    const authorizedMsgEl = document.createElement('p');
+    authorizedUserEl.append(authorizedMsgEl);
+
+    if (this.authorizationController.token) {
+      authorizedMsgEl.textContent = `Authorized as ${this.authorizationController.name}`;
+      loginContentEl.append(authorizedUserEl);
+    } else {
+      loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
+    }
 
     this.regNameInp.classList.add('authorization-input');
     this.regNameInp.type = 'text';
@@ -80,7 +91,10 @@ export default class Authorization {
 
     const signupBtn = document.createElement('button');
     signupBtn.classList.add('sign-btn', 'flat-button', 'blue');
-    signupBtn.innerText = 'Sign In';
+
+    if (this.authorizationController.token) signupBtn.innerText = 'Sign Out';
+    else signupBtn.innerText = 'Sign In';
+
     authorizationEl.append(signupBtn);
 
     this.errLoginContent.innerText = '';
@@ -96,6 +110,7 @@ export default class Authorization {
       regContentEl.style.display = 'none';
       loginContentEl.style.display = '';
       signupBtn.innerText = 'Sign In';
+      if (this.authorizationController.token) signupBtn.innerText = 'Sign Out';
     });
 
     this.regBtn.addEventListener('click', () => {
@@ -124,30 +139,37 @@ export default class Authorization {
 
   private async signIn(): Promise<void> {
     if (this.loginBtn.classList.contains('active')) {
-      let errText = '';
+      if (this.authorizationController.token) {
+        this.authorizationController.signOut();
+        this.clear();
+        this.draw();
+      } else {
+        let errText = '';
 
-      if (this.loginEmailInp.value.length === 0) {
-        errText = 'Email is required field';
-      } else if (this.validateEmail(this.loginEmailInp.value)) {
-        errText = 'Email should have correct format';
-      }
+        if (this.loginEmailInp.value.length === 0) {
+          errText = 'Email is required field';
+        } else if (this.validateEmail(this.loginEmailInp.value)) {
+          errText = 'Email should have correct format';
+        }
 
-      if (this.loginPassInp.value.length < 8) {
-        if (errText) errText += '\n';
-        errText += 'Password is too short - should be 8 chars minimum';
-      }
+        if (this.loginPassInp.value.length < 8) {
+          if (errText) errText += '\n';
+          errText += 'Password is too short - should be 8 chars minimum';
+        }
 
-      if (errText) this.errLoginContent.innerText = errText;
-      else {
-        const loginUserData = await this.authorizationController.userSignIn(
-          this.loginEmailInp.value,
-          this.loginPassInp.value
-        );
-        if (loginUserData) {
-          this.errLoginContent.innerText = loginUserData;
-        } else {
-          this.errLoginContent.innerText = '';
-          this.clear();
+        if (errText) this.errLoginContent.innerText = errText;
+        else {
+          const loginUserData = await this.authorizationController.userSignIn(
+            this.loginEmailInp.value,
+            this.loginPassInp.value
+          );
+          if (loginUserData) {
+            this.errLoginContent.innerText = loginUserData;
+          } else {
+            this.errLoginContent.innerText = '';
+            this.clear();
+            this.draw();
+          }
         }
       }
     } else if (this.regBtn.classList.contains('active')) {
@@ -176,6 +198,7 @@ export default class Authorization {
         } else {
           this.errRegContent.innerText = '';
           this.clear();
+          this.draw();
         }
       }
     }

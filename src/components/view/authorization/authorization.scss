@@ -67,6 +67,19 @@
         color: rgb(231, 14, 14);
         text-align: center;
       }
+
+      .authorized-user {
+        background-color: white;
+        border-radius: 2px;
+        margin: 5px;
+        padding: 10px;
+        
+        p {
+          font-size: 1rem;
+          
+          color: black;
+        }
+      }
     }
 
     .sign-btn {

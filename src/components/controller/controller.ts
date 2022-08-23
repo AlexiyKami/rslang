@@ -8,7 +8,7 @@ import AudioChallengeController from './audioChallengeController/audioChallengeC
 import AuthorizationController from './authorizationController';
 
 class Controller {
-  private model: AppModel;
+  public model: AppModel;
   public dictionary: DictionaryController;
   public api: Api;
   public audioChallengeController: AudioChallengeController;

@@ -124,4 +124,5 @@ export interface AppState {
   token?: string;
   userId?: string;
   userName?: string;
+  refreshToken?: string;
 }

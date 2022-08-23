@@ -10,10 +10,10 @@ class AppModel {
   public state: AppState;
 
   constructor() {
+    this.state = JSON.parse(localStorage.getItem('RSSLang-state') || '{}');
     this.controller = new Controller(this);
     this.view = new View(this.controller);
     this.audioChallengeModel = new AudioChallengeModel(this.view, this);
-    this.state = JSON.parse(localStorage.getItem('RSSLang-state') || '{}');
   }
 
   initApp(): void {

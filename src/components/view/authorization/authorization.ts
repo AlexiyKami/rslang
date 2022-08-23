@@ -38,6 +38,7 @@ export default class Authorization {
     this.loginBtn.innerText = 'Login';
 
     this.regBtn.classList.add('tab-btn');
+    this.regBtn.classList.remove('active');
     this.regBtn.innerText = 'Registration';
     tabsEl.append(this.loginBtn, this.regBtn);
 
@@ -52,33 +53,53 @@ export default class Authorization {
     this.loginEmailInp.classList.add('authorization-input');
     this.loginEmailInp.type = 'email';
     this.loginEmailInp.placeholder = 'Email';
+    this.loginEmailInp.value = '';
 
     this.loginPassInp.classList.add('authorization-input');
     this.loginPassInp.type = 'password';
     this.loginPassInp.placeholder = 'Password';
+    this.loginPassInp.value = '';
 
-    loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
+    const authorizedUserEl = document.createElement('div');
+    authorizedUserEl.classList.add('authorized-user');
+    const authorizedMsgEl = document.createElement('p');
+    authorizedUserEl.append(authorizedMsgEl);
+
+    if (this.authorizationController.token) {
+      authorizedMsgEl.textContent = `Authorized as ${this.authorizationController.name}`;
+      loginContentEl.append(authorizedUserEl);
+    } else {
+      loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
+    }
 
     this.regNameInp.classList.add('authorization-input');
     this.regNameInp.type = 'text';
     this.regNameInp.placeholder = 'Name';
+    this.regNameInp.value = '';
 
     this.regEmailInp.classList.add('authorization-input');
     this.regEmailInp.type = 'email';
     this.regEmailInp.placeholder = 'Email';
+    this.regEmailInp.value = '';
 
     this.regPassInp.classList.add('authorization-input');
     this.regPassInp.type = 'password';
     this.regPassInp.placeholder = 'Password';
+    this.regPassInp.value = '';
 
     regContentEl.append(this.regNameInp, this.regEmailInp, this.regPassInp, this.errRegContent);
 
     const signupBtn = document.createElement('button');
-    signupBtn.classList.add('sign-btn');
-    signupBtn.innerText = 'Sign Up';
+    signupBtn.classList.add('sign-btn', 'flat-button', 'blue');
+
+    if (this.authorizationController.token) signupBtn.innerText = 'Sign Out';
+    else signupBtn.innerText = 'Sign In';
+
     authorizationEl.append(signupBtn);
 
-    this.wrapperEl.addEventListener('click', (event: Event) => {
+    this.errLoginContent.innerText = '';
+
+    this.wrapperEl.addEventListener('mousedown', (event: Event) => {
       const target: EventTarget = event.target as HTMLElement;
       if (target === this.wrapperEl) this.clear();
     });
@@ -88,6 +109,8 @@ export default class Authorization {
       this.regBtn.classList.remove('active');
       regContentEl.style.display = 'none';
       loginContentEl.style.display = '';
+      signupBtn.innerText = 'Sign In';
+      if (this.authorizationController.token) signupBtn.innerText = 'Sign Out';
     });
 
     this.regBtn.addEventListener('click', () => {
@@ -95,6 +118,7 @@ export default class Authorization {
       this.loginBtn.classList.remove('active');
       loginContentEl.style.display = 'none';
       regContentEl.style.display = '';
+      signupBtn.innerText = 'Sign Up';
     });
 
     signupBtn.addEventListener('click', () => this.signIn());
@@ -115,30 +139,37 @@ export default class Authorization {
 
   private async signIn(): Promise<void> {
     if (this.loginBtn.classList.contains('active')) {
-      let errText = '';
+      if (this.authorizationController.token) {
+        this.authorizationController.signOut();
+        this.clear();
+        this.draw();
+      } else {
+        let errText = '';
 
-      if (this.loginEmailInp.value.length === 0) {
-        errText = 'Email is required field';
-      } else if (this.validateEmail(this.loginEmailInp.value)) {
-        errText = 'Email should have correct format';
-      }
+        if (this.loginEmailInp.value.length === 0) {
+          errText = 'Email is required field';
+        } else if (this.validateEmail(this.loginEmailInp.value)) {
+          errText = 'Email should have correct format';
+        }
 
-      if (this.loginPassInp.value.length < 8) {
-        if (errText) errText += '\n';
-        errText += 'Password is too short - should be 8 chars minimum';
-      }
+        if (this.loginPassInp.value.length < 8) {
+          if (errText) errText += '\n';
+          errText += 'Password is too short - should be 8 chars minimum';
+        }
 
-      if (errText) this.errLoginContent.innerText = errText;
-      else {
-        const loginUserData = await this.authorizationController.userSignIn(
-          this.loginEmailInp.value,
-          this.loginPassInp.value
-        );
-        if (loginUserData) {
-          this.errLoginContent.innerText = loginUserData;
-        } else {
-          this.errLoginContent.innerText = '';
-          this.clear();
+        if (errText) this.errLoginContent.innerText = errText;
+        else {
+          const loginUserData = await this.authorizationController.userSignIn(
+            this.loginEmailInp.value,
+            this.loginPassInp.value
+          );
+          if (loginUserData) {
+            this.errLoginContent.innerText = loginUserData;
+          } else {
+            this.errLoginContent.innerText = '';
+            this.clear();
+            this.draw();
+          }
         }
       }
     } else if (this.regBtn.classList.contains('active')) {
@@ -167,6 +198,7 @@ export default class Authorization {
         } else {
           this.errRegContent.innerText = '';
           this.clear();
+          this.draw();
         }
       }
     }

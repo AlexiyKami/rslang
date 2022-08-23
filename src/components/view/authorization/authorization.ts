@@ -52,33 +52,40 @@ export default class Authorization {
     this.loginEmailInp.classList.add('authorization-input');
     this.loginEmailInp.type = 'email';
     this.loginEmailInp.placeholder = 'Email';
+    this.loginEmailInp.value = '';
 
     this.loginPassInp.classList.add('authorization-input');
     this.loginPassInp.type = 'password';
     this.loginPassInp.placeholder = 'Password';
+    this.loginPassInp.value = '';
 
     loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
 
     this.regNameInp.classList.add('authorization-input');
     this.regNameInp.type = 'text';
     this.regNameInp.placeholder = 'Name';
+    this.regNameInp.value = '';
 
     this.regEmailInp.classList.add('authorization-input');
     this.regEmailInp.type = 'email';
     this.regEmailInp.placeholder = 'Email';
+    this.regEmailInp.value = '';
 
     this.regPassInp.classList.add('authorization-input');
     this.regPassInp.type = 'password';
     this.regPassInp.placeholder = 'Password';
+    this.regPassInp.value = '';
 
     regContentEl.append(this.regNameInp, this.regEmailInp, this.regPassInp, this.errRegContent);
 
     const signupBtn = document.createElement('button');
-    signupBtn.classList.add('sign-btn');
-    signupBtn.innerText = 'Sign Up';
+    signupBtn.classList.add('sign-btn', 'flat-button', 'blue');
+    signupBtn.innerText = 'Sign In';
     authorizationEl.append(signupBtn);
 
-    this.wrapperEl.addEventListener('click', (event: Event) => {
+    this.errLoginContent.innerText = '';
+
+    this.wrapperEl.addEventListener('mousedown', (event: Event) => {
       const target: EventTarget = event.target as HTMLElement;
       if (target === this.wrapperEl) this.clear();
     });
@@ -88,6 +95,7 @@ export default class Authorization {
       this.regBtn.classList.remove('active');
       regContentEl.style.display = 'none';
       loginContentEl.style.display = '';
+      signupBtn.innerText = 'Sign In';
     });
 
     this.regBtn.addEventListener('click', () => {
@@ -95,6 +103,7 @@ export default class Authorization {
       this.loginBtn.classList.remove('active');
       loginContentEl.style.display = 'none';
       regContentEl.style.display = '';
+      signupBtn.innerText = 'Sign Up';
     });
 
     signupBtn.addEventListener('click', () => this.signIn());

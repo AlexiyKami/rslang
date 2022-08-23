@@ -98,6 +98,7 @@ class Dictionary {
   }
 
   async updateWords() {
+    this.baseController.showLoadingPopup();
     const words = await this.dictionaryController.getWords();
     const userWords = await this.dictionaryController.getUserWords();
     let items;
@@ -192,6 +193,7 @@ class Dictionary {
         }
       });
     });
+    this.baseController.hideLoadingPopup();
   }
 
   private audioHandler(currTarget: HTMLElement, audioFile: string) {

@@ -119,3 +119,9 @@ export interface AudioChallengeModelState {
   currentRightWordsInRow: number;
   maxRightWordsInRow: number;
 }
+
+export interface AppState {
+  token?: string;
+  userId?: string;
+  userName?: string;
+}

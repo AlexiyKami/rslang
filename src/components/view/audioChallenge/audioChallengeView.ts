@@ -17,9 +17,9 @@ class AudioChallengeView {
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
-      buttonsHTML += `<button class="audio-challenge__difficulty-button group-${i} round-button" type="button" data-group="${i}">${
+      buttonsHTML += `<button class="audio-challenge__difficulty-button group-${
         i + 1
-      }</button>`;
+      } round-button" type="button" data-group="${i + 1}">${i + 1}</button>`;
     }
 
     this.mainWindow.innerHTML = `

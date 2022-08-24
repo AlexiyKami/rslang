@@ -13,12 +13,29 @@ export default class Authorization {
   private readonly regNameInp: HTMLInputElement = document.createElement('input');
   private readonly regEmailInp: HTMLInputElement = document.createElement('input');
   private readonly regPassInp: HTMLInputElement = document.createElement('input');
+  private readonly btnContent: HTMLSpanElement = document.createElement('span');
 
   private errLoginContent: HTMLParagraphElement = document.createElement('p');
   private errRegContent: HTMLParagraphElement = document.createElement('p');
 
   constructor(controller: Controller) {
     this.authorizationController = controller.authorizationController;
+
+    const loginBtn = document.createElement('button');
+    loginBtn.classList.add('log', 'flat-button');
+    const btnIcon = document.createElement('span');
+    btnIcon.classList.add('icon');
+
+    if (controller.isAuthorized()) {
+      this.btnContent.innerText = `${this.authorizationController.userEmail}`;
+    } else {
+      this.btnContent.innerText = 'LOGIN';
+    }
+
+    loginBtn.append(btnIcon, this.btnContent);
+    document.getElementsByTagName('header')[0].append(loginBtn);
+
+    loginBtn.addEventListener('click', this.draw.bind(this));
   }
 
   public draw(): void {

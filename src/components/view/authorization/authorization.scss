@@ -90,6 +90,33 @@
   }
 }
 
+.log {
+  margin: 4px;
+  padding: 0;
+  display: flex;
+  padding-right: 5px;
+  border-color: #5b67ed;
+  background-color: #5b67ed;
+
+  &:hover:not(:disabled) {
+    background-color: lighten($color: #5b67ed, $amount: 10);
+    border-color: lighten($color: #5b67ed, $amount: 10);
+  }
+
+  span {
+    align-self: center;
+    text-align: right;
+
+    &.icon {
+      margin-right: 5px;
+      background: url(/src/assets/icons/human-head.svg) no-repeat;
+      float: left;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
 
 
 

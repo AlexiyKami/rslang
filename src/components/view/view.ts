@@ -6,6 +6,7 @@ import AudioChallengeView from './audioChallenge/audioChallengeView';
 import MinigamesPageView from './minigamesPage/minigamesPageView';
 import { getElement } from '../utils/utils';
 import LoadingPopup from './loading-popup/loadingPopup';
+import MainPage from './mainPage/mainPage';
 
 class View {
   public dictionary: Dictionary;
@@ -14,6 +15,7 @@ class View {
   public authorization: Authorization;
   public MinigamesPage: MinigamesPageView;
   public loadingPopup: LoadingPopup;
+  public mainPage: MainPage;
 
   constructor(private readonly controller: Controller) {
     this.authorization = new Authorization(this.controller);
@@ -21,10 +23,12 @@ class View {
     this.audioChallenge = new AudioChallengeView(this.controller, this);
     this.MinigamesPage = new MinigamesPageView(this.controller, this);
     this.loadingPopup = new LoadingPopup(this.controller);
+    this.mainPage = new MainPage(this, this.controller);
     this.navigation = new Navigation(this.controller, this);
   }
 
   public initRender() {
+    this.mainPage.renderMainPage();
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();
     // this.MinigamesPage.renderMinigamesPage();

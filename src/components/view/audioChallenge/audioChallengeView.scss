@@ -37,6 +37,12 @@
   }
 }
 
+.audio-challenge__progress-count,
+.audio-challenge__progress-max {
+  display: inline-block;
+  font-size: 25px;
+}
+
 .audio-challenge__word-image-block {
   display: flex;
   overflow: hidden;
@@ -45,7 +51,7 @@
   width: 260px;
   height: 260px;
   border-radius: 10px;
-  background: url('/src/assets/icons/question.svg') no-repeat center;
+  background: url('/src/assets/images/question.jpg') no-repeat center;
   background-size: contain;
   box-shadow: 0 0 10px rgb(0 0 0 / 30%);
 }
@@ -73,7 +79,6 @@
 }
 
 .audio-challenge__select-button {
-  font-weight: 700;
 
   &.group-1 {
     border-color: #f2695cff;
@@ -210,6 +215,10 @@
 .audio-challenge__results-value {
   padding: 0 15px;
   border-radius: 5px;
+  font-size: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   &.value-1 {
     background-color: #3fb7cc;

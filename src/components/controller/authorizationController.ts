@@ -79,7 +79,6 @@ export default class AuthorizationController {
           this.baseController.model.state.token = this.token;
           this.baseController.model.state.refreshToken = this.refreshToken;
           this.baseController.model.saveState();
-          alert(this.baseController.model.state.token);
         }
       }
     }

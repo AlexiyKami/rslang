@@ -28,7 +28,7 @@ class View {
   }
 
   public initRender() {
-    this.mainPage.renderMainPage();
+    // this.mainPage.renderMainPage();
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();
     // this.MinigamesPage.renderMinigamesPage();

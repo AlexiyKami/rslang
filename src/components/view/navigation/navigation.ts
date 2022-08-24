@@ -50,7 +50,9 @@ export default class Navigation {
     }
 
     this.setCurPage(this.controller.navController.curPage);
-    if (this.controller.navController.curPage === 1) {
+    if (this.controller.navController.curPage === 0) {
+      this.view.mainPage.renderMainPage();
+    } else if (this.controller.navController.curPage === 1) {
       this.view.dictionary.draw();
     } else if (this.controller.navController.curPage === 2) {
       this.view.MinigamesPage.renderMinigamesPage();

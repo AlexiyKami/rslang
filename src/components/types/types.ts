@@ -130,4 +130,5 @@ export interface AppState {
   userName?: string;
   userEmail?: string;
   refreshToken?: string;
+  curPage?: number;
 }

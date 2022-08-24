@@ -3,6 +3,7 @@ import View from '../view';
 import Controller from '../../controller/controller';
 
 export default class Navigation {
+  private readonly navEl: HTMLElement;
   private readonly radioIdLabelMap = new Map<string, string>([
     ['radio-home', 'Home'],
     ['radio-book', 'Textbook'],
@@ -10,9 +11,11 @@ export default class Navigation {
     ['radio-stat', 'Statistics'],
   ]);
 
+  private readonly NavPageElMap = new Map<HTMLLabelElement, HTMLInputElement>();
+
   constructor(private readonly controller: Controller, private readonly view: View) {
-    const navEl = document.createElement('nav');
-    navEl.classList.add('page-nav');
+    this.navEl = document.createElement('nav');
+    this.navEl.classList.add('page-nav');
 
     for (const entry of this.radioIdLabelMap) {
       const radioEl = document.createElement('input');
@@ -25,6 +28,8 @@ export default class Navigation {
       radioLabelEl.setAttribute('for', entry[0]);
       radioLabelEl.innerText = entry[1];
 
+      this.NavPageElMap.set(radioLabelEl, radioEl);
+
       if (entry[1] === 'Textbook')
         radioLabelEl.addEventListener('click', () => {
           this.controller.playStopAudio('', false);
@@ -36,9 +41,26 @@ export default class Navigation {
           this.view.MinigamesPage.renderMinigamesPage();
         });
 
-      navEl.append(radioEl, radioLabelEl);
+      this.navEl.append(radioEl, radioLabelEl);
     }
 
-    document.getElementsByTagName('body')[0].prepend(navEl);
+    this.setCurPage(this.controller.navController.curPage);
+    if (this.controller.navController.curPage === 1) {
+      this.view.dictionary.draw();
+    } else if (this.controller.navController.curPage === 2) {
+      this.view.MinigamesPage.renderMinigamesPage();
+    }
+
+    this.navEl.addEventListener('mouseup', (event: Event) => {
+      const target = event.target as HTMLLabelElement;
+      if (this.NavPageElMap.has(target))
+        this.controller.navController.curPage = [...this.NavPageElMap.keys()].indexOf(target);
+    });
+
+    document.getElementsByTagName('body')[0].prepend(this.navEl);
+  }
+
+  public setCurPage(pageNum: number) {
+    [...this.NavPageElMap.values()][pageNum].checked = true;
   }
 }

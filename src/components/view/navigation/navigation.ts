@@ -60,6 +60,14 @@ export default class Navigation {
     document.getElementsByTagName('body')[0].prepend(this.navEl);
   }
 
+  public hideNav() {
+    this.navEl.classList.add('hide-nav');
+  }
+
+  public showNav() {
+    this.navEl.classList.remove('hide-nav');
+  }
+
   public setCurPage(pageNum: number) {
     [...this.NavPageElMap.values()][pageNum].checked = true;
   }

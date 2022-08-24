@@ -1,5 +1,4 @@
 import '../../../assets/images/ivan.jpg';
-import '../../../assets/images/no-photo.jpg';
 import '../../../assets/images/main-page-1.jpg';
 import '../../../assets/images/main-page-2.jpg';
 import './mainPage.scss';
@@ -91,15 +90,9 @@ class MainPage {
         <h2 class="main-page__our-team-title">Our Team</h2>
         <div class="main-page__our-team-members">
           <div class="member-card">
-            <div class="member-card__member-photo alex"></div>
-            <h3 class="member-card__name">Alexey</h3>
-            <a class="member-card__github-link" href="https://github.com/AlexiyKami" target="_blank"></a>
-            <p class="member-card__role">Developer</p>
-            <p class="member-card__role-text">Setting up environment, develop dictionary and textbook</p>
-          </div>
-
-          <div class="member-card">
-            <div class="member-card__member-photo ivan"></div>
+            <div class="member-card__member-photo-wrapper">
+              <div class="member-card__member-photo ivan"></div>
+            </div>
             <h3 class="member-card__name">Ivan Aliseiko</h3>
             <a class="member-card__github-link" href="https://github.com/Aliseiko" target="_blank"></a>
             <p class="member-card__role">Developer</p>
@@ -108,7 +101,19 @@ class MainPage {
           </div>
 
           <div class="member-card">
-            <div class="member-card__member-photo anton"></div>
+            <div class="member-card__member-photo-wrapper">
+              <div class="member-card__member-photo alex"></div>
+            </div>
+            <h3 class="member-card__name">Alexey Matsyl</h3>
+            <a class="member-card__github-link" href="https://github.com/AlexiyKami" target="_blank"></a>
+            <p class="member-card__role">Developer</p>
+            <p class="member-card__role-text">Setting up environment, develop dictionary and textbook</p>
+          </div>
+
+          <div class="member-card">
+            <div class="member-card__member-photo-wrapper">
+              <div class="member-card__member-photo anton"></div>
+            </div>
             <h3 class="member-card__name">Anton Shcherba</h3>
             <a class="member-card__github-link" href="https://github.com/Anton-Shcherba" target="_blank"></a>
             <p class="member-card__role">Developer</p>

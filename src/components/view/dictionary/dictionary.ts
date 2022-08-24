@@ -102,6 +102,7 @@ class Dictionary {
   }
 
   async updateWords() {
+    this.baseController.showLoadingPopup();
     const isAuthorized = this.baseController.isAuthorized();
     const words = await this.dictionaryController.getWords();
     let userWords: string | UserWord[] = [];
@@ -205,6 +206,7 @@ class Dictionary {
         }
       });
     });
+    this.baseController.hideLoadingPopup();
   }
 
   private audioHandler(currTarget: HTMLElement, audioFile: string) {

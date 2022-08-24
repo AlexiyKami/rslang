@@ -13,6 +13,7 @@ class Controller {
   public api: Api;
   public audioChallengeController: AudioChallengeController;
   public authorizationController: AuthorizationController;
+  public onLoadingPopup: CallbackFunction[];
 
   constructor(model: AppModel) {
     this.model = model;
@@ -20,6 +21,7 @@ class Controller {
     this.audioChallengeController = new AudioChallengeController(this, this.model);
     this.dictionary = new DictionaryController(this);
     this.authorizationController = new AuthorizationController(this);
+    this.onLoadingPopup = [];
   }
 
   public playStopAudio(fileName: string, startPlay = true) {
@@ -46,6 +48,13 @@ class Controller {
   public getState(): AppState {
     return this.model.state;
   }
+
+  public showLoadingPopup(): void {
+    this.onLoadingPopup[0]();
+  }
+
+  public hideLoadingPopup(): void {
+    this.onLoadingPopup[1]();
 
   public isAuthorized(): boolean {
     return !!this.model.state.token;

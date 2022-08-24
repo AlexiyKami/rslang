@@ -55,6 +55,7 @@ class Controller {
 
   public hideLoadingPopup(): void {
     this.onLoadingPopup[1]();
+  }
 
   public isAuthorized(): boolean {
     return !!this.model.state.token;

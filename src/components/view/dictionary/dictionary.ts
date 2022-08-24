@@ -90,6 +90,7 @@ class Dictionary {
       });
       (document.querySelector('.audio-challenge-link') as HTMLElement).addEventListener('click', () => {
         console.log('Audio challenge is started!');
+        this.baseController.navController.curPage = 2;
         this.baseController.audioChallengeController.initGameByGroupPage(
           this.dictionaryController.getDictionaryGroup(),
           this.dictionaryController.getDictionaryPage()

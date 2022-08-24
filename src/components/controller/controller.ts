@@ -6,6 +6,7 @@ import DictionaryController from './dictionaryController';
 import { AppState, CallbackFunction } from '../types/types';
 import AudioChallengeController from './audioChallengeController/audioChallengeController';
 import AuthorizationController from './authorizationController';
+import NavController from './navController';
 
 class Controller {
   public model: AppModel;
@@ -14,6 +15,7 @@ class Controller {
   public audioChallengeController: AudioChallengeController;
   public authorizationController: AuthorizationController;
   public onLoadingPopup: CallbackFunction[];
+  public navController: NavController;
 
   constructor(model: AppModel) {
     this.model = model;
@@ -21,6 +23,7 @@ class Controller {
     this.audioChallengeController = new AudioChallengeController(this, this.model);
     this.dictionary = new DictionaryController(this);
     this.authorizationController = new AuthorizationController(this);
+    this.navController = new NavController(this);
     this.onLoadingPopup = [];
   }
 

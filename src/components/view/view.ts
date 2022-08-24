@@ -11,7 +11,7 @@ import MainPage from './mainPage/mainPage';
 class View {
   public dictionary: Dictionary;
   public audioChallenge: AudioChallengeView;
-  private navigation: Navigation;
+  public navigation: Navigation;
   public authorization: Authorization;
   public MinigamesPage: MinigamesPageView;
   public loadingPopup: LoadingPopup;
@@ -22,9 +22,9 @@ class View {
     this.dictionary = new Dictionary(this.controller, this);
     this.audioChallenge = new AudioChallengeView(this.controller, this);
     this.MinigamesPage = new MinigamesPageView(this.controller, this);
-    this.navigation = new Navigation(this.controller, this);
     this.loadingPopup = new LoadingPopup(this.controller);
     this.mainPage = new MainPage(this, this.controller);
+    this.navigation = new Navigation(this.controller, this);
   }
 
   public initRender() {

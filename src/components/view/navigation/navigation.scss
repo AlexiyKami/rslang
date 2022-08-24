@@ -1,7 +1,7 @@
 .page-nav {
   position: sticky;
   top: 0;
-  width: 40px;
+  width: calc(24px + 1.6rem);
   height: 100vh;
   white-space: nowrap;
   overflow: hidden;
@@ -9,28 +9,26 @@
   color: white;
   transition: .3s;
   z-index: 2;
-  
+  max-width: max-content;
+
   &:hover {
-    width: 140px;
+    width: 200px;
   }
 
   label {
     display: block; 
     cursor: pointer;
     user-select: none;
-    height: calc(24px + 1rem);
-    line-height: calc(24px + 1rem);
+    height: calc(24px + 1.6rem);
+    line-height: calc(24px + 1.6rem);
+    padding-right: .8rem;
     transition: .3s;
 
     &::before {
       line-height: normal;
       display: inline-block;
       vertical-align: middle;
-      margin: 0 .5rem;
-    }
-
-    &[for="button-login"]::before {
-      content: url('/src/assets/icons/key.svg');
+      margin: 0 .8rem;
     }
 
     &[for="radio-home"]::before {
@@ -64,5 +62,8 @@
     &:checked + label {
       background-color: #4754e9;
     }
+  }
+  &.hide-nav {
+    width: 0;
   }
 }

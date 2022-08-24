@@ -203,12 +203,7 @@ export default class Authorization {
           this.regEmailInp.value,
           this.regPassInp.value
         );
-        if (regUserData) {
-          this.errRegContent.innerText = regUserData;
-        } else {
-          this.errRegContent.innerText = '';
-          location.reload();
-        }
+        if (regUserData) this.errRegContent.innerText = regUserData;
       }
     }
   }

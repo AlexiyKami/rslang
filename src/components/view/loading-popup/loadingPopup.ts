@@ -18,7 +18,6 @@ class LoadingPopup {
   }
 
   public clear(): void {
-    console.log('clear');
     document.querySelector('.loading-background')?.remove();
   }
 }

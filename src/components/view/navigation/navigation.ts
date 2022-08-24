@@ -47,6 +47,11 @@ export default class Navigation {
           this.controller.playStopAudio('', false);
           this.view.MinigamesPage.renderMinigamesPage();
         });
+      else if (entry[1] === 'Home')
+        radioLabelEl.addEventListener('click', () => {
+          this.controller.playStopAudio('', false);
+          this.view.mainPage.renderMainPage();
+        });
 
       navEl.append(radioEl, radioLabelEl);
     }

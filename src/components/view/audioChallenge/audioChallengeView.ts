@@ -70,9 +70,10 @@ class AudioChallengeView {
     this.mainWindow.innerHTML = `
     <div class="audio-challenge">
     <div class="audio-challenge__game-page">
-      <h2 class="audio-challenge__progress">Progress: ${state.currentWordIndex + 1}  /  ${
-      state.currentWords.length
-    }</h2>
+      <h2 class="audio-challenge__progress">Progress: <span class="audio-challenge__progress-count">${
+        state.currentWordIndex + 1
+      }</span> / <span
+        class="audio-challenge__progress-max">${state.currentWords.length}</span></h2>
       <div class="audio-challenge__word-image-block">
         <img class="audio-challenge__word-image" src="${settings.DATABASE_URL}/${currentWord.image}" alt="Word image">
       </div>

@@ -216,11 +216,13 @@ $marine: #02cc9d;
   background-size: cover;
 
   &.alex {
-    background: url('/src/assets/images/alex.jpg')
+    background: url('/src/assets/images/no-photo.jpg') no-repeat center;
+    background-size: cover;
   }
 
   &.anton {
-    background: url('/src/assets/images/anton.jpg')
+    background: url('/src/assets/images/no-photo.jpg') no-repeat center;
+    background-size: cover;
   }
 }
 

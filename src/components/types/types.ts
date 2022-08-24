@@ -22,6 +22,10 @@ export interface Word extends InitWord {
 
 export interface WordUnderscore extends InitWord {
   _id: string;
+  userWord: {
+    difficulty: string;
+    optional: Optional;
+  };
 }
 
 export interface User {

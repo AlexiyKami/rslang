@@ -1,4 +1,4 @@
-import { UserWord } from './../../types/types';
+import { WordUnderscore } from './../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -105,17 +105,15 @@ class Dictionary {
     this.baseController.showLoadingPopup();
     const isAuthorized = this.baseController.isAuthorized();
     const words = await this.dictionaryController.getWords();
-    let userWords: string | UserWord[] = [];
-    if (isAuthorized) {
-      userWords = await this.dictionaryController.getUserWords();
-    }
     let items;
     if (typeof words === 'string') {
       items = words;
     } else {
-      items = (words as unknown as Word[])
-        .map((word) => {
-          return `<div class='word-card' data-id=${word.id}>
+      items = words
+        .map((word: Word | WordUnderscore) => {
+          return `<div class='word-card ${(word as WordUnderscore)?.userWord?.difficulty || ''}' data-id=${
+            (word as Word).id ? (word as Word).id : (word as WordUnderscore)._id
+          }>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
               <div class='title'>
@@ -184,11 +182,6 @@ class Dictionary {
     });
 
     document.querySelectorAll('.word-card').forEach((card) => {
-      (userWords as UserWord[]).forEach((userWord) => {
-        if (card.getAttribute('data-id') === userWord.wordId) {
-          card.classList.add(`${userWord.difficulty}`);
-        }
-      });
       card.addEventListener('click', async (e: Event) => {
         const target = e.target as HTMLElement;
         const currTarget = e.currentTarget as HTMLElement;

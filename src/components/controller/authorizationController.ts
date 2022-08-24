@@ -17,8 +17,11 @@ export default class AuthorizationController {
     this.userId = this.baseController.model.state.userId;
     this.userEmail = this.baseController.model.state.userEmail;
     this.name = this.baseController.model.state.userName;
-    this.refresh();
-    if (this.token) this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
+
+    if (this.token) {
+      this.refresh();
+      this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
+    }
   }
 
   public async createUser(name: string, email: string, pass: string): Promise<string | null> {
@@ -70,7 +73,7 @@ export default class AuthorizationController {
     this.baseController.model.state.userEmail = undefined;
     this.baseController.model.saveState();
 
-    clearInterval(this.refreshInterval);
+    location.reload();
   }
 
   private async refresh(): Promise<void> {

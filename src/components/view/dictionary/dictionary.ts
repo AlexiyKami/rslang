@@ -213,15 +213,17 @@ class Dictionary {
         this.checkForLearnedPage();
       });
     });
-    this.checkForLearnedPage();
+    if (isAuthorized) {
+      this.checkForLearnedPage();
+    }
     this.baseController.hideLoadingPopup();
   }
 
   private checkForLearnedPage(): void {
     if (document.querySelectorAll('.word-card.difficult, .word-card.learned').length === settings.WORDS_PER_PAGE) {
-      (document.querySelector('.dictionary') as HTMLElement).classList.add('learned');
+      (document.querySelector('.dictionary') as HTMLElement)?.classList?.add('learned');
     } else {
-      (document.querySelector('.dictionary') as HTMLElement).classList.remove('learned');
+      (document.querySelector('.dictionary') as HTMLElement)?.classList?.remove('learned');
     }
   }
 

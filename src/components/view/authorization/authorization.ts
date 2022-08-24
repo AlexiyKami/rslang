@@ -179,12 +179,7 @@ export default class Authorization {
             this.loginEmailInp.value,
             this.loginPassInp.value
           );
-          if (loginUserData) {
-            this.errLoginContent.innerText = loginUserData;
-          } else {
-            this.errLoginContent.innerText = '';
-            location.reload();
-          }
+          if (loginUserData) this.errLoginContent.innerText = loginUserData;
         }
       }
     } else if (this.regBtn.classList.contains('active')) {

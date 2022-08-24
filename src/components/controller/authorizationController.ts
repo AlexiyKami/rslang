@@ -52,7 +52,7 @@ export default class AuthorizationController {
       this.baseController.model.saveState();
 
       this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
-
+      location.reload();
       return null;
     } else {
       return userData.data.toString();

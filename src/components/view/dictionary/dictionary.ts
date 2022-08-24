@@ -209,9 +209,19 @@ class Dictionary {
           currTarget.classList.remove('difficult');
           currTarget.classList.add('learned');
         }
+        this.checkForLearnedPage();
       });
     });
+    this.checkForLearnedPage();
     this.baseController.hideLoadingPopup();
+  }
+
+  private checkForLearnedPage(): void {
+    if (document.querySelectorAll('.word-card.difficult, .word-card.learned').length === settings.WORDS_PER_PAGE) {
+      (document.querySelector('.dictionary') as HTMLElement).classList.add('learned');
+    } else {
+      (document.querySelector('.dictionary') as HTMLElement).classList.remove('learned');
+    }
   }
 
   private audioHandler(currTarget: HTMLElement, audioFile: string) {

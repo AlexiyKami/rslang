@@ -6,6 +6,7 @@ export default class AuthorizationController {
   public token: string | undefined;
   public refreshToken: string | undefined;
   public userId: string | undefined;
+  public userEmail: string | undefined;
   public name: string | undefined;
   private refreshInterval: number | undefined = undefined;
 
@@ -14,9 +15,13 @@ export default class AuthorizationController {
     this.token = this.baseController.model.state.token;
     this.refreshToken = this.baseController.model.state.refreshToken;
     this.userId = this.baseController.model.state.userId;
+    this.userEmail = this.baseController.model.state.userEmail;
     this.name = this.baseController.model.state.userName;
-    this.refresh();
-    if (this.token) this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
+
+    if (this.token) {
+      this.refresh();
+      this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
+    }
   }
 
   public async createUser(name: string, email: string, pass: string): Promise<string | null> {
@@ -37,15 +42,17 @@ export default class AuthorizationController {
       this.userId = userData.data.userId;
       this.refreshToken = userData.data.refreshToken;
       this.name = userData.data.name;
+      this.userEmail = email;
 
       this.baseController.model.state.token = userData.data.token;
       this.baseController.model.state.refreshToken = userData.data.refreshToken;
       this.baseController.model.state.userId = userData.data.userId;
       this.baseController.model.state.userName = userData.data.name;
+      this.baseController.model.state.userEmail = email;
       this.baseController.model.saveState();
 
       this.refreshInterval = window.setInterval(() => this.refresh(), this.refreshTime);
-
+      location.reload();
       return null;
     } else {
       return userData.data.toString();
@@ -57,20 +64,21 @@ export default class AuthorizationController {
     this.userId = undefined;
     this.refreshToken = undefined;
     this.name = undefined;
+    this.userEmail = undefined;
 
     this.baseController.model.state.token = undefined;
     this.baseController.model.state.refreshToken = undefined;
     this.baseController.model.state.userId = undefined;
     this.baseController.model.state.userName = undefined;
+    this.baseController.model.state.userEmail = undefined;
     this.baseController.model.saveState();
 
-    clearInterval(this.refreshInterval);
+    location.reload();
   }
 
   private async refresh(): Promise<void> {
     if (this.userId && this.refreshToken) {
       const refreshData = await this.baseController.api.getUserTokens(this.userId, this.refreshToken);
-      console.log(refreshData.code);
       if (refreshData.code === 200) {
         if (typeof refreshData.data !== 'string') {
           this.token = refreshData.data.token;
@@ -80,7 +88,7 @@ export default class AuthorizationController {
           this.baseController.model.state.refreshToken = this.refreshToken;
           this.baseController.model.saveState();
         }
-      }
+      } else this.signOut();
     }
   }
 }

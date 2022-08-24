@@ -1,7 +1,6 @@
 import settings from '../settings';
 import {
   CreateUserData,
-  CreateUserErrors,
   DeleteUserWordData,
   GetUpsertStatistics,
   GetUpdateUserData,
@@ -111,8 +110,7 @@ export class Api {
       } else if (response.status === 417) {
         responseData = 'User with this e-mail exists';
       } else if (response.status === 422) {
-        const error: { error: CreateUserErrors } = await response.json();
-        responseData = error.error.errors;
+        responseData = 'Incorrect e-mail or password';
       } else {
         responseData = `Can't create User`;
       }

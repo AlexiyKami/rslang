@@ -141,8 +141,7 @@ export default class Authorization {
     if (this.loginBtn.classList.contains('active')) {
       if (this.authorizationController.token) {
         this.authorizationController.signOut();
-        this.clear();
-        this.draw();
+        location.reload();
       } else {
         let errText = '';
 
@@ -167,8 +166,7 @@ export default class Authorization {
             this.errLoginContent.innerText = loginUserData;
           } else {
             this.errLoginContent.innerText = '';
-            this.clear();
-            this.draw();
+            location.reload();
           }
         }
       }
@@ -197,8 +195,7 @@ export default class Authorization {
           this.errRegContent.innerText = regUserData;
         } else {
           this.errRegContent.innerText = '';
-          this.clear();
-          this.draw();
+          location.reload();
         }
       }
     }

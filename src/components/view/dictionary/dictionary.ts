@@ -1,4 +1,4 @@
-import { UserWord } from './../../types/types';
+import { WordUnderscore } from './../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -23,6 +23,7 @@ class Dictionary {
 
   draw(): void {
     this.view.changeAppTitle('Dictionary');
+    const isAuthorized = this.baseController.isAuthorized();
     const groupBtns = new Array(settings.MAX_DIFFICULTY_LEVEL + 2)
       .fill('')
       .map((item, index) => `<button class='round-button group-${index + 1}'>${index + 1}</button>`)
@@ -70,6 +71,9 @@ class Dictionary {
       ${pagination}
     </div>
     `;
+    if (!isAuthorized) {
+      document.querySelector('.group-7')?.remove();
+    }
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
       elem.addEventListener('click', () => {
         this.dictionaryController.setDictionaryGroup(+(elem.textContent as string) - 1);
@@ -98,15 +102,18 @@ class Dictionary {
   }
 
   async updateWords() {
+    this.baseController.showLoadingPopup();
+    const isAuthorized = this.baseController.isAuthorized();
     const words = await this.dictionaryController.getWords();
-    const userWords = await this.dictionaryController.getUserWords();
     let items;
     if (typeof words === 'string') {
       items = words;
     } else {
-      items = (words as unknown as Word[])
-        .map((word) => {
-          return `<div class='word-card' data-id=${word.id}>
+      items = words
+        .map((word: Word | WordUnderscore) => {
+          return `<div class='word-card ${(word as WordUnderscore)?.userWord?.difficulty || ''}' data-id=${
+            (word as Word).id ? (word as Word).id : (word as WordUnderscore)._id
+          }>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
               <div class='title'>
@@ -122,17 +129,34 @@ class Dictionary {
                 <p>${word.textMeaning}</p>
                 <p class='translation'>${word.textMeaningTranslate}</p>
               </div>
-              <div class='buttons'>
-                <button class='add-difficult-button flat-button'>${
-                  this.dictionaryController.getDictionaryGroup() !== 6 ? `Difficult` : 'Remove from Difficult'
-                }</button>
               ${
-                this.dictionaryController.getDictionaryGroup() !== 6
-                  ? `<button class='add-learned-button flat-button'>Learned</button>`
+                isAuthorized
+                  ? `<div class='buttons'>
+                      <button class='add-difficult-button flat-button'>${
+                        this.dictionaryController.getDictionaryGroup() !== 6 ? `Difficult` : 'Remove from Difficult'
+                      }
+                      </button>
+                      ${
+                        this.dictionaryController.getDictionaryGroup() !== 6
+                          ? `<button class='add-learned-button flat-button'>Learned</button>`
+                          : ''
+                      }
+                    </div>`
                   : ''
               }
-              </div>
             </div>
+            ${
+              isAuthorized
+                ? `<div class='counters'>
+                    <div class='right-answers' title='Правильные ответы'>${
+                      (word as WordUnderscore)?.userWord?.optional?.succesfulAttempts || '0'
+                    }</div>
+                    <div class='wrong-answers' title='Неправильные ответы'>${
+                      (word as WordUnderscore)?.userWord?.optional?.failedAttempts || '0'
+                    }</div>
+                  </div>`
+                : ''
+            }
             <div
               class='audio-image'
               audio='${word.audio}'
@@ -170,11 +194,6 @@ class Dictionary {
     });
 
     document.querySelectorAll('.word-card').forEach((card) => {
-      (userWords as UserWord[]).forEach((userWord) => {
-        if (card.getAttribute('data-id') === userWord.wordId) {
-          card.classList.add(`${userWord.difficulty}`);
-        }
-      });
       card.addEventListener('click', async (e: Event) => {
         const target = e.target as HTMLElement;
         const currTarget = e.currentTarget as HTMLElement;
@@ -190,8 +209,19 @@ class Dictionary {
           currTarget.classList.remove('difficult');
           currTarget.classList.add('learned');
         }
+        this.checkForLearnedPage();
       });
     });
+    this.checkForLearnedPage();
+    this.baseController.hideLoadingPopup();
+  }
+
+  private checkForLearnedPage(): void {
+    if (document.querySelectorAll('.word-card.difficult, .word-card.learned').length === settings.WORDS_PER_PAGE) {
+      (document.querySelector('.dictionary') as HTMLElement).classList.add('learned');
+    } else {
+      (document.querySelector('.dictionary') as HTMLElement).classList.remove('learned');
+    }
   }
 
   private audioHandler(currTarget: HTMLElement, audioFile: string) {

@@ -448,16 +448,21 @@ export class Api {
 
   public async getAllUserAggregatedWords(
     userId: string,
-    page: number,
-    wordsPerPage: number,
-    filter: string,
     token: string,
-    group?: number
+    filter?: string,
+    page?: number,
+    group?: number,
+    wordsPerPage?: number
   ): Promise<GetAllUserAggregatedWords> {
     try {
-      const groupParams = group !== undefined ? `group=${group}&` : ``;
+      const wordsPerPageParams = wordsPerPage
+        ? `wordsPerPage=${wordsPerPage}&`
+        : `wordsPerPage=${settings.WORDS_PER_PAGE}&`;
+      const pageParams = page ? `page=${page}&` : ``;
+      const filterParams = filter ? `filter=${filter}&` : ``;
+      const groupParams = group ? `group=${group}&` : ``;
       const response = await fetch(
-        `${this.usersUrl}/${userId}/aggregatedWords?${groupParams}page=${page}&wordsPerPage=${wordsPerPage}&filter=${filter}`,
+        `${this.usersUrl}/${userId}/aggregatedWords?${groupParams}${pageParams}&${wordsPerPageParams}${filterParams}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,

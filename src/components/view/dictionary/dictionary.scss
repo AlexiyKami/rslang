@@ -5,8 +5,12 @@
   flex-direction: column;
   gap: 40px;
   min-height: 100vh;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.dictionary.learned {
+  background-color: rgb(240, 255, 240);
 }
 
 .dictionary-pagination {
@@ -110,6 +114,30 @@
     background: url('/src/assets/icons/stop.svg') no-repeat center;
     transform: scale(0.7);
     border-radius: 3px;
+  }
+
+  & > .counters {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+    .right-answers, .wrong-answers {
+      font-size: 20px;
+      width: 40px;
+      padding: 5px;
+      text-align: center;
+      background-color: rgb(240, 240, 240);
+      
+    }
+    .right-answers {
+      border: 3px solid lightgreen;
+    }
+    .wrong-answers {
+      border: 3px solid lightcoral;
+    }
   }
 
   & > .description {

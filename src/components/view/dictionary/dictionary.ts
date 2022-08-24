@@ -145,6 +145,18 @@ class Dictionary {
                   : ''
               }
             </div>
+            ${
+              isAuthorized
+                ? `<div class='counters'>
+                    <div class='right-answers' title='Правильные ответы'>${
+                      (word as WordUnderscore)?.userWord?.optional?.succesfulAttempts || '0'
+                    }</div>
+                    <div class='wrong-answers' title='Неправильные ответы'>${
+                      (word as WordUnderscore)?.userWord?.optional?.failedAttempts || '0'
+                    }</div>
+                  </div>`
+                : ''
+            }
             <div
               class='audio-image'
               audio='${word.audio}'

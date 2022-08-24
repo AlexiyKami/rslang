@@ -112,6 +112,30 @@
     border-radius: 3px;
   }
 
+  & > .counters {
+    position: absolute;
+    top: 20px;
+    right: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4em;
+    .right-answers, .wrong-answers {
+      font-size: 20px;
+      width: 40px;
+      padding: 5px;
+      text-align: center;
+      background-color: rgb(240, 240, 240);
+      
+    }
+    .right-answers {
+      border: 3px solid lightgreen;
+    }
+    .wrong-answers {
+      border: 3px solid lightcoral;
+    }
+  }
+
   & > .description {
     display: flex;
     flex-direction: column;

@@ -1,0 +1,172 @@
+$orange: #ff8100;
+$green: #3fcc77;
+$red: #e51f1f;
+$blue: #0252ccff;
+$marine: #02cc9d;
+
+.main-page {
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  background-color: #fdfdfd;
+  gap: 50px;
+}
+
+.main-page__header {
+  z-index: 2;
+  align-self: start;
+  margin-top: 40px;
+}
+
+.main-page__header-title {
+  max-width: 570px;
+  font-size: 80px;
+  font-weight: 700;
+  line-height: 80px;
+}
+
+.main-page__header-subtitle {
+  max-width: 425px;
+  font-size: 18px;
+  margin-top: 20px;
+}
+
+.main-page__header-img {
+  position: absolute;
+  right: 0;
+  height: 450px;
+}
+
+.main-page__header-button {
+  margin-top: 20px;
+}
+
+.main-page__advantages {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.main-page__advantages-title,
+.main-page__login-title {
+  font-size: 40px;
+}
+
+.main-page__advantages-cards {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+
+.main-page__advantages-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+  gap: 20px;
+}
+
+.main-page__advantages-card-img, {
+  width: 56px;
+  height: 56px;
+  font-size: 56px;
+
+  &.red {
+    fill: $red;
+    }
+
+  &.blue {
+    fill: $blue;
+    }
+
+  &.orange {
+    fill: $orange;
+    }
+
+  &.marine {
+    fill: $marine;
+    }
+}
+
+.main-page__advantages-card-text {
+  text-align: center;
+  line-height: 1.5;
+  height: 120px;
+}
+
+.main-page__advantages-card-button,
+.main-page__header-button,
+.main-page__login-button {
+  &.orange {
+    border-color: $orange;
+    background-color: $orange;
+
+    &:hover {
+      border-color: lighten($color: $orange, $amount: 10);
+      background-color: lighten($color: $orange, $amount: 10);
+    }
+  }
+
+  &.red {
+    border-color: $red;
+    background-color: $red;
+
+    &:hover {
+      border-color: lighten($color: $red, $amount: 10);
+      background-color: lighten($color: $red, $amount: 10);
+    }
+  }
+
+  &.blue {
+    border-color: $blue;
+    background-color: $blue;
+
+    &:hover {
+      border-color: lighten($color: $blue, $amount: 10);
+      background-color: lighten($color: $blue, $amount: 10);
+    }
+  }
+
+  &.green {
+    border-color: $green;
+    background-color: $green;
+
+    &:hover {
+      border-color: lighten($color: $green, $amount: 10);
+      background-color: lighten($color: $green, $amount: 10);
+    }
+  }
+
+  &.marine {
+    border-color: $marine;
+    background-color: $marine;
+
+    &:hover {
+      border-color: lighten($color: $marine, $amount: 10);
+      background-color: lighten($color: $marine, $amount: 10);
+    }
+  }
+}
+
+.main-page__login {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.main-page__login-text {
+  text-align: center;
+  font-size: 18px;
+  max-width: 420px;
+}

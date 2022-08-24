@@ -37,6 +37,11 @@
   }
 }
 
+.audio-challenge__progress-count,
+.audio-challenge__progress-max {
+  display: inline-block;
+}
+
 .audio-challenge__word-image-block {
   display: flex;
   overflow: hidden;
@@ -73,7 +78,6 @@
 }
 
 .audio-challenge__select-button {
-  font-weight: 700;
 
   &.group-1 {
     border-color: #f2695cff;

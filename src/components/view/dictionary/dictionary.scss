@@ -1,12 +1,13 @@
 .dictionary {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   flex-direction: column;
-  gap: 40px;
+  justify-content: space-between;
   min-height: 100vh;
   padding-top: 10px;
   padding-bottom: 10px;
+  background-color: #fdfdfd;
+  gap: 40px;
 }
 
 .dictionary.learned {
@@ -15,10 +16,10 @@
 
 .dictionary-pagination {
   display: flex;
-  justify-content: center;
   align-items: center;
-  gap: 10px;
+  justify-content: center;
   height: 2rem;
+  gap: 10px;
   button {
     cursor: pointer;
   }
@@ -26,50 +27,50 @@
 
 .dictionary-minigame-links {
   display: flex;
-  gap: 50px;
   text-align: center;
+  gap: 50px;
   .audio-challenge-link, .sprint-link {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
     width: 80px;
     height: 80px;
-    cursor: pointer;
-    background-color: rgb(240, 240, 240);
+    padding: 20px;
     border: 3px solid rgb(253, 253, 253);
     border-radius: 50%;
-    padding: 20px;
+    background-color: rgb(240, 240, 240);
+    cursor: pointer;
   }
   img {
-    height: 32px;
     width: 32px;
+    height: 32px;
   }
   h2 {
-    font-size: 18px;
     height: 42px;
+    font-size: 18px;
   }
 }
 
 .dictionary-words {
   display: flex;
   flex-direction: column;
-  gap: 40px;
-  max-width: 800px;
   width: 100%;
+  max-width: 800px;
   min-height: 100vh;
+  gap: 40px;
   & .message {
-    text-align: center;
-    font-weight: 700;
     font-size: 32px;
+    font-weight: 700;
+    text-align: center;
   }
 }
 
 .dictionary-groups {
   display: flex;
+  align-items: center;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   gap: 10px;
   & > span {
     font-weight: 700;
@@ -77,10 +78,10 @@
 
   .group-buttons {
     display: flex;
-    gap: 15px;
-    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
-    border-radius: 10px;
     padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    gap: 15px;
   }
 }
 
@@ -88,9 +89,9 @@
   position: relative;
   display: flex;
   padding: 20px;
+  border-radius: 5px;
   box-shadow: gray 0 0 15px;
   gap: 25px;
-  border-radius: 5px;
 
   &.learned {
     background-color: rgb(230, 255, 231);
@@ -103,17 +104,17 @@
   & > .audio-image {
     position: absolute;
     right: 20px;
-    cursor: pointer;
-    height: 30px;
     width: 30px;
+    height: 30px;
     background: url('/src/assets/icons/audio.svg') no-repeat center;
     background-size: contain;
+    cursor: pointer;
   }
 
   & > .audio-image.playing {
+    border-radius: 3px;
     background: url('/src/assets/icons/stop.svg') no-repeat center;
     transform: scale(0.7);
-    border-radius: 3px;
   }
 
   & > .counters {
@@ -125,12 +126,12 @@
     justify-content: center;
     gap: 4em;
     .right-answers, .wrong-answers {
-      font-size: 20px;
       width: 40px;
       padding: 5px;
+      font-size: 20px;
       text-align: center;
       background-color: rgb(240, 240, 240);
-      
+
     }
     .right-answers {
       border: 3px solid lightgreen;
@@ -144,15 +145,15 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 10px;
     width: 445px;
+    padding: 10px;
   }
 
   & .title {
-    font-size: 20px;
     height: 3em;
-    border-left: 3px solid rgb(255, 203, 34);
     padding-left: 15px;
+    font-size: 20px;
+    border-left: 3px solid rgb(255, 203, 34);
   }
 
   & .word {
@@ -164,10 +165,10 @@
   }
 
   & > .image {
-    object-fit: cover;
-    object-position: center center;
     width: 260px;
     height: 300px;
+    object-fit: cover;
+    object-position: center center;
   }
 
   .text-example, .text-meaning {
@@ -189,18 +190,18 @@
 
   .add-difficult-button {
     width: fit-content;
-    background-color: orange;
     color: black;
     border-color: lighten($color: orange, $amount: 10);
+    background-color: orange;
     &:hover {
       background-color: lighten($color: orange, $amount: 10);
     }
   }
 
   .add-learned-button {
-    background-color: lightgreen;
     color: black;
     border-color: lighten($color: lightgreen, $amount: 10);
+    background-color: lightgreen;
     &:hover {
       background-color: lighten($color: lightgreen, $amount: 10);
     }

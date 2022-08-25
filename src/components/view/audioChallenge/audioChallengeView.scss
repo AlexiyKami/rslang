@@ -1,12 +1,11 @@
 .audio-challenge {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  flex-direction: column;
   justify-content: center;
   width: 100%;
   height: 100%;
-  //background-image: linear-gradient(rgb(24, 90, 157) 0%, rgb(67, 206, 162) 100%);
-  background-color: #fafcfe;
+  background-color: #fdfdfd;
   gap: 20px;
 }
 
@@ -169,19 +168,19 @@
 }
 
 .audio-challenge__results-page {
-  scrollbar-color: #223C5033 #ffffff;
-  scrollbar-width: thin;
-  overflow-y: scroll;
   display: flex;
+  overflow-y: scroll;
   align-items: center;
   flex-direction: column;
-  gap: 15px;
   width: 360px;
   height: 280px;
   padding: 30px;
   border-radius: 10px;
   background-color: #ffffff;
   box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+  scrollbar-color: #223C5033 #ffffff;
+  scrollbar-width: thin;
+  gap: 15px;
 
   &::-webkit-scrollbar {
     width: 7px;
@@ -200,25 +199,25 @@
 .audio-challenge__results-block {
   display: flex;
   flex-direction: column;
-  gap: 10px;
   margin-bottom: 10px;
+  gap: 10px;
 }
 
 .audio-challenge__results-string {
-  font-size: 28px;
-  width: 100%;
   display: flex;
   justify-content: right;
+  width: 100%;
+  font-size: 28px;
   gap: 30px;
 }
 
 .audio-challenge__results-value {
-  padding: 0 15px;
-  border-radius: 5px;
-  font-size: 25px;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  padding: 0 15px;
+  font-size: 25px;
+  border-radius: 5px;
 
   &.value-1 {
     background-color: #3fb7cc;
@@ -259,17 +258,17 @@
 }
 
 .line {
-  min-height: 2px;
   width: 100%;
+  min-height: 2px;
   background-color: rgba(0, 0, 0, 0.1);
 }
 
 .audio-challenge__results-audio-block {
   display: flex;
-  flex-direction: column;
-  gap: 20px;
   align-items: start;
+  flex-direction: column;
   width: 100%;
+  gap: 20px;
 }
 
 .audio-challenge__results-audio {

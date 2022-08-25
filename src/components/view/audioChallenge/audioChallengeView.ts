@@ -38,9 +38,10 @@ class AudioChallengeView {
     const buttonsBlock = getElement('audio-challenge__difficulty-buttons') as HTMLElement;
     buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
 
-    (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () =>
-      this.view.MinigamesPage.renderMinigamesPage()
-    );
+    (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () => {
+      document.removeEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
+      this.view.MinigamesPage.renderMinigamesPage();
+    });
 
     document.addEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
   }
@@ -229,9 +230,10 @@ class AudioChallengeView {
       this.controller.audioChallengeController.initGame()
     );
 
-    (getElement('audio-challenge__results-button-back') as HTMLButtonElement).addEventListener('click', () =>
-      this.view.MinigamesPage.renderMinigamesPage()
-    );
+    (getElement('audio-challenge__results-button-back') as HTMLButtonElement).addEventListener('click', () => {
+      document.removeEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
+      this.view.MinigamesPage.renderMinigamesPage();
+    });
   }
 }
 

@@ -2,6 +2,7 @@ import Controller from '../controller';
 import AppModel from '../../app/app';
 import { getElement, getRandomNumber } from '../../utils/utils';
 import settings from '../../settings';
+import { AudioChallengeKeycodesToHandle } from '../../types/types';
 
 class AudioChallengeController {
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
@@ -16,6 +17,16 @@ class AudioChallengeController {
       this.initGame();
     } else {
       this.model.audioChallengeModel.onWordsLoad(words);
+    }
+  }
+
+  public keyboardHandler(e: KeyboardEvent) {
+    if (Object.keys(AudioChallengeKeycodesToHandle).includes(e.code)) {
+      const button = getElement(`audio-challenge-group-${e.code}`);
+      // const answerButton = getElement(`audio-challenge__select-button.group-${e.code}`);
+      console.log(e.code, button);
+      if (button) button.click();
+      // if (answerButton) answerButton.click();
     }
   }
 

@@ -143,3 +143,11 @@ export enum AudioChallengeKeycodesToHandle {
   'Space',
   'Enter',
 }
+
+export interface GameStatistic {
+  date: string;
+  newWords: number;
+  rightWords: number;
+  wrongWords: number;
+  maxInRow: number;
+}

@@ -7,6 +7,7 @@ import { AppState, CallbackFunction } from '../types/types';
 import AudioChallengeController from './audioChallengeController/audioChallengeController';
 import AuthorizationController from './authorizationController';
 import NavController from './navController';
+import StatisticController from './statisticController';
 
 class Controller {
   public model: AppModel;
@@ -16,6 +17,7 @@ class Controller {
   public authorizationController: AuthorizationController;
   public onLoadingPopup: CallbackFunction[];
   public navController: NavController;
+  private statisticController: StatisticController;
 
   constructor(model: AppModel) {
     this.model = model;
@@ -25,6 +27,7 @@ class Controller {
     this.authorizationController = new AuthorizationController(this);
     this.navController = new NavController(this);
     this.onLoadingPopup = [];
+    this.statisticController = new StatisticController(this);
   }
 
   public playStopAudio(fileName: string, startPlay = true) {

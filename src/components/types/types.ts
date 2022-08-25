@@ -132,3 +132,14 @@ export interface AppState {
   refreshToken?: string;
   curPage?: number;
 }
+
+export enum AudioChallengeKeycodesToHandle {
+  'Digit1',
+  'Digit2',
+  'Digit3',
+  'Digit4',
+  'Digit5',
+  'Digit6',
+  'Space',
+  'Enter',
+}

@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" aria-labelledby="title"
+aria-describedby="desc" role="img">
+  <title>Enter Key</title>
+  <desc>A line styled icon from Orion Icon Library.</desc>
+  <rect
+  x="2" y="2" width="60" height="60" rx="7.8" ry="7.8" fill="none" stroke="#ffffff"
+  stroke-miterlimit="10" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></rect>
+  <path fill="none" stroke="#ffffff" stroke-miterlimit="10"
+  stroke-width="3" d="M16 32h30v-8" stroke-linejoin="round" stroke-linecap="round"></path>
+  <path fill="none" stroke="#ffffff" stroke-miterlimit="10"
+  stroke-width="3" d="M24 40l-8-8 8-8" stroke-linejoin="round" stroke-linecap="round"></path>
+</svg>

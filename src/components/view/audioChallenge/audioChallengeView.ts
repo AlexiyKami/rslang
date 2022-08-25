@@ -17,9 +17,9 @@ class AudioChallengeView {
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
-      buttonsHTML += `<button class="audio-challenge__difficulty-button group-${
+      buttonsHTML += `<button class="audio-challenge__difficulty-button group-${i + 1} audio-challenge-group-Digit${
         i + 1
-      } round-button" type="button" data-group="${i + 1}">${i + 1}</button>`;
+      } round-button" type="button" data-group="${i}">${i + 1}</button>`;
     }
 
     this.mainWindow.innerHTML = `
@@ -30,7 +30,7 @@ class AudioChallengeView {
       <div class="audio-challenge__difficulty-buttons">
         ${buttonsHTML}
       </div>
-      <button class="audio-challenge__back-to-games-button flat-button" type="button">Back to Games</button>
+      <button class="audio-challenge__back-to-games-button audio-challenge-group-Space flat-button" type="button"><span class="space-icon"></span>  Back to Games</button>
     </div>
   </div>
     `;
@@ -41,6 +41,8 @@ class AudioChallengeView {
     (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () =>
       this.view.MinigamesPage.renderMinigamesPage()
     );
+
+    document.addEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
   }
 
   private removeOnWordsLoadErrorMessage(): void {
@@ -60,7 +62,7 @@ class AudioChallengeView {
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
-      buttonsHTML += `<button class="audio-challenge__select-button group-${
+      buttonsHTML += `<button class="audio-challenge__select-button group-${i + 1} audio-challenge-group-Digit${
         i + 1
       } flat-button" type="button" data-word=${state.currentGuessingWords[i].word}>${i + 1}. ${
         state.currentGuessingWords[i].word
@@ -82,7 +84,8 @@ class AudioChallengeView {
       <div class="audio-challenge__select-buttons-block">
         ${buttonsHTML}
       </div>
-      <button class="audio-challenge__submit-button flat-button" type="button">I don't know</button>
+      <button class="audio-challenge__submit-button audio-challenge-group-Space flat-button" type="button">
+      <span class="space-icon"></span>  I don't know</button>
     </div>
   </div>
     `;
@@ -111,7 +114,7 @@ class AudioChallengeView {
     const currentWord = state.currentWords[state.currentWordIndex];
     const wordPrefix = isRightAnswer ? `&#10004;` : `&#10008;`;
     const wordHTML = getElement('audio-challenge__word') as HTMLElement;
-    wordHTML.innerHTML = `${wordPrefix}  ${currentWord.word}`;
+    wordHTML.innerHTML = `${wordPrefix}  ${currentWord.word} - ${currentWord.wordTranslate}`;
     wordHTML.style.color = isRightAnswer ? `#008000` : `#ff0000`;
     wordHTML.style.transition = '0.3s';
     wordHTML.style.opacity = '1';
@@ -120,13 +123,15 @@ class AudioChallengeView {
     img.style.transition = '0.3s';
     img.style.opacity = '1';
 
-    (getElement('audio-challenge__submit-button') as HTMLButtonElement).textContent =
-      state.currentWordIndex < state.currentWords.length - 1 ? 'Next word' : 'Show results';
+    (getElement('audio-challenge__submit-button') as HTMLButtonElement).innerHTML =
+      state.currentWordIndex < state.currentWords.length - 1
+        ? `<span class="space-icon"></span>Next word`
+        : `<span class="space-icon"></span> Show results`;
   }
 
   public updateGamePage(state: AudioChallengeModelState) {
     const currentWord = state.currentWords[state.currentWordIndex];
-    (getElement('audio-challenge__progress-count') as HTMLElement).textContent = `${state.currentWordIndex + 1}`;
+    (getElement('audio-challenge__progress-count') as HTMLElement).innerHTML = `${state.currentWordIndex + 1}`;
 
     const img = getElement('audio-challenge__word-image') as HTMLImageElement;
     img.removeAttribute('style');
@@ -139,12 +144,14 @@ class AudioChallengeView {
     const buttons = document.querySelectorAll('.audio-challenge__select-button');
     buttons.forEach((button, i) => {
       const btn = button as HTMLButtonElement;
-      btn.textContent = `${i + 1}. ${state.currentGuessingWords[i].word}`;
+      btn.innerHTML = `${i + 1}. ${state.currentGuessingWords[i].word}`;
       btn.dataset.word = state.currentGuessingWords[i].word;
       btn.disabled = false;
     });
 
-    (getElement('audio-challenge__submit-button') as HTMLButtonElement).textContent = `I don't know`;
+    (
+      getElement('audio-challenge__submit-button') as HTMLButtonElement
+    ).innerHTML = `<span class="space-icon"></span> I don't know`;
 
     this.controller.playStopAudio(currentWord.audio);
   }
@@ -208,8 +215,8 @@ class AudioChallengeView {
         
         </div>
       <div class="audio-challenge__results-buttons-block">
-          <button class="audio-challenge__results-button-play flat-button" type="button">Play again</button>
-          <button class="audio-challenge__results-button-back flat-button" type="button">Back to games</button>
+          <button class="audio-challenge__results-button-play audio-challenge-group-Enter flat-button" type="button"><span class="enter-icon"></span> Play again</button>
+          <button class="audio-challenge__results-button-back audio-challenge-group-Space flat-button" type="button"><span class="space-icon"></span> Back to games</button>
       </div>
     </div>
     `;

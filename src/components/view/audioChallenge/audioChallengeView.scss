@@ -145,6 +145,7 @@
 }
 
 .audio-challenge__submit-button {
+  line-height: 25px;
   border-color: #59484dff;
   background-color: #59484dff;
 
@@ -158,6 +159,22 @@
     border-color: #b4b4b4ff;
     background-color: transparent;
   }
+}
+
+.space-icon {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url('/src/assets/icons/space-bar-key.svg') no-repeat center;
+  background-size: contain;
+}
+
+.enter-icon {
+  display: inline-block;
+  width: 25px;
+  height: 25px;
+  background: url('/src/assets/icons/enter-key.svg') no-repeat center;
+  background-size: contain;
 }
 
 .audio-challenge__word {
@@ -287,6 +304,7 @@
 }
 
 .audio-challenge__results-button-play {
+  line-height: 25px;
   border-color: #0252ccff;
   background-color: #0252ccff;
 

@@ -8,10 +8,19 @@ class LoadingPopup {
     controller.onLoadingPopup = [this.draw.bind(this), this.clear.bind(this)];
   }
 
+  // public draw(): void {
+  //   const wrapper = `
+  //   <div class='loading-background'>
+  //     <div class='spinner'></div>
+  //   </div>
+  //   `;
+  //   document.body.insertAdjacentHTML('beforeend', wrapper);
+  // }
+
   public draw(): void {
     const wrapper = `
     <div class='loading-background'>
-      <div class='spinner'></div>
+      <div class='spinner2'></div>
     </div>
     `;
     document.body.insertAdjacentHTML('beforeend', wrapper);

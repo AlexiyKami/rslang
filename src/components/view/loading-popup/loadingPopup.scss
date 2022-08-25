@@ -36,3 +36,16 @@ $animation-time: 1s;
     to {transform: rotate(360deg);}
   }
 }
+
+.spinner2 {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: url('/src/assets/images/books-load.gif') no-repeat center;
+  background-size: cover;
+}

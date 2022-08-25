@@ -40,6 +40,10 @@ class MinigamesPageView {
     (getElement('minigames-page__game-card-button_audiochallenge') as HTMLButtonElement).addEventListener('click', () =>
       this.controller.audioChallengeController.initGame()
     );
+
+    (getElement('minigames-page__game-card-button_sprint') as HTMLButtonElement).addEventListener('click', () =>
+      this.view.sprint.renderStartPage()
+    );
   }
 }
 

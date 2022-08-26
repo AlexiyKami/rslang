@@ -17,7 +17,7 @@ class Controller {
   public authorizationController: AuthorizationController;
   public onLoadingPopup: CallbackFunction[];
   public navController: NavController;
-  private statisticController: StatisticController;
+  public statisticController: StatisticController;
 
   constructor(model: AppModel) {
     this.model = model;

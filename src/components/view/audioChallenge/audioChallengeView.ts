@@ -239,6 +239,8 @@ class AudioChallengeView {
       document.removeEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
       this.view.MinigamesPage.renderMinigamesPage();
     });
+
+    this.controller.statisticController.saveGameStatistic('audiochallenge', state);
   }
 }
 

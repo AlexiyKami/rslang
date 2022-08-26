@@ -47,7 +47,7 @@ export interface UserWord {
 
 interface StatisticsData {
   id: string;
-  learnedWords: number;
+  learnedWords?: number;
   optional?: Optional;
 }
 
@@ -114,14 +114,17 @@ export interface GetAllUserAggregatedWords extends ApiMethodsData {
 
 export type CallbackFunction = () => void;
 
-export interface AudioChallengeModelState {
+export interface GameState {
+  rightWords: Word[];
+  wrongWords: Word[];
+  maxRightWordsInRow: number;
+}
+
+export interface AudioChallengeModelState extends GameState {
   currentWords: Word[];
   currentWordIndex: number;
   currentGuessingWords: Word[];
-  rightWords: Word[];
-  wrongWords: Word[];
   currentRightWordsInRow: number;
-  maxRightWordsInRow: number;
 }
 
 export interface AppState {
@@ -146,7 +149,7 @@ export enum AudioChallengeKeycodesToHandle {
 
 export interface GameStatistic {
   date: string;
-  newWords: number;
+  newWords?: number;
   rightWords: number;
   wrongWords: number;
   maxInRow: number;

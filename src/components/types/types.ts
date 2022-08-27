@@ -20,12 +20,19 @@ export interface Word extends InitWord {
   id: string;
 }
 
-export interface WordUnderscore extends InitWord {
+export interface AggregatedWord extends InitWord {
   _id: string;
   userWord: {
     difficulty: string;
-    optional: Optional;
+    optional: WordOptional;
   };
+}
+
+export interface WordOptional {
+  successfulAttempts?: number;
+  failedAttempts?: number;
+  inRow?: number;
+  isLearned?: boolean;
 }
 
 export interface User {
@@ -40,9 +47,10 @@ export interface Auth {
 }
 
 export interface UserWord {
-  difficulty: string;
+  difficulty?: string;
   id: string;
   wordId: string;
+  optional?: WordOptional;
 }
 
 interface StatisticsData {
@@ -62,7 +70,7 @@ export interface CreateUserErrors {
 }
 
 export interface GetAllUserAggregatedWordsData {
-  paginatedResults: WordUnderscore[];
+  paginatedResults: AggregatedWord[];
   totalCount: [
     {
       count: number;
@@ -101,7 +109,7 @@ export interface UserWordData extends ApiMethodsData {
 }
 
 export interface GetUserAggregatedWord extends ApiMethodsData {
-  data: WordUnderscore[] | string;
+  data: AggregatedWord[] | string;
 }
 
 export interface GetUpsertStatistics extends ApiMethodsData {
@@ -153,4 +161,9 @@ export interface GameStatistic {
   rightWords: number;
   wrongWords: number;
   maxInRow: number;
+}
+
+export interface UserWordStatistic {
+  difficulty?: string;
+  optional?: WordOptional;
 }

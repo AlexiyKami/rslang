@@ -1,4 +1,4 @@
-import { WordUnderscore } from './../../types/types';
+import { AggregatedWord } from './../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -111,9 +111,9 @@ class Dictionary {
       items = words;
     } else {
       items = words
-        .map((word: Word | WordUnderscore) => {
-          return `<div class='word-card ${(word as WordUnderscore)?.userWord?.difficulty || ''}' data-id=${
-            (word as Word).id ? (word as Word).id : (word as WordUnderscore)._id
+        .map((word: Word | AggregatedWord) => {
+          return `<div class='word-card ${(word as AggregatedWord)?.userWord?.difficulty || ''}' data-id=${
+            (word as Word).id ? (word as Word).id : (word as AggregatedWord)._id
           }>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
@@ -150,10 +150,10 @@ class Dictionary {
               isAuthorized
                 ? `<div class='counters'>
                     <div class='right-answers' title='Правильные ответы'>${
-                      (word as WordUnderscore)?.userWord?.optional?.succesfulAttempts || '0'
+                      (word as AggregatedWord)?.userWord?.optional?.successfulAttempts || '0'
                     }</div>
                     <div class='wrong-answers' title='Неправильные ответы'>${
-                      (word as WordUnderscore)?.userWord?.optional?.failedAttempts || '0'
+                      (word as AggregatedWord)?.userWord?.optional?.failedAttempts || '0'
                     }</div>
                   </div>`
                 : ''

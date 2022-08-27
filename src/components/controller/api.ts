@@ -12,6 +12,7 @@ import {
   GetAllUserAggregatedWordsData,
   GetAllUserAggregatedWords,
   GetAllUserWordsData,
+  WordOptional,
 } from '../types/types';
 
 export class Api {
@@ -295,13 +296,13 @@ export class Api {
     userId: string,
     wordId: string,
     difficulty: string,
-    optional: Optional,
+    optional: WordOptional,
     token: string
   ): Promise<UserWordData> {
     try {
       const params = {
-        difficulty,
-        optional,
+        difficulty: difficulty,
+        optional: optional,
       };
       const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
         method: 'POST',

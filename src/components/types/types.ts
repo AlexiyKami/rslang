@@ -43,6 +43,7 @@ export interface UserWord {
   difficulty: string;
   id: string;
   wordId: string;
+  optional?: Optional;
 }
 
 interface StatisticsData {

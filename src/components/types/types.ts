@@ -28,6 +28,13 @@ export interface WordUnderscore extends InitWord {
   };
 }
 
+export interface WordOptional {
+  successfulAttempts?: number;
+  failedAttempts?: number;
+  inRow?: number;
+  isLearned?: boolean;
+}
+
 export interface User {
   name: string;
   email: string;
@@ -43,7 +50,7 @@ export interface UserWord {
   difficulty: string;
   id: string;
   wordId: string;
-  optional?: Optional;
+  optional?: WordOptional;
 }
 
 interface StatisticsData {

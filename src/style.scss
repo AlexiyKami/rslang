@@ -82,6 +82,24 @@ body {
       background-color: lighten($color: #9ea4e7, $amount: 10);
     }
   }
+
+  &.red {
+    border-color: #d84545;
+    background-color: #d84545;
+    &:hover:not(:disabled) {
+      border-color: lighten($color: #d84545, $amount: 10);
+      background-color: lighten($color: #d84545, $amount: 10);
+    }
+  }
+
+  &.green {
+    border-color: #3fbe5b;
+    background-color: #3fbe5b;
+    &:hover:not(:disabled) {
+      border-color: lighten($color: #3fbe5b, $amount: 10);
+      background-color: lighten($color: #3fbe5b, $amount: 10);
+    }
+  }
 }
 
 .rounded-button {

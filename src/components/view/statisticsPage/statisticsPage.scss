@@ -1,6 +1,7 @@
 .statistics-page {
   display: flex;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   .statistics-title {
     font-size: 32px;
     font-weight: 400;
@@ -10,7 +11,7 @@
 
 .today-statistics {
   width: 600px;
-  height: 400px;
+  height: 500px;
   padding: 20px;
   .today-indicators {
     margin-top: 20px;
@@ -102,5 +103,16 @@
     & span {
       font-size: 20px;
     }
+  }
+}
+
+.alltime-statistics {
+  margin-top: 50px;
+  width: 900px;
+  height: 400px;
+  gap: 50px;
+  .alltime-statistics-charts {
+    display: flex;
+    justify-content: space-between;
   }
 }

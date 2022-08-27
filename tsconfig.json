@@ -5,6 +5,7 @@
       "removeComments": true,
       "noImplicitAny": true,
       "strict": true,
-      "sourceMap": true
+      "sourceMap": true,
+      "moduleResolution": "node",
   }
 }

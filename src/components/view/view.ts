@@ -8,6 +8,7 @@ import { getElement } from '../utils/utils';
 import LoadingPopup from './loading-popup/loadingPopup';
 import MainPage from './mainPage/mainPage';
 import Sprint from './sprint/sprint';
+import StatisticsPage from './statisticsPage/statisticsPage';
 
 class View {
   public dictionary: Dictionary;
@@ -17,6 +18,7 @@ class View {
   public MinigamesPage: MinigamesPageView;
   public loadingPopup: LoadingPopup;
   public mainPage: MainPage;
+  public statisticsPage: StatisticsPage;
   public sprint: Sprint;
 
   constructor(private readonly controller: Controller) {
@@ -26,6 +28,7 @@ class View {
     this.MinigamesPage = new MinigamesPageView(this.controller, this);
     this.loadingPopup = new LoadingPopup(this.controller);
     this.mainPage = new MainPage(this, this.controller);
+    this.statisticsPage = new StatisticsPage(this.controller, this);
     this.navigation = new Navigation(this.controller, this);
     this.sprint = new Sprint(this.controller, this);
   }

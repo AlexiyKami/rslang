@@ -36,7 +36,10 @@ class AudioChallengeView {
     `;
 
     const buttonsBlock = getElement('audio-challenge__difficulty-buttons') as HTMLElement;
-    buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
+    buttonsBlock.addEventListener('click', (e) => {
+      this.view.loadingPopup.draw();
+      this.controller.audioChallengeController.startPageHandler(e);
+    });
 
     (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () => {
       document.removeEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
@@ -52,6 +55,7 @@ class AudioChallengeView {
   }
 
   public renderOnWordsLoadErrorMessage(errorMessage: string): void {
+    this.view.loadingPopup.clear();
     this.removeOnWordsLoadErrorMessage();
     const audioChallengeBlock = getElement('audio-challenge__main-page');
     const errorMessageBlock = createElement('p', 'audio-challenge__error-message');
@@ -60,6 +64,7 @@ class AudioChallengeView {
   }
 
   public renderGamePage(state: AudioChallengeModelState) {
+    this.view.loadingPopup.clear();
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
     for (let i = 0; i < state.currentGuessingWords.length; i++) {
@@ -234,6 +239,8 @@ class AudioChallengeView {
       document.removeEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
       this.view.MinigamesPage.renderMinigamesPage();
     });
+
+    this.controller.statisticController.saveGameStatistic('audiochallenge', state);
   }
 }
 

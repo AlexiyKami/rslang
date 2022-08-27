@@ -45,7 +45,11 @@ export default class Navigation {
           this.controller.playStopAudio('', false);
           this.view.mainPage.renderMainPage();
         });
-
+      else if (entry[1] === 'Statistics')
+        radioLabelEl.addEventListener('click', () => {
+          this.controller.playStopAudio('', false);
+          this.view.statisticsPage.draw();
+        });
       this.navEl.append(radioEl, radioLabelEl);
     }
 
@@ -56,6 +60,8 @@ export default class Navigation {
       this.view.dictionary.draw();
     } else if (this.controller.navController.curPage === 2) {
       this.view.MinigamesPage.renderMinigamesPage();
+    } else if (this.controller.navController.curPage === 3) {
+      this.view.statisticsPage.draw();
     }
 
     this.navEl.addEventListener('mouseup', (event: Event) => {

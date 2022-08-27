@@ -53,7 +53,7 @@ export interface UserWord {
   optional?: WordOptional;
 }
 
-interface StatisticsData {
+export interface StatisticsData {
   id: string;
   learnedWords?: number;
   optional?: Optional;

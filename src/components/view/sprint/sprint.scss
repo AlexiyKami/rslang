@@ -49,6 +49,10 @@
     text-align: center;
     border-radius: 10px;
 
+    &.sprint-delay{
+      display: none;
+    }
+
     .sprint-result {
       font-size: 3rem;
       margin: 0;
@@ -91,7 +95,7 @@
     }
 
     .sprint-buttons {
-      margin: 10px;
+      margin: 20px;
       margin-top: 20px;
       display: flex;
       justify-content: space-around;

@@ -9,7 +9,8 @@ export default class Sprint {
   private mainWindow: HTMLElement;
   private readonly FULL_DASH_ARRAY = 283;
   private readonly TIME_LIMIT = 60;
-  private timeLeft = this.TIME_LIMIT;
+  private readonly START_DELAY = 3;
+  private timeLeft = this.TIME_LIMIT + this.START_DELAY;
   private timePassed = 0;
   private timerInterval = 0;
 
@@ -40,18 +41,20 @@ export default class Sprint {
     </div>
     `;
 
-    // const buttonsBlock = getElement('sprint__difficulty-buttons') as HTMLElement;
-    // buttonsBlock.addEventListener('click', (e) => this.controller.audioChallengeController.startPageHandler(e));
+    (document.querySelector('.sprint__difficulty-buttons') as HTMLElement).addEventListener('click', (event: Event) => {
+      const target = event.target as HTMLElement;
+      if (target.tagName === 'BUTTON') this.controller.sprintController.initGame(+target.innerText - 1);
+    });
 
     (document.querySelector('.sprint__back-to-games-button') as HTMLButtonElement).addEventListener('click', () =>
-      this.controller.sprintController.initGame(0)
+      this.view.MinigamesPage.renderMinigamesPage()
     );
   }
   // section: number, page?: number
   public renderSprintGame(): void {
     this.mainWindow.innerHTML = `
     <div class="sprint">
-      <div class="sprint-game">
+      <div id="sprint-game" class="sprint-game sprint-delay">
         <p id="sprint-result" class="sprint-result">0</p>
         <p id="sprint-points" class="sprint-points">+10 points per word</p>
         <div class="sprint-series">
@@ -65,8 +68,8 @@ export default class Sprint {
           <button id="sprint-true" class="flat-button green">right</button>
           <button id="sprint-false" class="flat-button red">wrong</button>
         </div>
-        <div id="timer-app"></div>
       </div>
+      <div id="timer-app"></div>
     </div>
     `;
 
@@ -78,7 +81,7 @@ export default class Sprint {
     });
 
     this.renderTimer();
-    this.startTimer();
+    this.startSprintTimer();
   }
 
   private renderTimer() {
@@ -100,7 +103,7 @@ export default class Sprint {
           ></path>
         </g>
       </svg>
-      <span id="base-timer-label" class="base-timer__label">${this.formatTime(this.timeLeft)}</span>
+      <span id="base-timer-label" class="base-timer__label">${this.formatTime(this.START_DELAY)}</span>
     </div>
     `;
   }
@@ -112,8 +115,13 @@ export default class Sprint {
   }
 
   private calculateTimeFraction(): number {
-    const rawTimeFraction = this.timeLeft / this.TIME_LIMIT;
-    return rawTimeFraction - (1 / this.TIME_LIMIT) * (1 - rawTimeFraction);
+    if (this.timeLeft > this.TIME_LIMIT) {
+      const rawTimeFraction = (this.timeLeft - this.TIME_LIMIT) / this.START_DELAY;
+      return rawTimeFraction - (1 / this.START_DELAY) * (1 - rawTimeFraction);
+    } else {
+      const rawTimeFraction = this.timeLeft / this.TIME_LIMIT;
+      return rawTimeFraction - (1 / this.TIME_LIMIT) * (1 - rawTimeFraction);
+    }
   }
 
   private setCircleDasharray() {
@@ -121,7 +129,7 @@ export default class Sprint {
     document.getElementById('base-timer-path-remaining')?.setAttribute('stroke-dasharray', circleDasharray);
   }
 
-  private startTimer() {
+  private startSprintTimer() {
     clearInterval(this.timerInterval);
     this.timeLeft = this.TIME_LIMIT;
     this.timePassed = 0;
@@ -135,9 +143,16 @@ export default class Sprint {
         this.timerInterval = 0;
       } else {
         this.timePassed = this.timePassed += 1;
-        this.timeLeft = this.TIME_LIMIT - this.timePassed;
-        (document.getElementById('base-timer-label') as HTMLElement).innerHTML = this.formatTime(this.timeLeft);
+        this.timeLeft = this.TIME_LIMIT + this.START_DELAY - this.timePassed;
+        if (this.timeLeft > this.TIME_LIMIT)
+          (document.getElementById('base-timer-label') as HTMLElement).innerHTML = this.formatTime(
+            this.timeLeft - this.TIME_LIMIT
+          );
+        else (document.getElementById('base-timer-label') as HTMLElement).innerHTML = this.formatTime(this.timeLeft);
         this.setCircleDasharray();
+        if (this.timeLeft === this.TIME_LIMIT) {
+          (document.getElementById('sprint-game') as HTMLElement).classList.remove('sprint-delay');
+        }
         if (this.timeLeft === 0) {
           clearInterval(this.timerInterval);
         }

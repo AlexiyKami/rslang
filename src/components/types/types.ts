@@ -45,7 +45,7 @@ export interface UserWord {
   wordId: string;
 }
 
-interface StatisticsData {
+export interface StatisticsData {
   id: string;
   learnedWords?: number;
   optional?: Optional;

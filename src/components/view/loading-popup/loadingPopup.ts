@@ -9,6 +9,7 @@ class LoadingPopup {
   }
 
   public draw(): void {
+    this.clear();
     const wrapper = `
     <div class='loading-background'>
       <div class='spinner'></div>

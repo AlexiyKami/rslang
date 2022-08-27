@@ -98,6 +98,7 @@
   padding-right: 5px;
   border-color: #5b67ed;
   background-color: #5b67ed;
+  z-index: 2;
 
   &:hover:not(:disabled) {
     background-color: lighten($color: #5b67ed, $amount: 10);

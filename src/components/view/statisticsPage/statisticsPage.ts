@@ -28,6 +28,13 @@ class StatisticsPage {
       console.log(statistics);
     }
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
+      ${
+        !isAuthorized
+          ? `<div class='darkened-background'>
+              <h2>Прежде, чем посмотреть статистику, авторизуйтесь</h2>
+            </div>`
+          : ''
+      }
       <div class='statistics-page'>
         <div class='today-statistics'>
           <h3 class='statistics-title'>Сегодня</h3>

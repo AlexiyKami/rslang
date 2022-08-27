@@ -43,14 +43,10 @@ class StatisticController {
       wordStat.optional.isLearned = false;
     }
 
-    console.log(wordStat);
-
     if (!userWord) {
       await this.controller.api.createUserWord(this.userId, word.id, wordStat.difficulty, wordStat.optional, token);
-      console.log('Word created');
     } else {
       await this.controller.api.updateUserWord(this.userId, word.id, wordStat.difficulty, wordStat.optional, token);
-      console.log('Word updated');
     }
   }
 
@@ -59,7 +55,6 @@ class StatisticController {
     gameState.rightWords.forEach((word) => promises.push(this.saveWordStatistic(word, true, userWords)));
     gameState.wrongWords.forEach((word) => promises.push(this.saveWordStatistic(word, false, userWords)));
     await Promise.all(promises);
-    console.log('Saved');
   }
 
   public async saveGameStatistic(gameName: 'sprint' | 'audiochallenge', gameState: GameState) {
@@ -101,7 +96,6 @@ class StatisticController {
     stat.maxInRow = gameState.maxRightWordsInRow > stat.maxInRow ? gameState.maxRightWordsInRow : stat.maxInRow;
 
     optional[statName] = stat;
-    console.log(optional);
 
     await this.controller.api.upsertStatistics(this.userId, 0, optional, token);
   }

@@ -301,8 +301,8 @@ export class Api {
   ): Promise<UserWordData> {
     try {
       const params = {
-        difficulty: difficulty,
-        optional: optional,
+        difficulty,
+        optional,
       };
       const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
         method: 'POST',
@@ -372,7 +372,7 @@ export class Api {
     userId: string,
     wordId: string,
     difficulty: string,
-    optional: Optional,
+    optional: WordOptional,
     token: string
   ): Promise<UserWordData> {
     try {

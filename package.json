@@ -43,5 +43,8 @@
   "bugs": {
     "url": "https://github.com/AlexiyKami/rslang/issues"
   },
-  "homepage": "https://github.com/AlexiyKami/rslang"
+  "homepage": "https://github.com/AlexiyKami/rslang",
+  "dependencies": {
+    "chart.js": "^3.9.1"
+  }
 }

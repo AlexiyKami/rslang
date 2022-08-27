@@ -23,10 +23,7 @@ class AudioChallengeController {
   public keyboardHandler(e: KeyboardEvent) {
     if (Object.keys(AudioChallengeKeycodesToHandle).includes(e.code)) {
       const button = getElement(`audio-challenge-group-${e.code}`);
-      // const answerButton = getElement(`audio-challenge__select-button.group-${e.code}`);
-      console.log(e.code, button);
       if (button) button.click();
-      // if (answerButton) answerButton.click();
     }
   }
 

@@ -1,4 +1,4 @@
-import { WordUnderscore } from './../../types/types';
+import { AggregatedWord } from './../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -111,10 +111,10 @@ class Dictionary {
       items = words;
     } else {
       items = words
-        .map((word: Word | WordUnderscore) => {
-          return `<div class='word-card ${(word as WordUnderscore)?.userWord?.difficulty || ''}' data-id=${
-            (word as Word).id ? (word as Word).id : (word as WordUnderscore)._id
-          }>
+        .map((word: Word | AggregatedWord) => {
+          return `<div class='word-card ${(word as AggregatedWord)?.userWord?.optional?.isLearned ? 'learned' : ''} ${
+            (word as AggregatedWord)?.userWord?.difficulty === 'hard' ? 'hard' : ''
+          }' data-id=${(word as Word).id ? (word as Word).id : (word as AggregatedWord)._id}>
             <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
             <div class='description'>
               <div class='title'>
@@ -139,7 +139,7 @@ class Dictionary {
                       </button>
                       ${
                         this.dictionaryController.getDictionaryGroup() !== 6
-                          ? `<button class='add-learned-button flat-button'>Learned</button>`
+                          ? `<button class='add-learned-button flat-button'></button>`
                           : ''
                       }
                     </div>`
@@ -150,10 +150,10 @@ class Dictionary {
               isAuthorized
                 ? `<div class='counters'>
                     <div class='right-answers' title='Правильные ответы'>${
-                      (word as WordUnderscore)?.userWord?.optional?.succesfulAttempts || '0'
+                      (word as AggregatedWord)?.userWord?.optional?.successfulAttempts || '0'
                     }</div>
                     <div class='wrong-answers' title='Неправильные ответы'>${
-                      (word as WordUnderscore)?.userWord?.optional?.failedAttempts || '0'
+                      (word as AggregatedWord)?.userWord?.optional?.failedAttempts || '0'
                     }</div>
                   </div>`
                 : ''
@@ -200,15 +200,18 @@ class Dictionary {
         const currTarget = e.currentTarget as HTMLElement;
         if (target.classList.contains('add-difficult-button')) {
           const id = currTarget.getAttribute('data-id') as string;
-          this.dictionaryController.updateUserWord(id, 'difficult');
-          currTarget.classList.remove('learned');
-          currTarget.classList.add('difficult');
+          this.dictionaryController.updateUserWord(id, 'hard');
+          currTarget.classList.add('hard');
         }
         if (target.classList.contains('add-learned-button')) {
           const id = currTarget.getAttribute('data-id') as string;
-          this.dictionaryController.updateUserWord(id, 'learned');
-          currTarget.classList.remove('difficult');
-          currTarget.classList.add('learned');
+          if (currTarget.classList.contains('learned')) {
+            this.dictionaryController.updateUserWord(id, 'easy');
+            currTarget.classList.remove('learned');
+          } else {
+            this.dictionaryController.updateUserWord(id, 'learned');
+            currTarget.classList.add('learned');
+          }
         }
         this.checkForLearnedPage();
       });
@@ -220,7 +223,7 @@ class Dictionary {
   }
 
   private checkForLearnedPage(): void {
-    if (document.querySelectorAll('.word-card.difficult, .word-card.learned').length === settings.WORDS_PER_PAGE) {
+    if (document.querySelectorAll('.word-card.hard, .word-card.learned').length === settings.WORDS_PER_PAGE) {
       (document.querySelector('.dictionary') as HTMLElement)?.classList?.add('learned');
     } else {
       (document.querySelector('.dictionary') as HTMLElement)?.classList?.remove('learned');

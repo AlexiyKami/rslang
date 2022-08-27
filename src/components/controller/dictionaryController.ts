@@ -1,4 +1,4 @@
-import { GetAllUserAggregatedWordsData } from './../types/types';
+import { GetAllUserAggregatedWordsData, UserWord } from './../types/types';
 import settings from '../settings';
 import { CallbackFunction } from '../types/types';
 import Controller from './controller';
@@ -22,7 +22,7 @@ class DictionaryController {
         const response = await this.baseController.api.getAllUserAggregatedWords(
           state.userId as string,
           state.token as string,
-          `{"$or":[{ "userWord.difficulty": "difficult"}]}`,
+          `{"$or":[{ "userWord.difficulty": "hard"}]}`,
           undefined,
           undefined,
           settings.COUNT_OF_WORDS()
@@ -63,17 +63,68 @@ class DictionaryController {
     const userId = state.userId as string;
     const token = state.token as string;
     let response;
-    if ((await this.baseController.api.getsUserWord(userId, wordId, token)).code === 404) {
+    const getUserWord = await this.baseController.api.getsUserWord(userId, wordId, token);
+    console.log(getUserWord);
+    const initObj = {
+      successfulAttempts: 0,
+      failedAttempts: 0,
+      inRow: 0,
+      isLearned: false,
+    };
+
+    if (getUserWord.code === 404) {
       if (this.getDictionaryGroup() !== 6) {
-        response = await this.baseController.api.createUserWord(userId, wordId, difficulty, {}, token);
+        if (difficulty === 'hard') {
+          response = await this.baseController.api.createUserWord(userId, wordId, difficulty, { ...initObj }, token);
+        } else if (difficulty === 'learned') {
+          response = await this.baseController.api.createUserWord(
+            userId,
+            wordId,
+            'easy',
+            { ...initObj, isLearned: true },
+            token
+          );
+        }
         console.log(response);
       }
     } else {
       if (this.getDictionaryGroup() !== 6) {
-        response = await this.baseController.api.updateUserWord(userId, wordId, difficulty, {}, token);
-        console.log(response);
+        if (difficulty === 'hard') {
+          response = await this.baseController.api.updateUserWord(
+            userId,
+            wordId,
+            difficulty,
+            { ...(getUserWord.data as UserWord).optional },
+            token
+          );
+          console.log(response);
+        } else if (difficulty === 'learned') {
+          response = await this.baseController.api.updateUserWord(
+            userId,
+            wordId,
+            'easy',
+            { ...(getUserWord.data as UserWord).optional, isLearned: true },
+            token
+          );
+          console.log(response);
+        } else if (difficulty === 'easy') {
+          response = await this.baseController.api.updateUserWord(
+            userId,
+            wordId,
+            'easy',
+            { ...(getUserWord.data as UserWord).optional, isLearned: false },
+            token
+          );
+          console.log(response);
+        }
       } else {
-        response = await this.baseController.api.updateUserWord(userId, wordId, 'easy', {}, token);
+        response = await this.baseController.api.updateUserWord(
+          userId,
+          wordId,
+          'easy',
+          { ...(getUserWord.data as UserWord).optional },
+          token
+        );
         this.updateDictionary();
       }
     }

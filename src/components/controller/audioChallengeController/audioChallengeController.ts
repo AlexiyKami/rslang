@@ -57,6 +57,7 @@ class AudioChallengeController {
   }
 
   public gamePageNextButtonHandler() {
+    this.controller.playStopAudio('', false);
     const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
     const nextButtonText =

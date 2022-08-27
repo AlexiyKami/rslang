@@ -157,7 +157,7 @@ export enum AudioChallengeKeycodesToHandle {
 
 export interface GameStatistic {
   date: string;
-  newWords?: number;
+  newWords: number;
   rightWords: number;
   wrongWords: number;
   maxInRow: number;

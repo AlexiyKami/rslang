@@ -57,10 +57,29 @@ class StatisticController {
     await Promise.all(promises);
   }
 
+  private newWordsCount(gameState: GameState, userWords: UserWord[]) {
+    let newWordsCount = 0;
+    const gameWords = [...gameState.wrongWords, ...gameState.rightWords];
+    const gameWordsIds = gameWords.map((word) => word.id);
+    const userWordsIds = userWords.map((word) => word.wordId);
+    gameWordsIds.forEach((gameWordId) => {
+      if (!userWordsIds.includes(gameWordId)) {
+        newWordsCount++;
+      } else {
+        const userWord = userWords.find((word) => word.wordId === gameWordId) as UserWord;
+        if (userWord.optional?.successfulAttempts === 0 && userWord.optional?.failedAttempts === 0) {
+          newWordsCount++;
+        }
+      }
+    });
+    return newWordsCount;
+  }
+
   public async saveGameStatistic(gameName: 'sprint' | 'audiochallenge', gameState: GameState) {
     const token = this.controller.authorizationController.token as string;
     const userWordsResponse = await this.controller.api.getAllUserWords(this.userId, token);
     const userWords = userWordsResponse.data;
+    const newWordsCount = typeof userWords !== 'string' ? this.newWordsCount(gameState, userWords) : 0;
 
     if (typeof userWords !== 'string') await this.saveWordsStatistic(gameState, userWords);
 
@@ -91,6 +110,7 @@ class StatisticController {
     }
 
     stat.date = date;
+    stat.newWords += newWordsCount;
     stat.rightWords += gameState.rightWords.length;
     stat.wrongWords += gameState.wrongWords.length;
     stat.maxInRow = gameState.maxRightWordsInRow > stat.maxInRow ? gameState.maxRightWordsInRow : stat.maxInRow;

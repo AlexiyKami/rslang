@@ -64,6 +64,7 @@ class AudioChallengeView {
   }
 
   public renderGamePage(state: AudioChallengeModelState) {
+    this.view.changeAppTitle('Audio Challenge');
     this.view.loadingPopup.clear();
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';
@@ -106,6 +107,8 @@ class AudioChallengeView {
     (getElement('audio-challenge__submit-button') as HTMLButtonElement).addEventListener('click', () =>
       this.controller.audioChallengeController.gamePageNextButtonHandler()
     );
+
+    document.addEventListener('keyup', this.controller.audioChallengeController.keyboardHandler);
 
     this.controller.playStopAudio(currentWord.audio);
   }
@@ -240,7 +243,7 @@ class AudioChallengeView {
       this.view.MinigamesPage.renderMinigamesPage();
     });
 
-    this.controller.statisticController.saveGameStatistic('audiochallenge', state);
+    if (this.controller.isAuthorized()) this.controller.statisticController.saveGameStatistic('audiochallenge', state);
   }
 }
 

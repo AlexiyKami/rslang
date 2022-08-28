@@ -22,7 +22,6 @@ class AudioChallengeController {
 
   public async initGameByGroupPage(group: number, page: number) {
     let words;
-    console.log(this.controller.authorizationController.userId);
 
     if (!this.controller.isAuthorized()) {
       words = await this.controller.api.getWords(group, page);
@@ -41,7 +40,7 @@ class AudioChallengeController {
         const filteredWords = allWords.filter((word) => !word.userWord?.optional?.isLearned);
         words =
           filteredWords.length > settings.WORDS_PER_PAGE
-            ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE)
+            ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE - 1)
             : filteredWords;
         console.log(allWords, filteredWords);
       } else {
@@ -51,7 +50,10 @@ class AudioChallengeController {
 
     console.log(words);
 
-    if (typeof words === 'string') {
+    if (typeof words !== 'string' && words.length < 4) {
+      this.initGame();
+      this.model.audioChallengeModel.onWordsLoadError('The game can be started with words coun more then three!');
+    } else if (typeof words === 'string') {
       this.initGame();
     } else {
       this.model.audioChallengeModel.onWordsLoad(words);

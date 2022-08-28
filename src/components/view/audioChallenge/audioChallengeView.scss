@@ -323,3 +323,8 @@
     background-color: lighten($color: #02cc9d, $amount: 10);
   }
 }
+
+.audio-challenge__error-message {
+  text-align: center;
+  color: red;
+}

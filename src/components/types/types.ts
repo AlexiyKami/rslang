@@ -60,10 +60,10 @@ export interface StatisticsData {
     registrationDate: string;
     audioChallengeStatistics?: GameStatistic;
     sprintStatistics?: GameStatistic;
-    newWords: {
+    newWords?: {
       [date: string]: number;
     }[];
-    learnedWords: {
+    learnedWords?: {
       [date: string]: number;
     }[];
   };

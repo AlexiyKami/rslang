@@ -5,6 +5,7 @@ import { getElement } from '../utils/utils';
 import DictionaryController from './dictionaryController';
 import { AppState, CallbackFunction } from '../types/types';
 import AudioChallengeController from './audioChallengeController/audioChallengeController';
+import SprintController from './sprintController/sprintController';
 import AuthorizationController from './authorizationController';
 import NavController from './navController';
 import StatisticController from './statisticController';
@@ -14,6 +15,7 @@ class Controller {
   public dictionary: DictionaryController;
   public api: Api;
   public audioChallengeController: AudioChallengeController;
+  public sprintController: SprintController;
   public authorizationController: AuthorizationController;
   public onLoadingPopup: CallbackFunction[];
   public navController: NavController;
@@ -23,6 +25,7 @@ class Controller {
     this.model = model;
     this.api = new Api();
     this.audioChallengeController = new AudioChallengeController(this, this.model);
+    this.sprintController = new SprintController(this, this.model);
     this.dictionary = new DictionaryController(this);
     this.authorizationController = new AuthorizationController(this);
     this.navController = new NavController(this);
@@ -34,6 +37,17 @@ class Controller {
     const audio = getElement('app-audio') as HTMLAudioElement;
     if (startPlay) {
       audio.src = `${settings.DATABASE_URL}/${fileName}`;
+      audio.play();
+    } else {
+      audio.pause();
+      audio.currentTime = 0;
+    }
+  }
+
+  public playAudioFromLink(link: string, startPlay = true) {
+    const audio = getElement('app-audio') as HTMLAudioElement;
+    if (startPlay) {
+      audio.src = link;
       audio.play();
     } else {
       audio.pause();

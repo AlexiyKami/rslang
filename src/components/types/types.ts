@@ -153,6 +153,8 @@ export enum AudioChallengeKeycodesToHandle {
   'Digit6',
   'Space',
   'Enter',
+  'ArrowLeft',
+  'ArrowRight',
 }
 
 export interface GameStatistic {

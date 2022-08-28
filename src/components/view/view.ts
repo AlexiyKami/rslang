@@ -7,6 +7,7 @@ import MinigamesPageView from './minigamesPage/minigamesPageView';
 import { getElement } from '../utils/utils';
 import LoadingPopup from './loading-popup/loadingPopup';
 import MainPage from './mainPage/mainPage';
+import Sprint from './sprint/sprint';
 import StatisticsPage from './statisticsPage/statisticsPage';
 
 class View {
@@ -18,6 +19,7 @@ class View {
   public loadingPopup: LoadingPopup;
   public mainPage: MainPage;
   public statisticsPage: StatisticsPage;
+  public sprint: Sprint;
 
   constructor(private readonly controller: Controller) {
     this.authorization = new Authorization(this.controller);
@@ -28,6 +30,7 @@ class View {
     this.mainPage = new MainPage(this, this.controller);
     this.statisticsPage = new StatisticsPage(this.controller, this);
     this.navigation = new Navigation(this.controller, this);
+    this.sprint = new Sprint(this.controller, this);
   }
 
   public initRender() {
@@ -36,6 +39,7 @@ class View {
     // this.controller.audioChallengeController.initAudioChallengeGame();
     // this.MinigamesPage.renderMinigamesPage();
     // this.authorization.draw();
+    // this.sprint.renderStartPage();
   }
 
   public changeAppTitle(title: string): void {

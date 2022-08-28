@@ -1,9 +1,8 @@
 import Controller from '../controller';
 import AppModel from '../../app/app';
-import { Word, UserWord } from '../../types/types';
-// import { getElement, getRandomNumber } from '../../utils/utils';
-// import settings from '../../settings';
-// import { AudioChallengeKeycodesToHandle } from '../../types/types';
+import { Word, UserWord, AudioChallengeKeycodesToHandle } from '../../types/types';
+import { getRandomNumber } from '../../utils/utils';
+import settings from '../../settings';
 
 export default class SprintController {
   private words: Word[] = [];
@@ -14,14 +13,34 @@ export default class SprintController {
   private points = 10;
   private result = 0;
 
+  public group = 0;
+  public page = 0;
+  public fromTextBook = false;
+  public rightWords: Word[] = [];
+  public wrongWords: Word[] = [];
+  public maxInARow = 0;
+  private inARow = 0;
+
+  public audio = true;
+
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
 
-  public initGame(group: number, page = 29, fromTextBook = true) {
+  public initGame(group: number, fromTextBook = false, page = getRandomNumber(4, settings.MAX_DICTIONARY_PAGES)) {
+    this.group = group;
+    this.page = page;
+    this.fromTextBook = fromTextBook;
+
     this.controller.showLoadingPopup();
     this.getWords(group, page, fromTextBook).then((words: Word[]) => {
       this.model.view.sprint.renderSprintGame();
       this.words = words;
+      this.series = 0;
+      this.result = 0;
       this.curWordInd = 0;
+      this.rightWords = [];
+      this.wrongWords = [];
+      this.maxInARow = 0;
+      this.inARow = 0;
       this.setWordAndTranslate();
       this.controller.hideLoadingPopup();
     });
@@ -48,6 +67,7 @@ export default class SprintController {
     }
 
     for (let i = page; i >= 0; i--) {
+      if (words.length >= 100) break;
       let wordsPerPage = await this.controller.api.getWords(group, i);
       if (typeof wordsPerPage !== 'string') {
         if (fromTextBook) wordsPerPage = this.filterWords(wordsPerPage, userWords);
@@ -74,18 +94,32 @@ export default class SprintController {
     this.correctWord = this.words[this.curWordInd].word;
     this.model.view.sprint.setTranslate(translateWord);
     this.model.view.sprint.setWord(this.word);
-    if (++this.curWordInd === this.words.length) this.curWordInd = 0;
   }
 
   public answer(isRight: boolean) {
     if (isRight === (this.word === this.correctWord)) {
+      if (this.audio)
+        this.controller.playAudioFromLink(
+          'https://zvukipro.com/uploads/files/2021-02/1612331901_windows-xp-exclamation.mp3'
+        );
+      this.rightWords.push(this.words[this.curWordInd]);
+      this.inARow++;
+      if (this.inARow > this.maxInARow) this.maxInARow = this.inARow;
       this.addSeries();
       this.result += this.points;
       this.model.view.sprint.setResult(this.result);
     } else {
+      if (this.audio)
+        this.controller.playAudioFromLink(
+          'https://zvukipro.com/uploads/files/2021-02/1612331779_windows-xp-critical-stop.mp3'
+        );
+      this.wrongWords.push(this.words[this.curWordInd]);
+      this.inARow = 0;
       this.clearSeries();
     }
+
     this.setWordAndTranslate();
+    if (++this.curWordInd === this.words.length) this.curWordInd = 0;
   }
 
   private addSeries() {
@@ -101,7 +135,7 @@ export default class SprintController {
     } else if (this.series === 3) {
       this.model.view.sprint.setSeries(0);
       this.series = 0;
-      this.points = this.points * 2;
+      this.points = this.points + 10;
       this.model.view.sprint.setPoints(this.points);
     }
   }
@@ -111,5 +145,25 @@ export default class SprintController {
     this.series = 0;
     this.model.view.sprint.setPoints(10);
     this.model.view.sprint.setSeries(0);
+  }
+
+  public keyboardHandler(e: KeyboardEvent) {
+    if (Object.keys(AudioChallengeKeycodesToHandle).includes(e.code)) {
+      const button = document.querySelector(`.sprint-group-${e.code}`) as HTMLButtonElement;
+      if (button) button.click();
+    }
+  }
+
+  public toggleAudio() {
+    this.audio = !this.audio;
+  }
+
+  public setStatistic() {
+    if (this.controller.isAuthorized())
+      this.controller.statisticController.saveGameStatistic('sprint', {
+        rightWords: this.rightWords,
+        wrongWords: this.wrongWords,
+        maxRightWordsInRow: this.maxInARow,
+      });
   }
 }

@@ -3,7 +3,7 @@ import View from '../view';
 import settings from '../../settings';
 import './sprint.scss';
 import './timer.scss';
-// import { Word } from '../../types/types';
+import { Word } from '../../types/types';
 
 export default class Sprint {
   private mainWindow: HTMLElement;
@@ -23,9 +23,9 @@ export default class Sprint {
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
-      buttonsHTML += `<button class="sprint__difficulty-button group-${i + 1} round-button" type="button" data-group="${
+      buttonsHTML += `<button class="sprint__difficulty-button group-${i + 1} sprint-group-Digit${
         i + 1
-      }">${i + 1}</button>`;
+      } round-button" data-group="${i + 1}">${i + 1}</button>`;
     }
 
     this.mainWindow.innerHTML = `
@@ -36,7 +36,7 @@ export default class Sprint {
         <div class="sprint__difficulty-buttons">
           ${buttonsHTML}
         </div>
-        <button class="sprint__back-to-games-button flat-button" type="button">Back to Games</button>
+        <button class="sprint__back-to-games-button flat-button sprint-group-Space" type="button"><span class="space-icon"></span>Back to Games</button>
       </div>
     </div>
     `;
@@ -49,12 +49,17 @@ export default class Sprint {
     (document.querySelector('.sprint__back-to-games-button') as HTMLButtonElement).addEventListener('click', () =>
       this.view.MinigamesPage.renderMinigamesPage()
     );
+
+    document.addEventListener('keyup', this.controller.sprintController.keyboardHandler);
   }
   // section: number, page?: number
   public renderSprintGame(): void {
     this.mainWindow.innerHTML = `
     <div class="sprint">
       <div id="sprint-game" class="sprint-game sprint-delay">
+        <div id="sprint-audio-btn" class="sprint-audio-btn ${
+          this.controller.sprintController.audio ? '' : 'mute'
+        }"></div>
         <p id="sprint-result" class="sprint-result">0</p>
         <p id="sprint-points" class="sprint-points">+10 points per word</p>
         <div class="sprint-series">
@@ -65,27 +70,34 @@ export default class Sprint {
         <p id="sprint-word" class="sprint-word">dick</p>
         <p id="sprint-translating" class="sprint-translating">хуй</p>
         <div class="sprint-buttons">
-          <button id="sprint-true" class="flat-button green">right</button>
-          <button id="sprint-false" class="flat-button red">wrong</button>
+          <button id="sprint-true" class="flat-button green sprint-group-ArrowLeft"><span class="arrow-left-icon"></span>right</button>
+          <button id="sprint-false" class="flat-button red sprint-group-ArrowRight">wrong<span class="arrow-right-icon"></span></button>
         </div>
       </div>
-      <div id="timer-app"></div>
+      <div id="sprint-circle"></div>
     </div>
     `;
 
     (document.getElementById('sprint-true') as HTMLElement).addEventListener('click', () => {
       this.controller.sprintController.answer(true);
     });
+
     (document.getElementById('sprint-false') as HTMLElement).addEventListener('click', () => {
       this.controller.sprintController.answer(false);
     });
 
-    this.renderTimer();
+    const speaker = document.getElementById('sprint-audio-btn') as HTMLElement;
+    speaker.addEventListener('click', () => {
+      speaker.classList.toggle('mute');
+      this.controller.sprintController.toggleAudio();
+    });
+
+    this.renderCircle(this.formatTime(this.START_DELAY));
     this.startSprintTimer();
   }
 
-  private renderTimer() {
-    (document.getElementById('timer-app') as HTMLElement).innerHTML = `
+  private renderCircle(value: string) {
+    (document.getElementById('sprint-circle') as HTMLElement).innerHTML = `
     <div class="base-timer">
       <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
         <g class="base-timer__circle">
@@ -103,9 +115,105 @@ export default class Sprint {
           ></path>
         </g>
       </svg>
-      <span id="base-timer-label" class="base-timer__label">${this.formatTime(this.START_DELAY)}</span>
+      <span id="base-timer-label" class="base-timer__label">${value}</span>
     </div>
     `;
+  }
+
+  private renderSprintResult() {
+    const allWords =
+      this.controller.sprintController.rightWords.length + this.controller.sprintController.wrongWords.length;
+
+    this.mainWindow.innerHTML = `
+    <div class="sprint">
+      <h1 class="sprint-results-header">Game Result</h1>
+      <div class="sprint-results">
+        <div class="sprint-word-result">
+          <p class="answer"><span class="repeated">${allWords}</span> words were repeated</p>
+          <p class="answer"><span class="right">${
+            this.controller.sprintController.rightWords.length
+          }</span> right answers</p>
+          <p class="answer"><span class="wrong">${
+            this.controller.sprintController.wrongWords.length
+          }</span> wrong answers</p>
+          <p class="answer"><span class="in-a-row">${this.controller.sprintController.maxInARow}</span> in a row</p>
+        </div>
+        <div id="sprint-circle"></div>
+      </div>
+      ${
+        this.controller.sprintController.wrongWords.length > 0 || this.controller.sprintController.rightWords.length > 0
+          ? `
+            <div id="sprint-words-links" class="sprint-words-links">
+            ${
+              this.controller.sprintController.wrongWords.length > 0
+                ? `
+                <p class="sprint-words-links-header wrong">Mistakes</p>
+                ${this.audioWordsHTML(this.controller.sprintController.wrongWords)}
+                `
+                : ''
+            }
+            ${
+              this.controller.sprintController.rightWords.length > 0
+                ? `
+                <p class="sprint-words-links-header right">Correct answers</p>
+                ${this.audioWordsHTML(this.controller.sprintController.rightWords)}
+                `
+                : ''
+            }
+            </div>
+             `
+          : ''
+      }
+      <div class="sprint-buttons">
+        <button class="sprint-play-again-btn flat-button blue sprint-group-Space"><span class="space-icon"></span>Play again</button>
+        <button class="sprint-back-to-games-btn flat-button green sprint-group-Enter"><span class="enter-icon"></span>Back to games</button>
+      </div>
+    </div>
+    `;
+
+    const accuracy =
+      allWords === 0
+        ? 0
+        : this.controller.sprintController.rightWords.length === 0
+        ? 0
+        : Math.round((this.controller.sprintController.rightWords.length / allWords) * 100);
+    this.renderCircle(`${accuracy}%`);
+
+    document
+      .getElementById('base-timer-path-remaining')
+      ?.setAttribute('stroke-dasharray', `${(accuracy * this.FULL_DASH_ARRAY) / 100} ${this.FULL_DASH_ARRAY}`);
+
+    document.getElementById('sprint-words-links')?.addEventListener('click', (event: Event) => {
+      if ((event.target as HTMLElement).classList.contains('sprint-audio-play')) {
+        const audioLink = (event.target as HTMLButtonElement).dataset.audio || '';
+        this.controller.playStopAudio(audioLink);
+      }
+    });
+
+    (document.querySelector('.sprint-back-to-games-btn') as HTMLButtonElement).addEventListener('click', () =>
+      this.view.MinigamesPage.renderMinigamesPage()
+    );
+
+    (document.querySelector('.sprint-play-again-btn') as HTMLButtonElement).addEventListener('click', () =>
+      this.controller.sprintController.initGame(
+        this.controller.sprintController.group,
+        this.controller.sprintController.fromTextBook,
+        this.controller.sprintController.fromTextBook ? this.controller.sprintController.page : undefined
+      )
+    );
+  }
+
+  private audioWordsHTML(words: Word[]): string {
+    let result = '';
+    new Set(words).forEach((word: Word) => {
+      result += `
+      <div class="sprint-audio">
+        <button class="sprint-audio-play" data-audio=${word.audio}></button>
+        <p class="sprint-audio-word">${word.word} – ${word.wordTranslate}</p>
+      </div>
+      `;
+    });
+    return result;
   }
 
   private formatTime(time: number): string {
@@ -125,11 +233,14 @@ export default class Sprint {
   }
 
   private setCircleDasharray() {
-    const circleDasharray = `${(this.calculateTimeFraction() * this.FULL_DASH_ARRAY).toFixed(0)} 283`;
+    const circleDasharray = `${(this.calculateTimeFraction() * this.FULL_DASH_ARRAY).toFixed(0)} ${
+      this.FULL_DASH_ARRAY
+    }`;
     document.getElementById('base-timer-path-remaining')?.setAttribute('stroke-dasharray', circleDasharray);
   }
 
   private startSprintTimer() {
+    document.removeEventListener('keyup', this.controller.sprintController.keyboardHandler);
     clearInterval(this.timerInterval);
     this.timeLeft = this.TIME_LIMIT;
     this.timePassed = 0;
@@ -144,6 +255,8 @@ export default class Sprint {
       } else {
         this.timePassed = this.timePassed += 1;
         this.timeLeft = this.TIME_LIMIT + this.START_DELAY - this.timePassed;
+        if (this.timeLeft === this.TIME_LIMIT)
+          document.addEventListener('keyup', this.controller.sprintController.keyboardHandler);
         if (this.timeLeft > this.TIME_LIMIT)
           (document.getElementById('base-timer-label') as HTMLElement).innerHTML = this.formatTime(
             this.timeLeft - this.TIME_LIMIT
@@ -155,6 +268,8 @@ export default class Sprint {
         }
         if (this.timeLeft === 0) {
           clearInterval(this.timerInterval);
+          this.renderSprintResult();
+          this.controller.sprintController.setStatistic();
         }
       }
     }, 1000);

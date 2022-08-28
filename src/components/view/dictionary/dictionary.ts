@@ -86,7 +86,12 @@ class Dictionary {
 
     if (this.dictionaryController.getDictionaryGroup() !== 6) {
       (document.querySelector('.sprint-link') as HTMLElement).addEventListener('click', () => {
-        console.log('Sprint is started!');
+        this.baseController.navController.curPage = 2;
+        this.baseController.sprintController.initGame(
+          this.dictionaryController.getDictionaryGroup(),
+          true,
+          this.dictionaryController.getDictionaryPage()
+        );
       });
       (document.querySelector('.audio-challenge-link') as HTMLElement).addEventListener('click', () => {
         console.log('Audio challenge is started!');

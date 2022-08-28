@@ -26,31 +26,46 @@
     .sprint__back-to-games-button {
       border-color: #fa5833ff;
       background-color: #fa5833ff;
-    
+      
       &:hover:not(:disabled) {
         border-color: lighten($color: #fa5833ff, $amount: 10);
         background-color: lighten($color: #fa5833ff, $amount: 10);
       }
+
+      .space-icon {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: url('/src/assets/icons/space-bar-key.svg') no-repeat center;
+        background-size: contain;
+      }
     }
   }
 
-  // .sprint {
-  //   height: 90vh;
-  //   display: flex;
-  //   flex-direction: column;
-  //   justify-content: center;
-  //   align-items: center;
-  // }
-  
   .sprint-game {
     min-width: 350px;
     background-color: #5b67ed;
     color: white;
     text-align: center;
     border-radius: 10px;
+    position: relative;
 
     &.sprint-delay{
       display: none;
+    }
+
+    .sprint-audio-btn {
+      position: absolute;
+      right: 0;
+      width: 25px;
+      height: 25px;
+      margin: 10px;
+      background: url('/src/assets/icons/speaker.svg') no-repeat center;
+      background-size: contain;
+      cursor: pointer;
+      &.mute {
+        background: url('/src/assets/icons/speaker-mute.svg') no-repeat center;
+      }
     }
 
     .sprint-result {
@@ -62,7 +77,6 @@
     .sprint-points {
       font-size: 1rem;
       margin: 0;
-       
     }
 
     .sprint-series {
@@ -78,6 +92,7 @@
         width: 18px;
         border-radius: 11px;
         border: 2px solid white;
+
         &--fill{
           background-color: white;
         }
@@ -99,6 +114,144 @@
       margin-top: 20px;
       display: flex;
       justify-content: space-around;
+
+      .arrow-right-icon {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: url('/src/assets/icons/arrow-right.svg') no-repeat center;
+        background-size: contain;
+      }
+
+      .arrow-left-icon {
+        display: inline-block;
+        width: 25px;
+        height: 25px;
+        background: url('/src/assets/icons/arrow-left.svg') no-repeat center;
+        background-size: contain;
+      }
+    }
+  }
+
+  .sprint-results-header {
+    font-size: 1.5rem;
+  }
+
+  .sprint-results {
+    display: flex;
+    
+    .base-timer {
+      padding-right: 0;
+    }
+
+    .sprint-word-result {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .answer {
+        font-weight: bold;
+
+        span {
+          display: inline-block;
+          text-align: center;
+          padding: 2px;
+          margin: 2px;
+          min-width: 15px;
+          border-radius: 3px;
+
+          &.repeated {
+            background-color: #9ea4e7;
+          }
+  
+          &.right {
+            background-color: #73e48b;
+          }
+  
+          &.wrong {
+            background-color: #e65d5d;
+          }
+  
+          &.in-a-row {
+            background-color: #dfa271;
+          }
+        }
+        
+      }
+    }
+  }
+
+  .sprint-words-links {
+    min-width: 330px;
+    max-height: 250px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+      border-radius: 4px;
+      background-color: #9ea4e7;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      border-radius: 4px;
+      background-color: #5b67ed;
+    }
+
+    .sprint-words-links-header {
+      font-weight: bold;
+      font-size: 1.1rem;
+      margin-top: 10px;
+
+      &.right {
+        color: #73e48b;
+      }
+
+      &.wrong{
+        color: #e65d5d;
+      }
+    }
+
+    .sprint-audio {
+      display: flex;
+      align-items: center;
+
+      .sprint-audio-play {
+        width: 20px;
+        height: 20px;
+        border: none;
+        background: url('/src/assets/icons/audio.svg') no-repeat center;
+        background-size: contain;
+        margin: 5px;
+        cursor: pointer;
+      }
+
+      .sprint-audio-word {
+        margin-right: 10px;
+      }
+    }
+  }
+
+  .sprint-buttons {
+    display: flex;
+
+    button {
+      margin: 10px;
+    }
+
+    .space-icon {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background: url('/src/assets/icons/space-bar-key.svg') no-repeat center;
+      background-size: contain;
+    }
+
+    .enter-icon {
+      display: inline-block;
+      width: 25px;
+      height: 25px;
+      background: url('/src/assets/icons/enter-key.svg') no-repeat center;
+      background-size: contain;
     }
   }
 }

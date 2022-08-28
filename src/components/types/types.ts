@@ -61,10 +61,10 @@ export interface StatisticsData {
     audioChallengeStatistics?: GameStatistic;
     sprintStatistics?: GameStatistic;
     newWords: {
-      [date: string]: string;
+      [date: string]: number;
     }[];
     learnedWords: {
-      [date: string]: string;
+      [date: string]: number;
     }[];
   };
 }

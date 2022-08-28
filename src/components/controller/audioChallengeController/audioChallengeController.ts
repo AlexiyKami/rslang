@@ -12,8 +12,36 @@ class AudioChallengeController {
   }
 
   public async initGameByGroupPage(group: number, page: number) {
-    const words = await this.controller.api.getWords(group, page);
-    if (typeof words === 'string') {
+    let words;
+
+    if (!this.controller.isAuthorized()) {
+      words = await this.controller.api.getWords(group, page);
+    } else {
+      const allWordsResponse = await this.controller.api.getAllUserAggregatedWords(
+        this.controller.authorizationController.userId as string,
+        this.controller.authorizationController.token as string,
+        undefined,
+        undefined,
+        group,
+        (page + 1) * settings.WORDS_PER_PAGE
+      );
+
+      if (typeof allWordsResponse.data !== 'string') {
+        const allWords = allWordsResponse.data.paginatedResults;
+        const filteredWords = allWords.filter((word) => !word.userWord?.optional?.isLearned);
+        words =
+          filteredWords.length > settings.WORDS_PER_PAGE
+            ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE - 1)
+            : filteredWords;
+      } else {
+        words = allWordsResponse.data;
+      }
+    }
+
+    if (typeof words !== 'string' && words.length < 4) {
+      this.initGame();
+      this.model.audioChallengeModel.onWordsLoadError('The game can be started with words coun more then three!');
+    } else if (typeof words === 'string') {
       this.initGame();
     } else {
       this.model.audioChallengeModel.onWordsLoad(words);

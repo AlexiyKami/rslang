@@ -28,6 +28,13 @@ module.exports = {
         test: /\.svg/,
         type: 'asset/inline',
       },
+      {
+        test: /\.(mp3|ogg|wav)$/i,
+        type: 'asset/resource',
+        generator: {
+          filename: 'assets/sounds/[name][ext]',
+        },
+      },
     ],
   },
   resolve: {

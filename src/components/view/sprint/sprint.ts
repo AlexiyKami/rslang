@@ -8,7 +8,7 @@ import { Word } from '../../types/types';
 export default class Sprint {
   private mainWindow: HTMLElement;
   private readonly FULL_DASH_ARRAY = 283;
-  private readonly TIME_LIMIT = 10;
+  private readonly TIME_LIMIT = 60;
   private readonly START_DELAY = 3;
   private timeLeft = this.TIME_LIMIT + this.START_DELAY;
   private timePassed = 0;

@@ -60,12 +60,12 @@ export interface StatisticsData {
     registrationDate: string;
     audioChallengeStatistics?: GameStatistic;
     sprintStatistics?: GameStatistic;
-    newWords?: {
-      [date: string]: number;
-    }[];
-    learnedWords?: {
-      [date: string]: number;
-    }[];
+    globalStatistic: {
+      [date: string]: {
+        newWords?: number;
+        learnedWords?: number;
+      };
+    };
   };
 }
 

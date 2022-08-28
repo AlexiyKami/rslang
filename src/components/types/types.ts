@@ -56,7 +56,17 @@ export interface UserWord {
 export interface StatisticsData {
   id: string;
   learnedWords?: number;
-  optional?: Optional;
+  optional?: {
+    registrationDate: string;
+    audioChallengeStatistics?: GameStatistic;
+    sprintStatistics?: GameStatistic;
+    newWords: {
+      [date: string]: number;
+    }[];
+    learnedWords: {
+      [date: string]: number;
+    }[];
+  };
 }
 
 export interface CreateUserError {

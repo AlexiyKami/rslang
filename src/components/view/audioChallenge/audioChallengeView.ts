@@ -37,8 +37,10 @@ class AudioChallengeView {
 
     const buttonsBlock = getElement('audio-challenge__difficulty-buttons') as HTMLElement;
     buttonsBlock.addEventListener('click', (e) => {
-      this.view.loadingPopup.draw();
-      this.controller.audioChallengeController.startPageHandler(e);
+      if ((e.target as HTMLElement).classList.contains('audio-challenge__difficulty-button')) {
+        this.view.loadingPopup.draw();
+        this.controller.audioChallengeController.startPageHandler(e);
+      }
     });
 
     (getElement('audio-challenge__back-to-games-button') as HTMLButtonElement).addEventListener('click', () => {

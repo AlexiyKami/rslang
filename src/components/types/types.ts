@@ -54,18 +54,18 @@ export interface UserWord {
 }
 
 export interface StatisticsData {
-  id: string;
+  readonly id: string;
   learnedWords?: number;
   optional?: {
     registrationDate: string;
     audioChallengeStatistics?: GameStatistic;
     sprintStatistics?: GameStatistic;
-    newWords?: {
-      [date: string]: number;
-    }[];
-    learnedWords?: {
-      [date: string]: number;
-    }[];
+    globalStatistics: {
+      [date: string]: {
+        newWords?: number;
+        learnedWords?: number;
+      }
+    }
   };
 }
 

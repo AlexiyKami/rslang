@@ -36,7 +36,6 @@ export default class SprintController {
 
     this.controller.showLoadingPopup();
     this.getWords(group, page, fromTextBook).then((words: Word[]) => {
-      this.model.view.sprint.renderSprintGame();
       this.words = words;
 
       this.series = 0;
@@ -51,7 +50,10 @@ export default class SprintController {
       this.maxInARow = 0;
       this.inARow = 0;
 
-      this.setWordAndTranslate();
+      if (words.length > 0) {
+        this.model.view.sprint.renderSprintGame();
+        this.setWordAndTranslate();
+      } else this.model.view.sprint.renderStartPage(true);
       this.controller.hideLoadingPopup();
     });
   }

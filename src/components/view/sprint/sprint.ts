@@ -8,7 +8,7 @@ import { Word } from '../../types/types';
 export default class Sprint {
   private mainWindow: HTMLElement;
   private readonly FULL_DASH_ARRAY = 283;
-  private readonly TIME_LIMIT = 5;
+  private readonly TIME_LIMIT = 60;
   private readonly START_DELAY = 3;
   private timeLeft = this.TIME_LIMIT + this.START_DELAY;
   private timePassed = 0;
@@ -18,7 +18,7 @@ export default class Sprint {
     this.mainWindow = document.querySelector('.main-window') as HTMLElement;
   }
 
-  public renderStartPage(): void {
+  public renderStartPage(withMistake = false): void {
     this.view.changeAppTitle('Sprint');
 
     let buttonsHTML = '';
@@ -37,6 +37,7 @@ export default class Sprint {
           ${buttonsHTML}
         </div>
         <button class="sprint__back-to-games-button flat-button sprint-group-Space" type="button"><span class="space-icon"></span>Back to Games</button>
+        ${withMistake ? '<span class="sprint-err">Not enough words to start the game!<br>Please try again</span>' : ''}
       </div>
     </div>
     `;

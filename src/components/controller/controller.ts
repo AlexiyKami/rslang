@@ -8,6 +8,9 @@ import AudioChallengeController from './audioChallengeController/audioChallengeC
 import AuthorizationController from './authorizationController';
 import NavController from './navController';
 import StatisticController from './statisticController';
+import '../../assets/sounds/correct.mp3';
+import '../../assets/sounds/wrong.mp3';
+import '../../assets/sounds/end.mp3';
 
 class Controller {
   public model: AppModel;

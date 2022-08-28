@@ -72,7 +72,7 @@ class AudioChallengeView {
       buttonsHTML += `<button class="audio-challenge__select-button group-${i + 1} audio-challenge-group-Digit${
         i + 1
       } flat-button" type="button" data-word=${state.currentGuessingWords[i].word}>${i + 1}. ${
-        state.currentGuessingWords[i].word
+        state.currentGuessingWords[i].wordTranslate
       }</button>`;
     }
 
@@ -132,6 +132,9 @@ class AudioChallengeView {
     img.style.transition = '0.3s';
     img.style.opacity = '1';
 
+    const soundLink = isRightAnswer ? settings.RIGHT_SOUND_LINK : settings.WRONG_SOUND_LINK;
+    this.controller.playStopAudio(soundLink, true, false);
+
     (getElement('audio-challenge__submit-button') as HTMLButtonElement).innerHTML =
       state.currentWordIndex < state.currentWords.length - 1
         ? `<span class="space-icon"></span>Next word`
@@ -153,7 +156,7 @@ class AudioChallengeView {
     const buttons = document.querySelectorAll('.audio-challenge__select-button');
     buttons.forEach((button, i) => {
       const btn = button as HTMLButtonElement;
-      btn.innerHTML = `${i + 1}. ${state.currentGuessingWords[i].word}`;
+      btn.innerHTML = `${i + 1}. ${state.currentGuessingWords[i].wordTranslate}`;
       btn.dataset.word = state.currentGuessingWords[i].word;
       btn.disabled = false;
     });
@@ -179,6 +182,8 @@ class AudioChallengeView {
   }
 
   public renderResultsPage(state: AudioChallengeModelState) {
+    this.controller.playStopAudio(settings.END_GAME_LINK, true, false);
+
     this.mainWindow.innerHTML = `
     <div class="audio-challenge">
       <h2 class="audio-challenge__results-title">Game results</h2>

@@ -11,15 +11,6 @@ class AudioChallengeController {
     this.model.audioChallengeModel.initGame();
   }
 
-  // public async initGameByGroupPage(group: number, page: number) {
-  //   const words = await this.controller.api.getWords(group, page);
-  //   if (typeof words === 'string') {
-  //     this.initGame();
-  //   } else {
-  //     this.model.audioChallengeModel.onWordsLoad(words);
-  //   }
-  // }
-
   public async initGameByGroupPage(group: number, page: number) {
     let words;
 
@@ -42,13 +33,10 @@ class AudioChallengeController {
           filteredWords.length > settings.WORDS_PER_PAGE
             ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE - 1)
             : filteredWords;
-        console.log(allWords, filteredWords);
       } else {
         words = allWordsResponse.data;
       }
     }
-
-    console.log(words);
 
     if (typeof words !== 'string' && words.length < 4) {
       this.initGame();

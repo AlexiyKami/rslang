@@ -30,10 +30,10 @@ class Controller {
     this.statisticController = new StatisticController(this);
   }
 
-  public playStopAudio(fileName: string, startPlay = true) {
+  public playStopAudio(fileName: string, startPlay = true, isOnServer = true) {
     const audio = getElement('app-audio') as HTMLAudioElement;
     if (startPlay) {
-      audio.src = `${settings.DATABASE_URL}/${fileName}`;
+      audio.src = isOnServer ? `${settings.DATABASE_URL}/${fileName}` : fileName;
       audio.play();
     } else {
       audio.pause();

@@ -1,5 +1,5 @@
 import AppModel from '../app';
-import { AudioChallengeModelState, Word } from '../../types/types';
+import { AggregatedWord, AudioChallengeModelState, Word } from '../../types/types';
 import View from '../../view/view';
 import { getRandomNumber } from '../../utils/utils';
 
@@ -56,7 +56,7 @@ class AudioChallengeModel {
     this.view.audioChallenge.renderOnWordsLoadErrorMessage(errorMessage);
   }
 
-  public onWordsLoad(words: Word[]) {
+  public onWordsLoad(words: Word[] | AggregatedWord[]) {
     this.resetState();
     this.state.currentWords = words;
     this.shuffleWords(this.state.currentWords);
@@ -64,7 +64,7 @@ class AudioChallengeModel {
     this.view.audioChallenge.renderGamePage(this.state);
   }
 
-  public onWordSelected(word: Word, isRightAnswer: boolean) {
+  public onWordSelected(word: Word | AggregatedWord, isRightAnswer: boolean) {
     const rightOrWrong = isRightAnswer ? 'rightWords' : 'wrongWords';
     this.state[rightOrWrong].push(word);
     if (isRightAnswer) {

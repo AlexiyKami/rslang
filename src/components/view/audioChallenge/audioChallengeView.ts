@@ -3,7 +3,7 @@ import Controller from '../../controller/controller';
 import View from '../view';
 import settings from '../../settings';
 import './audioChallengeView.scss';
-import { AudioChallengeModelState, Word } from '../../types/types';
+import { AggregatedWord, AudioChallengeModelState, Word } from '../../types/types';
 
 class AudioChallengeView {
   private mainWindow: HTMLElement;
@@ -165,7 +165,7 @@ class AudioChallengeView {
     this.controller.playStopAudio(currentWord.audio);
   }
 
-  private generateResultsAudioBlock(words: Word[]): string {
+  private generateResultsAudioBlock(words: (Word | AggregatedWord)[]): string {
     let audioBlock = '';
     words.forEach((word) => {
       audioBlock += `

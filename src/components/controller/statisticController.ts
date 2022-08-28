@@ -1,5 +1,5 @@
 import Controller from './controller';
-import { GameState, GameStatistic, Optional, UserWord, Word, WordOptional } from '../types/types';
+import { AggregatedWord, GameState, GameStatistic, Optional, UserWord, Word, WordOptional } from '../types/types';
 import { isEmptyObj } from '../utils/utils';
 
 class StatisticController {
@@ -9,7 +9,7 @@ class StatisticController {
     this.userId = this.controller.authorizationController.userId as string;
   }
 
-  private async saveWordStatistic(word: Word, isSuccessful: boolean, userWords: UserWord[]) {
+  private async saveWordStatistic(word: Word | AggregatedWord, isSuccessful: boolean, userWords: UserWord[]) {
     const token = this.controller.authorizationController.token as string;
     const wordStat = {
       difficulty: 'easy',
@@ -21,7 +21,7 @@ class StatisticController {
       },
     };
 
-    const userWord = userWords.find((el) => el.wordId === word.id);
+    const userWord = userWords.find((el) => el.wordId === (word as Word).id || (word as AggregatedWord)._id);
     if (userWord) {
       if (userWord.difficulty) wordStat.difficulty = userWord.difficulty;
       if (userWord.optional !== undefined) Object.assign(wordStat.optional as WordOptional, userWord.optional);
@@ -44,9 +44,21 @@ class StatisticController {
     }
 
     if (!userWord) {
-      await this.controller.api.createUserWord(this.userId, word.id, wordStat.difficulty, wordStat.optional, token);
+      await this.controller.api.createUserWord(
+        this.userId,
+        (word as Word).id || (word as AggregatedWord)._id,
+        wordStat.difficulty,
+        wordStat.optional,
+        token
+      );
     } else {
-      await this.controller.api.updateUserWord(this.userId, word.id, wordStat.difficulty, wordStat.optional, token);
+      await this.controller.api.updateUserWord(
+        this.userId,
+        (word as Word).id || (word as AggregatedWord)._id,
+        wordStat.difficulty,
+        wordStat.optional,
+        token
+      );
     }
   }
 
@@ -60,7 +72,7 @@ class StatisticController {
   private newWordsCount(gameState: GameState, userWords: UserWord[]) {
     let newWordsCount = 0;
     const gameWords = [...gameState.wrongWords, ...gameState.rightWords];
-    const gameWordsIds = gameWords.map((word) => word.id);
+    const gameWordsIds = gameWords.map((word) => (word as Word).id || (word as AggregatedWord)._id);
     const userWordsIds = userWords.map((word) => word.wordId);
     gameWordsIds.forEach((gameWordId) => {
       if (!userWordsIds.includes(gameWordId)) {

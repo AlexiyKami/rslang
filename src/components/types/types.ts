@@ -123,15 +123,15 @@ export interface GetAllUserAggregatedWords extends ApiMethodsData {
 export type CallbackFunction = () => void;
 
 export interface GameState {
-  rightWords: Word[];
-  wrongWords: Word[];
+  rightWords: (Word | AggregatedWord)[];
+  wrongWords: (Word | AggregatedWord)[];
   maxRightWordsInRow: number;
 }
 
 export interface AudioChallengeModelState extends GameState {
-  currentWords: Word[];
+  currentWords: (Word | AggregatedWord)[];
   currentWordIndex: number;
-  currentGuessingWords: Word[];
+  currentGuessingWords: (Word | AggregatedWord)[];
   currentRightWordsInRow: number;
 }
 

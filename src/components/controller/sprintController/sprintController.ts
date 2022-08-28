@@ -16,8 +16,12 @@ export default class SprintController {
   public group = 0;
   public page = 0;
   public fromTextBook = false;
-  public rightWords: Word[] = [];
-  public wrongWords: Word[] = [];
+
+  public rightAnswers = 0;
+  public wrongAnswers = 0;
+  public rightWords: Set<Word> = new Set();
+  public wrongWords: Set<Word> = new Set();
+
   public maxInARow = 0;
   private inARow = 0;
 
@@ -34,13 +38,19 @@ export default class SprintController {
     this.getWords(group, page, fromTextBook).then((words: Word[]) => {
       this.model.view.sprint.renderSprintGame();
       this.words = words;
+
       this.series = 0;
       this.result = 0;
+
       this.curWordInd = 0;
-      this.rightWords = [];
-      this.wrongWords = [];
+      this.rightAnswers = 0;
+      this.wrongAnswers = 0;
+      this.rightWords.clear();
+      this.wrongWords.clear();
+
       this.maxInARow = 0;
       this.inARow = 0;
+
       this.setWordAndTranslate();
       this.controller.hideLoadingPopup();
     });
@@ -98,22 +108,20 @@ export default class SprintController {
 
   public answer(isRight: boolean) {
     if (isRight === (this.word === this.correctWord)) {
-      if (this.audio)
-        this.controller.playAudioFromLink(
-          'https://zvukipro.com/uploads/files/2021-02/1612331901_windows-xp-exclamation.mp3'
-        );
-      this.rightWords.push(this.words[this.curWordInd]);
+      if (this.audio) this.controller.playStopAudio(settings.RIGHT_SOUND_LINK, true, false);
+      this.rightWords.add(this.words[this.curWordInd]);
+      this.wrongWords.delete(this.words[this.curWordInd]);
+      this.rightAnswers++;
       this.inARow++;
       if (this.inARow > this.maxInARow) this.maxInARow = this.inARow;
       this.addSeries();
       this.result += this.points;
       this.model.view.sprint.setResult(this.result);
     } else {
-      if (this.audio)
-        this.controller.playAudioFromLink(
-          'https://zvukipro.com/uploads/files/2021-02/1612331779_windows-xp-critical-stop.mp3'
-        );
-      this.wrongWords.push(this.words[this.curWordInd]);
+      if (this.audio) this.controller.playStopAudio(settings.WRONG_SOUND_LINK, true, false);
+      this.wrongWords.add(this.words[this.curWordInd]);
+      this.rightWords.delete(this.words[this.curWordInd]);
+      this.wrongAnswers++;
       this.inARow = 0;
       this.clearSeries();
     }
@@ -159,10 +167,11 @@ export default class SprintController {
   }
 
   public setStatistic() {
+    if (this.audio) this.controller.playStopAudio(settings.END_GAME_LINK, true, false);
     if (this.controller.isAuthorized())
       this.controller.statisticController.saveGameStatistic('sprint', {
-        rightWords: this.rightWords,
-        wrongWords: this.wrongWords,
+        rightWords: [...this.rightWords],
+        wrongWords: [...this.wrongWords],
         maxRightWordsInRow: this.maxInARow,
       });
   }

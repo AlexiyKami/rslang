@@ -47,17 +47,6 @@ class Controller {
     }
   }
 
-  public playAudioFromLink(link: string, startPlay = true) {
-    const audio = getElement('app-audio') as HTMLAudioElement;
-    if (startPlay) {
-      audio.src = link;
-      audio.play();
-    } else {
-      audio.pause();
-      audio.currentTime = 0;
-    }
-  }
-
   public onAudioEnded(cb: CallbackFunction) {
     const audio = getElement('app-audio') as HTMLAudioElement;
     audio.onended = cb;

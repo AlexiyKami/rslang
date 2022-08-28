@@ -18,7 +18,7 @@ export default class Sprint {
     this.mainWindow = document.querySelector('.main-window') as HTMLElement;
   }
 
-  public renderStartPage(): void {
+  public renderStartPage(withMistake = false): void {
     this.view.changeAppTitle('Sprint');
 
     let buttonsHTML = '';
@@ -37,6 +37,7 @@ export default class Sprint {
           ${buttonsHTML}
         </div>
         <button class="sprint__back-to-games-button flat-button sprint-group-Space" type="button"><span class="space-icon"></span>Back to Games</button>
+        ${withMistake ? '<span class="sprint-err">Not enough words to start the game!<br>Please try again</span>' : ''}
       </div>
     </div>
     `;
@@ -67,8 +68,8 @@ export default class Sprint {
           <span id="series-two" class="sprint-series-marker"></span>
           <span id="series-three" class="sprint-series-marker"></span>
         </div>
-        <p id="sprint-word" class="sprint-word">dick</p>
-        <p id="sprint-translating" class="sprint-translating">хуй</p>
+        <p id="sprint-word" class="sprint-word"></p>
+        <p id="sprint-translating" class="sprint-translating"></p>
         <div class="sprint-buttons">
           <button id="sprint-true" class="flat-button green sprint-group-ArrowLeft"><span class="arrow-left-icon"></span>right</button>
           <button id="sprint-false" class="flat-button red sprint-group-ArrowRight">wrong<span class="arrow-right-icon"></span></button>
@@ -121,47 +122,38 @@ export default class Sprint {
   }
 
   private renderSprintResult() {
-    const allWords =
-      this.controller.sprintController.rightWords.length + this.controller.sprintController.wrongWords.length;
+    const mistakes = [...this.controller.sprintController.wrongWords];
+    const correct = [...this.controller.sprintController.rightWords];
+    const rightAnswers = this.controller.sprintController.rightAnswers;
+    const wrongAnswers = this.controller.sprintController.wrongAnswers;
+    const allAWords = correct.length + mistakes.length;
+    const allAnswers = rightAnswers + wrongAnswers;
 
     this.mainWindow.innerHTML = `
     <div class="sprint">
       <h1 class="sprint-results-header">Game Result</h1>
       <div class="sprint-results">
         <div class="sprint-word-result">
-          <p class="answer"><span class="repeated">${allWords}</span> words were repeated</p>
-          <p class="answer"><span class="right">${
-            this.controller.sprintController.rightWords.length
-          }</span> right answers</p>
-          <p class="answer"><span class="wrong">${
-            this.controller.sprintController.wrongWords.length
-          }</span> wrong answers</p>
+          <p class="answer"><span class="repeated">${allAWords}</span> words were repeated</p>
+          <p class="answer"><span class="right">${rightAnswers}</span> right answers</p>
+          <p class="answer"><span class="wrong">${wrongAnswers}</span> wrong answers</p>
           <p class="answer"><span class="in-a-row">${this.controller.sprintController.maxInARow}</span> in a row</p>
         </div>
         <div id="sprint-circle"></div>
       </div>
       ${
-        this.controller.sprintController.wrongWords.length > 0 || this.controller.sprintController.rightWords.length > 0
-          ? `
-            <div id="sprint-words-links" class="sprint-words-links">
+        allAWords > 0
+          ? `<div id="sprint-words-links" class="sprint-words-links"> 
             ${
-              this.controller.sprintController.wrongWords.length > 0
-                ? `
-                <p class="sprint-words-links-header wrong">Mistakes</p>
-                ${this.audioWordsHTML(this.controller.sprintController.wrongWords)}
-                `
+              mistakes.length > 0
+                ? `<p class="sprint-words-links-header wrong">Mistakes</p> ${this.audioWordsHTML(mistakes)}`
+                : ''
+            }${
+              correct.length > 0
+                ? ` <p class="sprint-words-links-header right">Correct answers</p> ${this.audioWordsHTML(correct)}`
                 : ''
             }
-            ${
-              this.controller.sprintController.rightWords.length > 0
-                ? `
-                <p class="sprint-words-links-header right">Correct answers</p>
-                ${this.audioWordsHTML(this.controller.sprintController.rightWords)}
-                `
-                : ''
-            }
-            </div>
-             `
+            </div>`
           : ''
       }
       <div class="sprint-buttons">
@@ -171,12 +163,7 @@ export default class Sprint {
     </div>
     `;
 
-    const accuracy =
-      allWords === 0
-        ? 0
-        : this.controller.sprintController.rightWords.length === 0
-        ? 0
-        : Math.round((this.controller.sprintController.rightWords.length / allWords) * 100);
+    const accuracy = allAnswers === 0 ? 0 : rightAnswers === 0 ? 0 : Math.round((rightAnswers / allAnswers) * 100);
     this.renderCircle(`${accuracy}%`);
 
     document
@@ -205,7 +192,7 @@ export default class Sprint {
 
   private audioWordsHTML(words: Word[]): string {
     let result = '';
-    new Set(words).forEach((word: Word) => {
+    words.forEach((word: Word) => {
       result += `
       <div class="sprint-audio">
         <button class="sprint-audio-play" data-audio=${word.audio}></button>

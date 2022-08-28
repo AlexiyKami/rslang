@@ -27,10 +27,24 @@ export default class AuthorizationController {
   public async createUser(name: string, email: string, pass: string): Promise<string | null> {
     const createUserData = await this.baseController.api.createUser(name, email, pass);
     if (createUserData.code === 200) {
+      await this.createInitialStatistics(email, pass);
       return this.userSignIn(email, pass);
     } else {
       return createUserData.data.toString();
     }
+  }
+
+  private async createInitialStatistics(email: string, pass: string): Promise<void> {
+    const initOptionalStatistics = {
+      registrationDate: new Date().toDateString(),
+    };
+    const userData = await this.baseController.api.userSignIn(email, pass);
+    await this.baseController.api.upsertStatistics(
+      userData.data.userId,
+      0,
+      initOptionalStatistics,
+      userData.data.token
+    );
   }
 
   public async userSignIn(email: string, pass: string): Promise<string | null> {

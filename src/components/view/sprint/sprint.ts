@@ -8,7 +8,7 @@ import { Word } from '../../types/types';
 export default class Sprint {
   private mainWindow: HTMLElement;
   private readonly FULL_DASH_ARRAY = 283;
-  private readonly TIME_LIMIT = 60;
+  private readonly TIME_LIMIT = 5;
   private readonly START_DELAY = 3;
   private timeLeft = this.TIME_LIMIT + this.START_DELAY;
   private timePassed = 0;
@@ -67,8 +67,8 @@ export default class Sprint {
           <span id="series-two" class="sprint-series-marker"></span>
           <span id="series-three" class="sprint-series-marker"></span>
         </div>
-        <p id="sprint-word" class="sprint-word">dick</p>
-        <p id="sprint-translating" class="sprint-translating">хуй</p>
+        <p id="sprint-word" class="sprint-word"></p>
+        <p id="sprint-translating" class="sprint-translating"></p>
         <div class="sprint-buttons">
           <button id="sprint-true" class="flat-button green sprint-group-ArrowLeft"><span class="arrow-left-icon"></span>right</button>
           <button id="sprint-false" class="flat-button red sprint-group-ArrowRight">wrong<span class="arrow-right-icon"></span></button>

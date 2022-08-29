@@ -29,16 +29,18 @@ class StatisticsPage {
         ?.sprintStatistics as GameStatistic;
     }
     const audioChallengeAccuracy =
-      (+(
-        (audioChallengeStatistics as GameStatistic)?.rightWords /
-        ((audioChallengeStatistics as GameStatistic)?.rightWords +
-          (audioChallengeStatistics as GameStatistic)?.wrongWords)
-      ).toFixed(2) as number) * 100 || 0;
+      +(
+        ((audioChallengeStatistics as GameStatistic)?.rightWords /
+          ((audioChallengeStatistics as GameStatistic)?.rightWords +
+            (audioChallengeStatistics as GameStatistic)?.wrongWords)) *
+        100
+      ).toFixed(1) || 0;
     const sprintAccuracy =
-      (+(
-        (sprintStatistics as GameStatistic)?.rightWords /
-        ((sprintStatistics as GameStatistic)?.rightWords + (sprintStatistics as GameStatistic)?.wrongWords)
-      ).toFixed(2) as number) * 100 || 0;
+      +(
+        ((sprintStatistics as GameStatistic)?.rightWords /
+          ((sprintStatistics as GameStatistic)?.rightWords + (sprintStatistics as GameStatistic)?.wrongWords)) *
+        100
+      ).toFixed(1) || 0;
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
       ${
         !isAuthorized

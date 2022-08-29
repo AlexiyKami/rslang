@@ -191,6 +191,11 @@ class StatisticsPage {
             },
           },
           plugins: {
+            title: {
+              display: true,
+              text: `Всего: ${newWordsDataset.reduce((total, curr) => total + curr)}`,
+              position: 'bottom',
+            },
             legend: {
               display: true,
               labels: {
@@ -225,7 +230,6 @@ class StatisticsPage {
           },
           scales: {
             yAxes: {
-              min: 0,
               suggestedMax: 10,
             },
             xAxes: {
@@ -235,6 +239,11 @@ class StatisticsPage {
             },
           },
           plugins: {
+            title: {
+              display: true,
+              text: `Всего: ${learnedWordsDataset.reduce((total, curr) => total + curr)}`,
+              position: 'bottom',
+            },
             legend: {
               display: true,
               labels: {

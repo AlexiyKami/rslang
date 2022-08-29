@@ -1,10 +1,10 @@
-import { GameStatistic } from './../../types/types';
+import { GameStatistic, StatisticsOptional } from '../../types/types';
 import Controller from '../../controller/controller';
 import View from '../view';
 import './statisticsPage.scss';
 import Chart from 'chart.js/auto';
 import settings from '../../settings';
-import { Optional, StatisticsData } from '../../types/types';
+import { StatisticsData } from '../../types/types';
 
 class StatisticsPage {
   controller: Controller;
@@ -23,9 +23,8 @@ class StatisticsPage {
     if (isAuthorized) {
       statistics = (await this.controller.api.getStatistics(state.userId as string, state.token as string))
         .data as StatisticsData;
-      audioChallengeStatistics = ((statistics as StatisticsData).optional as Optional)
-        .audiochallengeStatistic as GameStatistic;
-      console.log(statistics);
+      audioChallengeStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
+        .audioChallengeStatistics as GameStatistic;
     }
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
       ${
@@ -120,7 +119,7 @@ class StatisticsPage {
         undefined,
         settings.COUNT_OF_WORDS()
       );
-      console.log(words);
+
       const wordsChart = document.getElementById('chart-words') as HTMLCanvasElement;
       const progressChart = document.getElementById('chart-progress') as HTMLCanvasElement;
       new Chart(wordsChart, {

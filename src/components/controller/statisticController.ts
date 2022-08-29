@@ -1,6 +1,13 @@
 import Controller from './controller';
-import { AggregatedWord, GameState, GameStatistic, Optional, UserWord, Word, WordOptional } from '../types/types';
-import { isEmptyObj } from '../utils/utils';
+import {
+  AggregatedWord,
+  GameState,
+  GameStatistic,
+  StatisticsOptional,
+  UserWord,
+  Word,
+  WordOptional,
+} from '../types/types';
 
 class StatisticController {
   private readonly userId: string;
@@ -11,6 +18,7 @@ class StatisticController {
 
   private async saveWordStatistic(word: Word | AggregatedWord, isSuccessful: boolean, userWords: UserWord[]) {
     const token = this.controller.authorizationController.token as string;
+    let learnedWordsCount = 0;
     const wordStat = {
       difficulty: 'easy',
       optional: {
@@ -21,7 +29,9 @@ class StatisticController {
       },
     };
 
-    const userWord = userWords.find((el) => el.wordId === (word as Word).id || (word as AggregatedWord)._id);
+    const wordId = (word as Word).id || (word as AggregatedWord)._id;
+    const userWord = userWords.find((el) => el.wordId === wordId);
+
     if (userWord) {
       if (userWord.difficulty) wordStat.difficulty = userWord.difficulty;
       if (userWord.optional !== undefined) Object.assign(wordStat.optional as WordOptional, userWord.optional);
@@ -33,8 +43,10 @@ class StatisticController {
       if (
         (wordStat.difficulty === 'easy' && wordStat.optional.inRow >= 3) ||
         (wordStat.difficulty === 'hard' && wordStat.optional.inRow >= 5)
-      )
+      ) {
         wordStat.optional.isLearned = true;
+        learnedWordsCount++;
+      }
     }
 
     if (!isSuccessful) {
@@ -60,13 +72,15 @@ class StatisticController {
         token
       );
     }
+    return learnedWordsCount;
   }
 
   private async saveWordsStatistic(gameState: GameState, userWords: UserWord[]) {
-    const promises: Promise<void>[] = [];
+    const promises: Promise<number>[] = [];
     gameState.rightWords.forEach((word) => promises.push(this.saveWordStatistic(word, true, userWords)));
     gameState.wrongWords.forEach((word) => promises.push(this.saveWordStatistic(word, false, userWords)));
-    await Promise.all(promises);
+    const numArr = await Promise.all(promises);
+    return numArr.reduce((acc, num) => acc + num, 0);
   }
 
   private newWordsCount(gameState: GameState, userWords: UserWord[]) {
@@ -87,29 +101,39 @@ class StatisticController {
     return newWordsCount;
   }
 
-  public async saveGameStatistic(gameName: 'sprint' | 'audiochallenge', gameState: GameState) {
+  public async saveGameStatistic(gameName: 'sprint' | 'audioChallenge', gameState: GameState) {
     const token = this.controller.authorizationController.token as string;
     const userWordsResponse = await this.controller.api.getAllUserWords(this.userId, token);
     const userWords = userWordsResponse.data;
+
+    const date = new Date().toDateString();
     const newWordsCount = typeof userWords !== 'string' ? this.newWordsCount(gameState, userWords) : 0;
 
-    if (typeof userWords !== 'string') await this.saveWordsStatistic(gameState, userWords);
+    let learnedWords = 0;
+    if (typeof userWords !== 'string') learnedWords = await this.saveWordsStatistic(gameState, userWords);
 
     const userStat = await this.controller.api.getStatistics(this.userId, token);
+    const userStatLearnedWords = typeof userStat.data !== 'string' ? userStat.data.learnedWords || 0 : 0;
 
-    const optional: Optional = {};
-    if (
-      typeof userStat.data !== 'string' &&
-      userStat.data.optional !== undefined &&
-      !isEmptyObj(userStat.data.optional)
-    ) {
-      Object.assign(optional, userStat.data.optional);
-    }
-    const statName: 'sprintStatistic' | 'audiochallengeStatistic' = `${gameName}Statistic`;
-    const date = new Date().toDateString();
+    const optional: StatisticsOptional = {
+      registrationDate: date,
+      globalStatistic: {
+        [date]: {
+          newWords: 0,
+          learnedWords: 0,
+        },
+      },
+    };
+
+    if (typeof userStat.data !== 'string') Object.assign(optional, userStat.data.optional);
+    (optional.globalStatistic[date].newWords as number) += newWordsCount;
+    (optional.globalStatistic[date].learnedWords as number) += learnedWords;
+
+    const statName: 'sprintStatistics' | 'audioChallengeStatistics' = `${gameName}Statistics`;
+
     const serverStat = optional[statName] as GameStatistic | undefined;
 
-    const stat: GameStatistic = {
+    const gameStat: GameStatistic = {
       date: '',
       newWords: 0,
       rightWords: 0,
@@ -118,18 +142,19 @@ class StatisticController {
     };
 
     if (serverStat !== undefined && serverStat.date === date) {
-      Object.assign(stat, optional[statName]);
+      Object.assign(gameStat, serverStat);
     }
 
-    stat.date = date;
-    stat.newWords += newWordsCount;
-    stat.rightWords += gameState.rightWords.length;
-    stat.wrongWords += gameState.wrongWords.length;
-    stat.maxInRow = gameState.maxRightWordsInRow > stat.maxInRow ? gameState.maxRightWordsInRow : stat.maxInRow;
+    gameStat.date = date;
+    gameStat.newWords += newWordsCount;
+    gameStat.rightWords += gameState.rightWords.length;
+    gameStat.wrongWords += gameState.wrongWords.length;
+    gameStat.maxInRow =
+      gameState.maxRightWordsInRow > gameStat.maxInRow ? gameState.maxRightWordsInRow : gameStat.maxInRow;
 
-    optional[statName] = stat;
+    optional[statName] = gameStat;
 
-    await this.controller.api.upsertStatistics(this.userId, 0, optional, token);
+    await this.controller.api.upsertStatistics(this.userId, userStatLearnedWords + learnedWords, optional, token);
   }
 }
 

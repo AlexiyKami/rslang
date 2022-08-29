@@ -31,7 +31,7 @@ class AudioChallengeController {
         const filteredWords = allWords.filter((word) => !word.userWord?.optional?.isLearned);
         words =
           filteredWords.length > settings.WORDS_PER_PAGE
-            ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE - 1)
+            ? filteredWords.slice(filteredWords.length - settings.WORDS_PER_PAGE)
             : filteredWords;
       } else {
         words = allWordsResponse.data;

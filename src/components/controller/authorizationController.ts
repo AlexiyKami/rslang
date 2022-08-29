@@ -1,4 +1,5 @@
 import Controller from './controller';
+import { StatisticsOptional } from '../types/types';
 
 export default class AuthorizationController {
   private readonly baseController: Controller;
@@ -35,8 +36,9 @@ export default class AuthorizationController {
   }
 
   private async createInitialStatistics(email: string, pass: string): Promise<void> {
-    const initOptionalStatistics = {
+    const initOptionalStatistics: StatisticsOptional = {
       registrationDate: new Date().toDateString(),
+      globalStatistic: {},
     };
     const userData = await this.baseController.api.userSignIn(email, pass);
     await this.baseController.api.upsertStatistics(

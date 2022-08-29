@@ -53,20 +53,22 @@ export interface UserWord {
   optional?: WordOptional;
 }
 
+export interface StatisticsOptional {
+  registrationDate: string;
+  audioChallengeStatistics?: GameStatistic;
+  sprintStatistics?: GameStatistic;
+  globalStatistic: {
+    [date: string]: {
+      newWords?: number;
+      learnedWords?: number;
+    };
+  };
+}
+
 export interface StatisticsData {
   readonly id: string;
   learnedWords?: number;
-  optional?: {
-    registrationDate: string;
-    audioChallengeStatistics?: GameStatistic;
-    sprintStatistics?: GameStatistic;
-    globalStatistic: {
-      [date: string]: {
-        newWords?: number;
-        learnedWords?: number;
-      };
-    };
-  };
+  optional?: StatisticsOptional;
 }
 
 export interface CreateUserError {
@@ -88,7 +90,7 @@ export interface GetAllUserAggregatedWordsData {
   ];
 }
 
-export type Optional = Record<string, unknown>;
+// export type Optional = Record<string, unknown>;
 
 interface ApiMethodsData {
   code: number;

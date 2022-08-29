@@ -128,8 +128,8 @@ export default class SprintController {
       this.clearSeries();
     }
 
-    this.setWordAndTranslate();
     if (++this.curWordInd === this.words.length) this.model.view.sprint.renderEarlyResult();
+    this.setWordAndTranslate();
   }
 
   private addSeries() {

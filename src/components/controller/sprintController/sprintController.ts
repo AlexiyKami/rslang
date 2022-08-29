@@ -50,7 +50,7 @@ export default class SprintController {
       this.maxInARow = 0;
       this.inARow = 0;
 
-      if (words.length > 0) {
+      if (words.length >= 5) {
         this.model.view.sprint.renderSprintGame();
         this.setWordAndTranslate();
       } else this.model.view.sprint.renderStartPage(true);
@@ -129,7 +129,7 @@ export default class SprintController {
     }
 
     this.setWordAndTranslate();
-    if (++this.curWordInd === this.words.length) this.curWordInd = 0;
+    if (++this.curWordInd === this.words.length) this.model.view.sprint.renderEarlyResult();
   }
 
   private addSeries() {

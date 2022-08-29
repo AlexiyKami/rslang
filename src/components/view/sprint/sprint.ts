@@ -190,6 +190,12 @@ export default class Sprint {
     );
   }
 
+  public renderEarlyResult() {
+    clearInterval(this.timerInterval);
+    this.renderSprintResult();
+    this.controller.sprintController.setStatistic();
+  }
+
   private audioWordsHTML(words: Word[]): string {
     let result = '';
     words.forEach((word: Word) => {

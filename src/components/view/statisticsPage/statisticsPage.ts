@@ -3,7 +3,6 @@ import Controller from '../../controller/controller';
 import View from '../view';
 import './statisticsPage.scss';
 import Chart from 'chart.js/auto';
-import settings from '../../settings';
 import { StatisticsData } from '../../types/types';
 
 class StatisticsPage {
@@ -20,12 +19,26 @@ class StatisticsPage {
     const isAuthorized = this.controller.isAuthorized();
     let statistics: string | StatisticsData | undefined = undefined;
     let audioChallengeStatistics: GameStatistic | undefined = undefined;
+    let sprintStatistics: GameStatistic | undefined = undefined;
     if (isAuthorized) {
       statistics = (await this.controller.api.getStatistics(state.userId as string, state.token as string))
         .data as StatisticsData;
       audioChallengeStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
-        .audioChallengeStatistics as GameStatistic;
+        ?.audioChallengeStatistics as GameStatistic;
+      sprintStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
+        ?.sprintStatistics as GameStatistic;
     }
+    const audioChallengeAccuracy =
+      (+(
+        (audioChallengeStatistics as GameStatistic)?.rightWords /
+        ((audioChallengeStatistics as GameStatistic)?.rightWords +
+          (audioChallengeStatistics as GameStatistic)?.wrongWords)
+      ).toFixed(2) as number) * 100 || 0;
+    const sprintAccuracy =
+      (+(
+        (sprintStatistics as GameStatistic)?.rightWords /
+        ((sprintStatistics as GameStatistic)?.rightWords + (sprintStatistics as GameStatistic)?.wrongWords)
+      ).toFixed(2) as number) * 100 || 0;
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
       ${
         !isAuthorized
@@ -39,27 +52,38 @@ class StatisticsPage {
           <h3 class='statistics-title'>Сегодня</h3>
           <div class='today-indicators'>
             <div class='learned-words'>
-              <h3 class='learned-words-title'>Слов изучено</h3>
-              <h3 class='learned-words-counter'>${statistics?.learnedWords || 0}</h3>
+              <h3 class='learned-words-title'>Изученных слов:</h3>
+              <h3 class='learned-words-counter'>${
+                statistics?.optional.globalStatistics[new Date().toDateString()]?.learnedWords || 0
+              }</h3>
+            </div>
+            <div class='new-words'>
+              <h3 class='new-words-title'>Новых слов:</h3>
+              <h3 class='new-words-counter'>${
+                statistics?.optional.globalStatistics[new Date().toDateString()]?.newWords || 0
+              }</h3>
             </div>
             <div class='accuracy'>
               <h3 class='accuracy-title'>Точность</h3>
-              <h3 class='accuracy-counter'>0%</h3>
+              <h3 class='accuracy-counter'>${(audioChallengeAccuracy + sprintAccuracy) / 2}%</h3>
             </div>
             <div class='sprint-indicator'>
               <h3 class='sprint-indicator-title'>Спринт</h3>
               <div class='indicator-stats'>
                 <div class='sprint-words'>
                   <span>Слов</span>
-                  <span>0</span>
+                  <span>${
+                    (sprintStatistics as GameStatistic)?.rightWords + (sprintStatistics as GameStatistic)?.wrongWords ||
+                    0
+                  }</span>
                 </div>
                 <div class='sprint-accuracy'>
                   <span>Точность</span>
-                  <span>0%</span>
+                  <span>${sprintAccuracy}%</span>
                 </div>
                 <div class='sprint-in-row'>
                   <span>Угадано подряд</span>
-                  <span>0</span>
+                  <span>${(sprintStatistics as GameStatistic)?.maxInRow || 0}</span>
                 </div>
               </div>
             </div>
@@ -75,13 +99,7 @@ class StatisticsPage {
                 </div>
                 <div class='audio-challenge-accuracy'>
                   <span>Точность</span>
-                  <span>${
-                    (+(
-                      (audioChallengeStatistics as GameStatistic)?.rightWords /
-                      ((audioChallengeStatistics as GameStatistic)?.rightWords +
-                        (audioChallengeStatistics as GameStatistic)?.wrongWords)
-                    ).toFixed(2) as number) * 100 || 0
-                  }%</span>
+                  <span>${audioChallengeAccuracy}%</span>
                 </div>
                 <div class='audio-challenge-in-row'>
                   <span>Угадано подряд</span>
@@ -111,25 +129,42 @@ class StatisticsPage {
       </div>
     `;
     if (isAuthorized) {
-      const words = await this.controller.api.getAllUserAggregatedWords(
-        state.userId as string,
-        state.token as string,
-        `{"$nor":[{ "userWord": null}]}`,
-        undefined,
-        undefined,
-        settings.COUNT_OF_WORDS()
+      // const words = await this.controller.api.getAllUserAggregatedWords(
+      //   state.userId as string,
+      //   state.token as string,
+      //   `{"$nor":[{ "userWord": null}]}`,
+      //   undefined,
+      //   undefined,
+      //   settings.COUNT_OF_WORDS()
+      // );
+      // console.log(words);
+      console.log(statistics);
+      const minDate = new Date(statistics?.optional.registrationDate as string).getTime();
+      const maxDate = Math.max(
+        ...Object.keys((statistics as StatisticsData).optional.globalStatistics).map((date) => new Date(date).getTime())
       );
-
+      const dataLabels = [];
+      const newWordsDataset = [];
+      const learnedWordsDataset = [];
+      for (let i = minDate; i <= maxDate; i = i + 24 * 60 * 60 * 1000) {
+        dataLabels.push(new Date(i).toLocaleDateString());
+        newWordsDataset.push(
+          (statistics as StatisticsData).optional.globalStatistics[new Date(i).toDateString()]?.newWords || 0
+        );
+        learnedWordsDataset.push(
+          (statistics as StatisticsData).optional.globalStatistics[new Date(i).toDateString()]?.learnedWords || 0
+        );
+      }
       const wordsChart = document.getElementById('chart-words') as HTMLCanvasElement;
       const progressChart = document.getElementById('chart-progress') as HTMLCanvasElement;
       new Chart(wordsChart, {
         type: 'line',
         data: {
-          labels: ['22.08.2022', '23.08.2022', '24.08.2022', '25.08.2022', '26.08.2022', '27.08.2022'], //  labels[] and data[] has same length, labels starts with earliest Date
+          labels: dataLabels,
           datasets: [
             {
               label: 'Слова',
-              data: [1, 25, 8, 2, 0, 15],
+              data: newWordsDataset,
               backgroundColor: 'orange',
               borderColor: 'lightcoral',
               borderWidth: 2,
@@ -143,6 +178,10 @@ class StatisticsPage {
             },
           },
           scales: {
+            yAxes: {
+              min: 0,
+              suggestedMax: 10,
+            },
             xAxes: {
               grid: {
                 display: false,
@@ -165,11 +204,11 @@ class StatisticsPage {
       new Chart(progressChart, {
         type: 'line',
         data: {
-          labels: ['22.08.2022', '23.08.2022', '24.08.2022', '25.08.2022', '26.08.2022', '27.08.2022'],
+          labels: dataLabels,
           datasets: [
             {
               label: 'Прогресс',
-              data: [1, 2, 5, 3, 8, 2],
+              data: learnedWordsDataset,
               backgroundColor: 'green',
               borderColor: 'lightgreen',
               borderWidth: 2,
@@ -183,6 +222,10 @@ class StatisticsPage {
             },
           },
           scales: {
+            yAxes: {
+              min: 0,
+              suggestedMax: 10,
+            },
             xAxes: {
               grid: {
                 display: false,

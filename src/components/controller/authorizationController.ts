@@ -38,7 +38,7 @@ export default class AuthorizationController {
   private async createInitialStatistics(email: string, pass: string): Promise<void> {
     const initOptionalStatistics: StatisticsOptional = {
       registrationDate: new Date().toDateString(),
-      globalStatistic: {},
+      globalStatistics: {},
     };
     const userData = await this.baseController.api.userSignIn(email, pass);
     await this.baseController.api.upsertStatistics(

@@ -57,7 +57,7 @@ export interface StatisticsOptional {
   registrationDate: string;
   audioChallengeStatistics?: GameStatistic;
   sprintStatistics?: GameStatistic;
-  globalStatistic: {
+  globalStatistics: {
     [date: string]: {
       newWords?: number;
       learnedWords?: number;
@@ -68,7 +68,7 @@ export interface StatisticsOptional {
 export interface StatisticsData {
   readonly id: string;
   learnedWords?: number;
-  optional?: StatisticsOptional;
+  optional: StatisticsOptional;
 }
 
 export interface CreateUserError {

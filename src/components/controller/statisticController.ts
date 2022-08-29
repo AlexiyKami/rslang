@@ -117,7 +117,7 @@ class StatisticController {
 
     const optional: StatisticsOptional = {
       registrationDate: date,
-      globalStatistic: {
+      globalStatistics: {
         [date]: {
           newWords: 0,
           learnedWords: 0,
@@ -126,8 +126,8 @@ class StatisticController {
     };
 
     if (typeof userStat.data !== 'string') Object.assign(optional, userStat.data.optional);
-    (optional.globalStatistic[date].newWords as number) += newWordsCount;
-    (optional.globalStatistic[date].learnedWords as number) += learnedWords;
+    (optional.globalStatistics[date].newWords as number) += newWordsCount;
+    (optional.globalStatistics[date].learnedWords as number) += learnedWords;
 
     const statName: 'sprintStatistics' | 'audioChallengeStatistics' = `${gameName}Statistics`;
 

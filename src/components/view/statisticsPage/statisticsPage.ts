@@ -25,7 +25,8 @@ class StatisticsPage {
         .data as StatisticsData;
       audioChallengeStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
         ?.audioChallengeStatistics as GameStatistic;
-      sprintStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)?.sprintStatistics as GameStatistic;
+      sprintStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
+        ?.sprintStatistics as GameStatistic;
     }
     const audioChallengeAccuracy =
       (+(
@@ -65,7 +66,7 @@ class StatisticsPage {
             <div class='accuracy'>
               <h3 class='accuracy-title'>Точность</h3>
               <h3 class='accuracy-counter'>${
-                (audioChallengeAccuracy * sprintAccuracy) / 2 || audioChallengeAccuracy || sprintAccuracy
+                (audioChallengeAccuracy + sprintAccuracy) / 2 || audioChallengeAccuracy || sprintAccuracy
               }%</h3>
             </div>
             <div class='sprint-indicator'>

@@ -28,7 +28,7 @@
 }
 
 .today-statistics {
-  width: 600px;
+  width: 760px;
   height: 500px;
   padding: 20px;
   .today-indicators {
@@ -36,27 +36,32 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    height: 100%;
     gap: 20px;
   }
-  .learned-words, .accuracy, .sprint-indicator, .audio-challenge-indicator {
+  .learned-words, .new-words, .accuracy {
     padding: 20px;
-    width: 250px;
+    width: 200px;
     box-shadow: 0 0 10px rgb(0 0 0 / 15%);
     border-radius: 10px;
   }
-  .learned-words {
+  .sprint-indicator, .audio-challenge-indicator {
+    padding: 20px;
+    width: 330px;
+    box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+    border-radius: 10px;
+  }
+  .learned-words, .new-words {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 10px;
     align-items: center;
     height: 100px;
-    .learned-words-counter {
+    .learned-words-counter, .new-words-counter {
       font-size: 48px;
     }
 
-    .learned-words-title {
+    .learned-words-title, .new-words-title {
       font-size: 20px;
       font-weight: 400;
     }
@@ -125,7 +130,6 @@
 }
 
 .alltime-statistics {
-  margin-top: 50px;
   width: 900px;
   height: 400px;
   gap: 50px;

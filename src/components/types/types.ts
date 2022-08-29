@@ -56,11 +56,11 @@ export interface UserWord {
 export interface StatisticsData {
   readonly id: string;
   learnedWords?: number;
-  optional?: {
+  optional: {
     registrationDate: string;
     audioChallengeStatistics?: GameStatistic;
     sprintStatistics?: GameStatistic;
-    globalStatistic: {
+    globalStatistics: {
       [date: string]: {
         newWords?: number;
         learnedWords?: number;

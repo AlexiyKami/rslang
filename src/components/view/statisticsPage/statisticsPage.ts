@@ -1,9 +1,9 @@
-import { GameStatistic } from './../../types/types';
+import { GameStatistic, StatisticsOptional } from '../../types/types';
 import Controller from '../../controller/controller';
 import View from '../view';
 import './statisticsPage.scss';
 import Chart from 'chart.js/auto';
-import { Optional, StatisticsData } from '../../types/types';
+import { StatisticsData } from '../../types/types';
 
 class StatisticsPage {
   controller: Controller;
@@ -23,9 +23,9 @@ class StatisticsPage {
     if (isAuthorized) {
       statistics = (await this.controller.api.getStatistics(state.userId as string, state.token as string))
         .data as StatisticsData;
-      audioChallengeStatistics = ((statistics as StatisticsData).optional as Optional)
+      audioChallengeStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)
         ?.audioChallengeStatistics as GameStatistic;
-      sprintStatistics = ((statistics as StatisticsData).optional as Optional)?.sprintStatistics as GameStatistic;
+      sprintStatistics = ((statistics as StatisticsData).optional as StatisticsOptional)?.sprintStatistics as GameStatistic;
     }
     const audioChallengeAccuracy =
       (+(

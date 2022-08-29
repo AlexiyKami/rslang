@@ -16,10 +16,3 @@ export const createElement = (
 export const getElement = (tagClass: string): HTMLElement | null => document.querySelector(`.${tagClass}`);
 
 export const getRandomNumber = (min: number, max: number): number => Math.floor(Math.random() * (max - min + 1) + min);
-
-export const isEmptyObj = (obj: Record<string, unknown>) => {
-  for (const key in obj) {
-    return false;
-  }
-  return true;
-};

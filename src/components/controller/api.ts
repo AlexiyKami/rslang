@@ -6,13 +6,13 @@ import {
   GetUpdateUserData,
   GetUserAggregatedWord,
   GetUserTokensData,
-  Optional,
   UserWordData,
   Word,
   GetAllUserAggregatedWordsData,
   GetAllUserAggregatedWords,
   GetAllUserWordsData,
   WordOptional,
+  StatisticsOptional,
 } from '../types/types';
 
 export class Api {
@@ -560,7 +560,7 @@ export class Api {
   public async upsertStatistics(
     userId: string,
     learnedWords: number,
-    optional: Optional,
+    optional: StatisticsOptional,
     token: string
   ): Promise<GetUpsertStatistics> {
     try {

@@ -1,5 +1,14 @@
 import Controller from './controller';
-import { AggregatedWord, GameState, GameStatistic, Optional, UserWord, Word, WordOptional } from '../types/types';
+import {
+  AggregatedWord,
+  GameState,
+  GameStatistic,
+  Optional,
+  StatisticsData,
+  UserWord,
+  Word,
+  WordOptional,
+} from '../types/types';
 import { isEmptyObj } from '../utils/utils';
 
 class StatisticController {
@@ -87,7 +96,7 @@ class StatisticController {
     return newWordsCount;
   }
 
-  public async saveGameStatistic(gameName: 'sprint' | 'audiochallenge', gameState: GameState) {
+  public async saveGameStatistic(gameName: 'sprint' | 'audioChallenge', gameState: GameState) {
     const token = this.controller.authorizationController.token as string;
     const userWordsResponse = await this.controller.api.getAllUserWords(this.userId, token);
     const userWords = userWordsResponse.data;
@@ -105,7 +114,7 @@ class StatisticController {
     ) {
       Object.assign(optional, userStat.data.optional);
     }
-    const statName: 'sprintStatistic' | 'audiochallengeStatistic' = `${gameName}Statistic`;
+    const statName: 'sprintStatistics' | 'audioChallengeStatistics' = `${gameName}Statistics`;
     const date = new Date().toDateString();
     const serverStat = optional[statName] as GameStatistic | undefined;
 
@@ -130,6 +139,34 @@ class StatisticController {
     optional[statName] = stat;
 
     await this.controller.api.upsertStatistics(this.userId, 0, optional, token);
+    await this.updateGlobalStatistics();
+  }
+
+  public async updateGlobalStatistics() {
+    const token = this.controller.authorizationController.token as string;
+    const statistics = await this.controller.api.getStatistics(this.userId, token);
+    const audioChallengeStats = [
+      ((statistics.data as StatisticsData).optional?.audioChallengeStatistics as GameStatistic)?.date,
+      ((statistics.data as StatisticsData).optional?.audioChallengeStatistics as GameStatistic)?.newWords,
+    ];
+    const sprintStats = [
+      ((statistics.data as StatisticsData).optional?.sprintStatistics as GameStatistic)?.date,
+      ((statistics.data as StatisticsData).optional?.sprintStatistics as GameStatistic)?.newWords,
+    ];
+    const sumNewWords = +(audioChallengeStats[1] || 0) + +(sprintStats[1] || 0);
+    const optional = (statistics.data as StatisticsData).optional;
+    if (audioChallengeStats[0] === new Date().toDateString() || sprintStats[0] === new Date().toDateString()) {
+      if (optional.globalStatistics[new Date().toDateString()]) {
+        (optional.globalStatistics[new Date().toDateString()].newWords as number) = sumNewWords;
+      } else {
+        optional.globalStatistics = {
+          ...optional.globalStatistics,
+          [new Date().toDateString()]: { newWords: sumNewWords, learnedWords: 0 },
+        };
+      }
+    }
+    await this.controller.api.upsertStatistics(this.userId, 0, optional, token);
+    console.log(statistics);
   }
 }
 

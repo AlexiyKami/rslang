@@ -65,9 +65,7 @@ class StatisticsPage {
             </div>
             <div class='accuracy'>
               <h3 class='accuracy-title'>Точность</h3>
-              <h3 class='accuracy-counter'>${
-                (audioChallengeAccuracy + sprintAccuracy) / 2 || audioChallengeAccuracy || sprintAccuracy
-              }%</h3>
+              <h3 class='accuracy-counter'>${(audioChallengeAccuracy + sprintAccuracy) / 2}%</h3>
             </div>
             <div class='sprint-indicator'>
               <h3 class='sprint-indicator-title'>Спринт</h3>

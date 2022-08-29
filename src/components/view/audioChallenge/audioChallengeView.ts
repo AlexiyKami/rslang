@@ -250,7 +250,7 @@ class AudioChallengeView {
       this.view.MinigamesPage.renderMinigamesPage();
     });
 
-    if (this.controller.isAuthorized()) this.controller.statisticController.saveGameStatistic('audiochallenge', state);
+    if (this.controller.isAuthorized()) this.controller.statisticController.saveGameStatistic('audioChallenge', state);
   }
 }
 

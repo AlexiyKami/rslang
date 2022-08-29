@@ -1,4 +1,4 @@
-import { GetAllUserAggregatedWordsData, UserWord } from './../types/types';
+import { GetAllUserAggregatedWordsData, UserWord, StatisticsData } from './../types/types';
 import settings from '../settings';
 import { CallbackFunction } from '../types/types';
 import Controller from './controller';
@@ -64,7 +64,6 @@ class DictionaryController {
     const token = state.token as string;
     let response;
     const getUserWord = await this.baseController.api.getsUserWord(userId, wordId, token);
-    console.log(getUserWord);
     const initObj = {
       successfulAttempts: 0,
       failedAttempts: 0,
@@ -85,7 +84,7 @@ class DictionaryController {
             token
           );
         }
-        console.log(response);
+        await this.updateStatistics(userId, token, 1);
       }
     } else {
       if (this.getDictionaryGroup() !== 6) {
@@ -97,7 +96,6 @@ class DictionaryController {
             { ...(getUserWord.data as UserWord).optional },
             token
           );
-          console.log(response);
         } else if (difficulty === 'learned') {
           response = await this.baseController.api.updateUserWord(
             userId,
@@ -106,7 +104,7 @@ class DictionaryController {
             { ...(getUserWord.data as UserWord).optional, isLearned: true },
             token
           );
-          console.log(response);
+          await this.updateStatistics(userId, token, 1);
         } else if (difficulty === 'easy') {
           response = await this.baseController.api.updateUserWord(
             userId,
@@ -115,7 +113,7 @@ class DictionaryController {
             { ...(getUserWord.data as UserWord).optional, isLearned: false },
             token
           );
-          console.log(response);
+          await this.updateStatistics(userId, token, -1);
         }
       } else {
         response = await this.baseController.api.updateUserWord(
@@ -129,6 +127,24 @@ class DictionaryController {
       }
     }
     return response;
+  }
+
+  public async updateStatistics(userId: string, token: string, count: number) {
+    const statistics = (await this.baseController.api.getStatistics(userId, token)).data as StatisticsData;
+    if (statistics.optional.globalStatistics[new Date().toDateString()]) {
+      (statistics.optional.globalStatistics[new Date().toDateString()].learnedWords as number) += count;
+    } else {
+      statistics.optional.globalStatistics = {
+        ...statistics.optional.globalStatistics,
+        [new Date().toDateString()]: { newWords: 0, learnedWords: 1 },
+      };
+    }
+    await this.baseController.api.upsertStatistics(
+      userId,
+      (statistics.learnedWords as number) + count || 0,
+      statistics.optional,
+      token
+    );
   }
 
   public updateDictionary() {

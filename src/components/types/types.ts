@@ -67,7 +67,7 @@ export interface StatisticsOptional {
 
 export interface StatisticsData {
   readonly id: string;
-  learnedWords?: number;
+  learnedWords: number;
   optional: StatisticsOptional;
 }
 

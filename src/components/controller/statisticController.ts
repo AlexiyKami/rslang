@@ -17,6 +17,29 @@ class StatisticController {
     this.userId = this.controller.authorizationController.userId as string;
   }
 
+  public async resetGamesDayStatistics() {
+    const token = this.controller.authorizationController.token as string;
+    const userStat = await this.controller.api.getStatistics(this.userId, token);
+    const date = new Date().toDateString();
+    // console.log('current date:', date);
+    const gameDefaultStat: GameStatistic = {
+      date: date,
+      newWords: 0,
+      rightWords: 0,
+      wrongWords: 0,
+      maxInRow: 0,
+    };
+
+    if (typeof userStat.data !== 'string') {
+      // console.log('stat date:', userStat.data.optional.audioChallengeStatistics?.date);
+      const learnedWords = userStat.data.learnedWords;
+      const optional = userStat.data.optional;
+      if (optional.audioChallengeStatistics?.date !== date) optional.audioChallengeStatistics = gameDefaultStat;
+      if (optional.sprintStatistics?.date !== date) optional.sprintStatistics = gameDefaultStat;
+      await this.controller.api.upsertStatistics(this.userId, learnedWords, optional, token);
+    }
+  }
+
   private async saveWordStatistic(word: Word | AggregatedWord, isSuccessful: boolean, userWords: UserWord[]) {
     const token = this.controller.authorizationController.token as string;
     let learnedWordsCount = 0;

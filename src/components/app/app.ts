@@ -16,8 +16,8 @@ class AppModel {
     this.audioChallengeModel = new AudioChallengeModel(this.view, this);
   }
 
-  initApp(): void {
-    this.view.initRender();
+  async initApp(): Promise<void> {
+    await this.view.initRender();
   }
 
   saveState(): void {

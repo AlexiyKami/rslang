@@ -140,7 +140,7 @@ class StatisticsPage {
       //   settings.COUNT_OF_WORDS()
       // );
       // console.log(words);
-      console.log(statistics);
+      // console.log(statistics);
       const minDate = new Date(statistics?.optional.registrationDate as string).getTime();
       const maxDate = Math.max(
         ...Object.keys((statistics as StatisticsData).optional.globalStatistics).map((date) => new Date(date).getTime())

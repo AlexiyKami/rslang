@@ -8,6 +8,7 @@ import {
   Word,
   WordOptional,
 } from '../types/types';
+import { merge } from 'lodash';
 
 class StatisticController {
   private readonly userId: string;
@@ -125,7 +126,7 @@ class StatisticController {
       },
     };
 
-    if (typeof userStat.data !== 'string') Object.assign(optional, userStat.data.optional);
+    if (typeof userStat.data !== 'string') merge(optional, userStat.data.optional);
     (optional.globalStatistics[date].newWords as number) += newWordsCount;
     (optional.globalStatistics[date].learnedWords as number) += learnedWords;
 

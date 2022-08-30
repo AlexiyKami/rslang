@@ -73,8 +73,8 @@ class StatisticController {
         (wordStat.difficulty === 'easy' && wordStat.optional.inRow >= 3) ||
         (wordStat.difficulty === 'hard' && wordStat.optional.inRow >= 5)
       ) {
+        if (!wordStat.optional.isLearned) learnedWordsCount++;
         wordStat.optional.isLearned = true;
-        learnedWordsCount++;
       }
     }
 
@@ -82,6 +82,7 @@ class StatisticController {
       wordStat.optional.failedAttempts++;
       wordStat.optional.inRow = 0;
       wordStat.optional.isLearned = false;
+      learnedWordsCount--;
     }
 
     if (!userWord) {

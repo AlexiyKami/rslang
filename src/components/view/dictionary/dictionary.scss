@@ -23,6 +23,9 @@
   button {
     cursor: pointer;
   }
+  .dictionary-page-current.learned {
+    color: green;
+  }
 }
 
 .dictionary-minigame-links {

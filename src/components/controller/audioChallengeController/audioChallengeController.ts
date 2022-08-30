@@ -23,11 +23,13 @@ class AudioChallengeController {
         undefined,
         undefined,
         group,
-        (page + 1) * settings.WORDS_PER_PAGE
+        (settings.MAX_DICTIONARY_PAGES + 1) * settings.WORDS_PER_PAGE
       );
 
       if (typeof allWordsResponse.data !== 'string') {
-        const allWords = allWordsResponse.data.paginatedResults;
+        let allWords = allWordsResponse.data.paginatedResults;
+        allWords.sort((curWord, prevWord) => curWord.page - prevWord.page);
+        allWords = allWords.slice(0, (page + 1) * settings.WORDS_PER_PAGE);
         const filteredWords = allWords.filter((word) => !word.userWord?.optional?.isLearned);
         words =
           filteredWords.length > settings.WORDS_PER_PAGE
@@ -40,7 +42,7 @@ class AudioChallengeController {
 
     if (typeof words !== 'string' && words.length < 4) {
       this.initGame();
-      this.model.audioChallengeModel.onWordsLoadError('The game can be started with words coun more then three!');
+      this.model.audioChallengeModel.onWordsLoadError('The game can be started with words count more then three!');
     } else if (typeof words === 'string') {
       this.initGame();
     } else {

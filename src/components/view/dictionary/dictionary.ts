@@ -232,8 +232,16 @@ class Dictionary {
   private checkForLearnedPage(): void {
     if (document.querySelectorAll('.word-card.hard, .word-card.learned').length === settings.WORDS_PER_PAGE) {
       (document.querySelector('.dictionary') as HTMLElement)?.classList?.add('learned');
+      (document.querySelector('.audio-challenge-link') as HTMLElement).style.pointerEvents = 'none';
+      (document.querySelector('.audio-challenge-link') as HTMLElement).style.cursor = 'default';
+      (document.querySelector('.sprint-link') as HTMLElement).style.pointerEvents = 'none';
+      (document.querySelector('.sprint-link') as HTMLElement).style.cursor = 'default';
     } else {
       (document.querySelector('.dictionary') as HTMLElement)?.classList?.remove('learned');
+      (document.querySelector('.audio-challenge-link') as HTMLElement).style.pointerEvents = 'auto';
+      (document.querySelector('.audio-challenge-link') as HTMLElement).style.cursor = 'pointer';
+      (document.querySelector('.sprint-link') as HTMLElement).style.pointerEvents = 'auto';
+      (document.querySelector('.sprint-link') as HTMLElement).style.cursor = 'pointer';
     }
   }
 

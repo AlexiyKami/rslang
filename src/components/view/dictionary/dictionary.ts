@@ -231,10 +231,22 @@ class Dictionary {
   }
 
   private checkForLearnedPage(): void {
-    if (document.querySelectorAll('.word-card.hard, .word-card.learned').length === settings.WORDS_PER_PAGE) {
-      (document.querySelector('.dictionary') as HTMLElement)?.classList?.add('learned');
-    } else {
-      (document.querySelector('.dictionary') as HTMLElement)?.classList?.remove('learned');
+    if (this.dictionaryController.getDictionaryGroup() !== 6) {
+      if (document.querySelectorAll('.word-card.hard, .word-card.learned').length === settings.WORDS_PER_PAGE) {
+        (document.querySelector('.dictionary') as HTMLElement)?.classList?.add('learned');
+        (document.querySelector('.audio-challenge-link') as HTMLElement).style.pointerEvents = 'none';
+        (document.querySelector('.audio-challenge-link') as HTMLElement).style.cursor = 'default';
+        (document.querySelector('.sprint-link') as HTMLElement).style.pointerEvents = 'none';
+        (document.querySelector('.sprint-link') as HTMLElement).style.cursor = 'default';
+        document.querySelectorAll('.dictionary-page-current').forEach((item) => item.classList.add('learned'));
+      } else {
+        (document.querySelector('.dictionary') as HTMLElement)?.classList?.remove('learned');
+        (document.querySelector('.audio-challenge-link') as HTMLElement).style.pointerEvents = 'auto';
+        (document.querySelector('.audio-challenge-link') as HTMLElement).style.cursor = 'pointer';
+        (document.querySelector('.sprint-link') as HTMLElement).style.pointerEvents = 'auto';
+        (document.querySelector('.sprint-link') as HTMLElement).style.cursor = 'pointer';
+        document.querySelectorAll('.dictionary-page-current').forEach((item) => item.classList.remove('learned'));
+      }
     }
   }
 
@@ -284,9 +296,11 @@ class Dictionary {
       .querySelectorAll('.dictionary-page-number')
       .forEach(
         (item) =>
-          (item.innerHTML = `${this.dictionaryController.getDictionaryPage() + 1} / ${
+          (item.innerHTML = `<span class='dictionary-page-current'>${
+            this.dictionaryController.getDictionaryPage() + 1
+          }</span><span> / </span><span class='dictionary-page-all'>${
             this.dictionaryController.getMaxDictionaryPage() + 1
-          }`)
+          }</span>`)
       );
   }
 }

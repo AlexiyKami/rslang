@@ -8,12 +8,41 @@ import {
   Word,
   WordOptional,
 } from '../types/types';
+import { merge } from 'lodash';
 
 class StatisticController {
   private readonly userId: string;
 
   constructor(private readonly controller: Controller) {
     this.userId = this.controller.authorizationController.userId as string;
+  }
+
+  public async resetGamesDayStatistics() {
+    const token = this.controller.authorizationController.token as string;
+    const userStat = await this.controller.api.getStatistics(this.userId, token);
+    const date = new Date().toDateString();
+    const gameDefaultStat: GameStatistic = {
+      date: date,
+      newWords: 0,
+      rightWords: 0,
+      wrongWords: 0,
+      maxInRow: 0,
+    };
+
+    if (typeof userStat.data !== 'string') {
+      const learnedWords = userStat.data.learnedWords;
+      const optional = userStat.data.optional;
+      let isNeedUpdate = false;
+      if (optional.audioChallengeStatistics?.date !== date) {
+        optional.audioChallengeStatistics = gameDefaultStat;
+        isNeedUpdate = true;
+      }
+      if (optional.sprintStatistics?.date !== date) {
+        optional.sprintStatistics = gameDefaultStat;
+        isNeedUpdate = true;
+      }
+      if (isNeedUpdate) await this.controller.api.upsertStatistics(this.userId, learnedWords, optional, token);
+    }
   }
 
   private async saveWordStatistic(word: Word | AggregatedWord, isSuccessful: boolean, userWords: UserWord[]) {
@@ -44,8 +73,8 @@ class StatisticController {
         (wordStat.difficulty === 'easy' && wordStat.optional.inRow >= 3) ||
         (wordStat.difficulty === 'hard' && wordStat.optional.inRow >= 5)
       ) {
+        if (!wordStat.optional.isLearned) learnedWordsCount++;
         wordStat.optional.isLearned = true;
-        learnedWordsCount++;
       }
     }
 
@@ -53,6 +82,7 @@ class StatisticController {
       wordStat.optional.failedAttempts++;
       wordStat.optional.inRow = 0;
       wordStat.optional.isLearned = false;
+      learnedWordsCount--;
     }
 
     if (!userWord) {
@@ -125,7 +155,7 @@ class StatisticController {
       },
     };
 
-    if (typeof userStat.data !== 'string') Object.assign(optional, userStat.data.optional);
+    if (typeof userStat.data !== 'string') merge(optional, userStat.data.optional);
     (optional.globalStatistics[date].newWords as number) += newWordsCount;
     (optional.globalStatistics[date].learnedWords as number) += learnedWords;
 

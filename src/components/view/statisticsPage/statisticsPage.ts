@@ -14,6 +14,7 @@ class StatisticsPage {
   }
   async draw(): Promise<void> {
     this.controller.showLoadingPopup();
+    await this.controller.statisticController.resetGamesDayStatistics();
     this.view.changeAppTitle('Statistics');
     const state = this.controller.getState();
     const isAuthorized = this.controller.isAuthorized();
@@ -140,7 +141,7 @@ class StatisticsPage {
       //   settings.COUNT_OF_WORDS()
       // );
       // console.log(words);
-      console.log(statistics);
+      // console.log(statistics);
       const minDate = new Date(statistics?.optional.registrationDate as string).getTime();
       const maxDate = Math.max(
         ...Object.keys((statistics as StatisticsData).optional.globalStatistics).map((date) => new Date(date).getTime())

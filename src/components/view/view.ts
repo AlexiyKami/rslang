@@ -33,7 +33,8 @@ class View {
     this.sprint = new Sprint(this.controller, this);
   }
 
-  public initRender() {
+  public async initRender() {
+    // if (this.controller.isAuthorized()) await this.controller.statisticController.resetGamesDayStatistics();
     // this.mainPage.renderMainPage();
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();

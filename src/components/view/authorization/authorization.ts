@@ -83,9 +83,13 @@ export default class Authorization {
     authorizedUserEl.append(authorizedMsgEl);
 
     if (this.authorizationController.token) {
+      this.regBtn.disabled = true;
+      this.regBtn.classList.add('reg-disable');
       authorizedMsgEl.textContent = `Authorized as ${this.authorizationController.name}`;
       loginContentEl.append(authorizedUserEl);
     } else {
+      this.regBtn.disabled = false;
+      this.regBtn.classList.remove('reg-disable');
       loginContentEl.append(this.loginEmailInp, this.loginPassInp, this.errLoginContent);
     }
 

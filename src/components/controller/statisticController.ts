@@ -81,8 +81,8 @@ class StatisticController {
     if (!isSuccessful) {
       wordStat.optional.failedAttempts++;
       wordStat.optional.inRow = 0;
+      if (wordStat.optional.isLearned) learnedWordsCount--;
       wordStat.optional.isLearned = false;
-      learnedWordsCount--;
     }
 
     if (!userWord) {

@@ -11,6 +11,7 @@ class MainPage {
 
   public renderMainPage() {
     this.view.changeAppTitle('RSLang');
+    this.view.hideFooter(false);
     const mainWindow = getElement('main-window') as HTMLElement;
 
     mainWindow.innerHTML = `

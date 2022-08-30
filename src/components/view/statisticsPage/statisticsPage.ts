@@ -16,6 +16,7 @@ class StatisticsPage {
     this.controller.showLoadingPopup();
     await this.controller.statisticController.resetGamesDayStatistics();
     this.view.changeAppTitle('Statistics');
+    this.view.hideFooter(false);
     const state = this.controller.getState();
     const isAuthorized = this.controller.isAuthorized();
     let statistics: string | StatisticsData | undefined = undefined;

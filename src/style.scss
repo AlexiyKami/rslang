@@ -28,6 +28,7 @@ body {
     flex-direction: column;
     width: 100%;
     min-height: 100%;
+    overflow: hidden;
 
     header {
       display: flex;
@@ -48,6 +49,13 @@ body {
 
     footer {
       background-color: aqua;
+      transition: 0.3s;
+      height: 50px;
+
+      &.hidden {
+        height: 0;
+        overflow: hidden;
+      }
     }
   }
 }

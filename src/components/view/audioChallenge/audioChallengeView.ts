@@ -14,6 +14,7 @@ class AudioChallengeView {
 
   public renderStartPage() {
     this.view.changeAppTitle('Audio Challenge');
+    this.view.hideFooter();
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {
@@ -67,6 +68,7 @@ class AudioChallengeView {
 
   public renderGamePage(state: AudioChallengeModelState) {
     this.view.changeAppTitle('Audio Challenge');
+    this.view.hideFooter();
     this.view.loadingPopup.clear();
     const currentWord = state.currentWords[state.currentWordIndex];
     let buttonsHTML = '';

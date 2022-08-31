@@ -98,8 +98,14 @@ export default class Navigation {
     const toggle = document.getElementById('menu-toggle') as HTMLElement;
     toggle.addEventListener('change', (event: Event) => {
       const target = event.target as HTMLInputElement;
-      if (target.checked) this.navEl.classList.add('extend');
-      else this.navEl.classList.remove('extend');
+      if (target.checked) {
+        this.navEl.classList.add('extend');
+        const wrapper = '<div class="nav-holder"></div>';
+        document.body.insertAdjacentHTML('beforeend', wrapper);
+      } else {
+        document.querySelector('.nav-holder')?.remove();
+        this.navEl.classList.remove('extend');
+      }
     });
 
     const rssIcon = `

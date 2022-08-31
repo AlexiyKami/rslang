@@ -13,6 +13,7 @@ class MinigamesPageView {
   }
   public renderMinigamesPage() {
     this.view.changeAppTitle('Games');
+    this.view.hideFooter(false);
 
     this.mainWindow.innerHTML = `
     <div class="minigames-page">

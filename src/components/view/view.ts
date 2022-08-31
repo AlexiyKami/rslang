@@ -46,6 +46,12 @@ class View {
   public changeAppTitle(title: string): void {
     (getElement('app-title') as HTMLTitleElement).textContent = title;
   }
+
+  public hideFooter(hide = true) {
+    const footer = getElement('footer') as HTMLElement;
+    const action = hide ? 'add' : 'remove';
+    footer.classList[action]('hidden');
+  }
 }
 
 export default View;

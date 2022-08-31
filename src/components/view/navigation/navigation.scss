@@ -5,7 +5,7 @@
   height: 100vh;
   white-space: nowrap;
   overflow: hidden;
-  background-color: #5b67ed ;
+  background-color: #172e54;
   color: white;
   transition: .3s;
   z-index: 2;
@@ -16,7 +16,7 @@
   }
 
   label {
-    display: block; 
+    display: block;
     cursor: pointer;
     user-select: none;
     height: calc(24px + 1.6rem);
@@ -48,11 +48,11 @@
     }
 
     &:hover {
-      background-color: #757fec;
+      background-color: #23457a;
     }
 
     &:active {
-      background-color: #9ea4e7;
+      background-color: #396fc0;
     }
   }
 
@@ -60,7 +60,7 @@
     display: none;
 
     &:checked + label {
-      background-color: #4754e9;
+      background-color: #23457a;
     }
   }
   &.hide-nav {

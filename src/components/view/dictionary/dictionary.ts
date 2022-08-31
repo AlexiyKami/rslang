@@ -23,6 +23,7 @@ class Dictionary {
 
   draw(): void {
     this.view.changeAppTitle('Dictionary');
+    this.view.hideFooter(false);
     const isAuthorized = this.baseController.isAuthorized();
     const groupBtns = new Array(settings.MAX_DIFFICULTY_LEVEL + 2)
       .fill('')

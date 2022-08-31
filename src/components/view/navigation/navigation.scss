@@ -1,15 +1,15 @@
 .page-nav {
   position: sticky;
   top: 0;
+  z-index: 3;
+  overflow: hidden;
   width: 58px;
+  max-width: max-content;
   height: 100vh;
   white-space: nowrap;
-  overflow: hidden;
-  background-color: #172e54;
   color: white;
+  background-color: #172e54;
   transition: .3s;
-  z-index: 3;
-  max-width: max-content;
   &.extend {
     width: 200px;
   }
@@ -56,12 +56,18 @@
   
   label {
     display: block;
-    cursor: pointer;
-    user-select: none;
     height: 56px;
     line-height: 56px;
     padding-right: 16px;
     transition: .3s;
+    cursor: pointer;
+    user-select: none;
+
+    &.menu-button-container {
+      box-sizing: border-box;
+      padding: 26px 16px 0;
+      height: 56px;
+    }
 
     &.menu-button-container {
       box-sizing: border-box;
@@ -70,8 +76,8 @@
     }
 
     &::before {
-      line-height: normal;
       display: inline-block;
+      line-height: normal;
       vertical-align: middle;
       margin: 0 16px;
       width: 24px;

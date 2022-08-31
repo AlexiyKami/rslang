@@ -1,40 +1,40 @@
 .authorization-wrapper {
-  z-index: 3;
-  background-color: rgba(0, 0, 0, 0.5);
   position:fixed;
-  left:0;
   top: 0;
+  left:0;
+  z-index: 3;
   width:100%;
   height:100%;
+  background-color: rgba(0, 0, 0, 0.5);
 
   .authorization {
     position: absolute;
-    z-index: 1;
     top: 0;
+    right: 0;
     bottom: 0;
     left: 0;
-    right: 0;
-    margin: auto;
-    max-width: 300px;
-    height: max-content;
-    background-color: #23457a;
-    border-radius: 5px;
+    z-index: 1;
     display: flex;
     flex-direction: column;
+    max-width: 300px;
+    height: max-content;
+    margin: auto;
+    border-radius: 5px;
+    background-color: #23457a;
 
     .tabs {
       display: flex;
       flex-direction: row;
 
       .tab-btn {
-        border: none;
-        border-radius: 2px 2px 0 0;
-        background-color: #23457a;
         width: 100%;
-        cursor: pointer;
         margin: 10px 10px 0;
         padding: 10px;
         color: white;
+        border: none;
+        border-radius: 2px 2px 0 0;
+        background-color: #23457a;
+        cursor: pointer;
 
         &.active {
           background-color: #3367b7;
@@ -47,12 +47,12 @@
     }
 
     .tab-content {
-      background-color: #3367b7;
-      padding: 5px;
-      margin: 0 10px;
-      border-radius: 0 0 2px 2px;
       display: flex;
       flex-direction: column;
+      margin: 0 10px;
+      padding: 5px;
+      border-radius: 0 0 2px 2px;
+      background-color: #3367b7;
 
       .authorization-input {
         margin: 5px;
@@ -62,21 +62,21 @@
       }
 
       .authorization-input:placeholder-shown {
-        border-radius: 2px;
         color: #bdbdbd;
+        border-radius: 2px;
       }
 
       p {
         font-size: 0.8rem;
-        color: rgb(231, 14, 14);
         text-align: center;
+        color: rgb(231, 14, 14);
       }
 
       .authorized-user {
-        background-color: white;
-        border-radius: 2px;
         margin: 5px;
         padding: 10px;
+        border-radius: 2px;
+        background-color: white;
 
         p {
           font-size: 1rem;
@@ -87,25 +87,25 @@
     }
 
     .sign-btn {
+      align-self: center;
       width: fit-content;
       margin: 10px 0;
-      align-self: center;
     }
   }
 }
 
 .log {
+  z-index: 2;
+  display: flex;
   margin: 4px 0;
   padding: 0;
-  display: flex;
   padding-right: 5px;
   border-color: #23457a;
   background-color: #23457a;
-  z-index: 2;
 
   &:hover:not(:disabled) {
-    background-color: lighten($color: #23457a, $amount: 10);
     border-color: lighten($color: #23457a, $amount: 10);
+    background-color: lighten($color: #23457a, $amount: 10);
   }
 
   span {
@@ -113,11 +113,11 @@
     text-align: right;
 
     &.icon {
-      margin-right: 5px;
-      background: url(/src/assets/icons/human-head.svg) no-repeat;
       float: left;
       width: 24px;
       height: 24px;
+      margin-right: 5px;
+      background: url(/src/assets/icons/human-head.svg) no-repeat;
     }
   }
 }

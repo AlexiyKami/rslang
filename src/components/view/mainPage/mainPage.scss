@@ -33,6 +33,10 @@
       @media (max-width: $tablet1023) {
         font-size: 60px;
       }
+
+      @media (max-width: $mobile767) {
+        font-size: 30px;
+      }
     }
 
     &-subtitle {

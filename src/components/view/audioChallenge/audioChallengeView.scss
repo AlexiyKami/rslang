@@ -1,4 +1,7 @@
+@import "../variables.scss";
+
 .audio-challenge {
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-direction: column;
@@ -7,6 +10,7 @@
   height: 100%;
   background-color: #fdfdfd;
   gap: 20px;
+  padding: 20px 20px 60px 20px;
 }
 
 .audio-challenge__main-page,
@@ -60,6 +64,7 @@
   min-width: 100%;
   min-height: 100%;
   opacity: 0;
+  text-align: center;
 }
 
 .audio-challenge__play-button {
@@ -75,6 +80,10 @@
 .audio-challenge__select-buttons-block {
   display: flex;
   gap: 30px;
+
+  @media (max-width: $tablet1023) {
+    gap: 15px;
+  }
 }
 
 .audio-challenge__select-button {

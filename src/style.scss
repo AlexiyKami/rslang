@@ -63,6 +63,11 @@ body {
       background-color: transparent;
       transition: 0.3s;
 
+      @media (max-width: $mobile767) {
+        height: 80px;
+        margin-top: -80px;
+      }
+
       &.hidden {
         overflow: hidden;
         height: 0;
@@ -72,6 +77,10 @@ body {
         height: 30px;
         transition: 0.3s;
 
+        @media (max-width: $mobile767) {
+          height: 25px;
+        }
+
         &:hover {
           fill: #3d3d3d;
         }
@@ -80,6 +89,12 @@ body {
       &__github-links {
         display: flex;
         gap: 30px;
+
+        @media (max-width: $mobile767) {
+          align-items: center;
+          flex-direction: column;
+          gap: 5px;
+        }
       }
 
       &__github-link {
@@ -233,7 +248,8 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .main-wrapper {
-    margin-left: 56px;
+  body .main-wrapper header h1.app-title {
+    display: inline-block;
+    margin-left: 33px;
   }
 }

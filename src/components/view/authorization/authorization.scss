@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .authorization-wrapper {
   position:fixed;
   top: 0;
@@ -103,6 +105,10 @@
   border-color: #23457a;
   background-color: #23457a;
 
+  @media (max-width: $mobile767) {
+    padding-right: 0;
+  }
+
   &:hover:not(:disabled) {
     border-color: lighten($color: #23457a, $amount: 10);
     background-color: lighten($color: #23457a, $amount: 10);
@@ -118,6 +124,16 @@
       height: 24px;
       margin-right: 5px;
       background: url(/src/assets/icons/human-head.svg) no-repeat;
+
+      @media (max-width: $mobile767) {
+        margin-right: 0;
+      }
+    }
+
+    &.email {
+      @media (max-width: $mobile767) {
+        display: none;
+      }
     }
   }
 }

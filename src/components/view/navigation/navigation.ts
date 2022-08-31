@@ -25,6 +25,18 @@ export default class Navigation {
     </label>
     `;
 
+    const toggle = this.navEl.querySelector('#menu-toggle') as HTMLInputElement;
+    toggle.addEventListener('change', () => {
+      if (toggle.checked) {
+        this.navEl.classList.add('extend');
+        const wrapper = '<div class="nav-holder"></div>';
+        document.body.insertAdjacentHTML('beforeend', wrapper);
+      } else {
+        document.querySelector('.nav-holder')?.remove();
+        this.navEl.classList.remove('extend');
+      }
+    });
+
     for (const entry of this.radioIdLabelMap) {
       if (entry[1] === 'Dictionary' && !controller.isAuthorized()) continue;
 
@@ -42,27 +54,47 @@ export default class Navigation {
 
       if (entry[1] === 'Textbook')
         radioLabelEl.addEventListener('click', () => {
+          toggle.checked = false;
+          document.querySelector('.nav-holder')?.remove();
+          this.navEl.classList.remove('extend');
+
           this.controller.playStopAudio('', false);
           if (this.controller.dictionary.getDictionaryGroup() !== 6) this.view.dictionary.draw();
           else this.controller.dictionary.setDictionaryGroup(0);
         });
       else if (entry[1] === 'Dictionary')
         radioLabelEl.addEventListener('click', () => {
+          toggle.checked = false;
+          document.querySelector('.nav-holder')?.remove();
+          this.navEl.classList.remove('extend');
+
           this.controller.playStopAudio('', false);
           this.controller.dictionary.setDictionaryGroup(6);
         });
       else if (entry[1] === 'Minigames')
         radioLabelEl.addEventListener('click', () => {
+          toggle.checked = false;
+          document.querySelector('.nav-holder')?.remove();
+          this.navEl.classList.remove('extend');
+
           this.controller.playStopAudio('', false);
           this.view.MinigamesPage.renderMinigamesPage();
         });
       else if (entry[1] === 'Home')
         radioLabelEl.addEventListener('click', () => {
+          toggle.checked = false;
+          document.querySelector('.nav-holder')?.remove();
+          this.navEl.classList.remove('extend');
+
           this.controller.playStopAudio('', false);
           this.view.mainPage.renderMainPage();
         });
       else if (entry[1] === 'Statistics')
         radioLabelEl.addEventListener('click', () => {
+          toggle.checked = false;
+          document.querySelector('.nav-holder')?.remove();
+          this.navEl.classList.remove('extend');
+
           this.controller.playStopAudio('', false);
           this.view.statisticsPage.draw();
         });
@@ -95,19 +127,6 @@ export default class Navigation {
 
     document.getElementsByTagName('body')[0].prepend(this.navEl);
 
-    const toggle = document.getElementById('menu-toggle') as HTMLElement;
-    toggle.addEventListener('change', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      if (target.checked) {
-        this.navEl.classList.add('extend');
-        const wrapper = '<div class="nav-holder"></div>';
-        document.body.insertAdjacentHTML('beforeend', wrapper);
-      } else {
-        document.querySelector('.nav-holder')?.remove();
-        this.navEl.classList.remove('extend');
-      }
-    });
-
     const rssIcon = `
     <svg class="footer__rsschool-img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 242 90">
           <path
@@ -133,6 +152,28 @@ export default class Navigation {
       <span class="copyright__year">2022</span>
     </div>
     `;
+
+    const navBtn = document.createElement('div');
+    navBtn.classList.add('nav-btn-small');
+    document.getElementsByTagName('header')[0].prepend(navBtn);
+
+    navBtn.addEventListener('click', () => {
+      toggle.checked = !toggle.checked;
+      if (toggle.checked) {
+        this.navEl.classList.add('extend');
+        const wrapper = '<div class="nav-holder"></div>';
+        document.body.insertAdjacentHTML('beforeend', wrapper);
+        const navHolder = document.querySelector('.nav-holder');
+        navHolder?.addEventListener('click', () => {
+          navHolder.remove();
+          this.navEl.classList.remove('extend');
+          toggle.checked = false;
+        });
+      } else {
+        document.querySelector('.nav-holder')?.remove();
+        this.navEl.classList.remove('extend');
+      }
+    });
   }
 
   public setCurPage(pageNum: number) {

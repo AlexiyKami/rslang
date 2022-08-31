@@ -26,6 +26,7 @@ export default class Authorization {
     const btnIcon = document.createElement('span');
     btnIcon.classList.add('icon');
 
+    this.btnContent.classList.add('email');
     if (controller.isAuthorized()) {
       this.btnContent.innerText = `${this.authorizationController.userEmail}`;
     } else {

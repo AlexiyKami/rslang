@@ -13,7 +13,7 @@
   gap: 20px;
 
   @media (max-width: $mobile767) {
-    padding: 10px 10px 50px 10px;
+    padding: 10px 10px 100px 10px;
   }
 }
 
@@ -194,16 +194,16 @@
 
 .space-icon {
   display: inline-block;
-  width: 25px;
-  height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   background: url('/src/assets/icons/space-bar-key.svg') no-repeat center;
   background-size: contain;
 }
 
 .enter-icon {
   display: inline-block;
-  width: 25px;
-  height: 25px;
+  min-width: 25px;
+  min-height: 25px;
   background: url('/src/assets/icons/enter-key.svg') no-repeat center;
   background-size: contain;
 }

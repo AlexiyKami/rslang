@@ -11,7 +11,7 @@ $marine: #02cc9d;
   flex-direction: column;
   max-width: 1200px;
   margin: auto;
-  padding: 30px 20px;
+  padding: 20px 20px 80px 20px;
   background-color: #fdfdfd;
   gap: 50px;
 }
@@ -186,13 +186,12 @@ $marine: #02cc9d;
 
 .main-page__our-team-members {
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   gap: 40px;
-  flex-wrap: wrap;
 }
 
 .member-card {
-  gap: 10px;
   display: flex;
   overflow: hidden;
   align-items: center;
@@ -203,6 +202,7 @@ $marine: #02cc9d;
   background-color: #ffffff;
   box-shadow: 0 0 4px rgb(0 0 0 / 15%);
   transition: 0.3s;
+  gap: 10px;
 
   &:hover {
     box-shadow: 0 0 15px rgb(0 0 0 / 30%);
@@ -255,6 +255,6 @@ $marine: #02cc9d;
 }
 
 .member-card__role-text {
-  text-align: center;
   margin: 0 10px;
+  text-align: center;
 }

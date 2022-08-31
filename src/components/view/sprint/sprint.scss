@@ -13,12 +13,12 @@
     align-items: center;
     flex-direction: column;
     gap: 40px;
-    
+
     .sprint-err {
       text-align: center;
       color: red;
     }
-    
+
     .sprint__difficulty-buttons {
       display: flex;
       justify-content: center;
@@ -31,7 +31,7 @@
     .sprint__back-to-games-button {
       border-color: #fa5833ff;
       background-color: #fa5833ff;
-      
+
       &:hover:not(:disabled) {
         border-color: lighten($color: #fa5833ff, $amount: 10);
         background-color: lighten($color: #fa5833ff, $amount: 10);
@@ -48,12 +48,12 @@
   }
 
   .sprint-game {
-    min-width: 350px;
-    background-color: #5b67ed;
-    color: white;
-    text-align: center;
-    border-radius: 10px;
     position: relative;
+    min-width: 350px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    background-color: #5b67ed;
 
     &.sprint-delay{
       display: none;
@@ -74,14 +74,14 @@
     }
 
     .sprint-result {
-      font-size: 3rem;
       margin: 0;
-       
+      font-size: 3rem;
+
     }
 
     .sprint-points {
-      font-size: 1rem;
       margin: 0;
+      font-size: 1rem;
     }
 
     .sprint-series {
@@ -92,11 +92,11 @@
 
       .sprint-series-marker {
         display: block;
-        margin: 4px;
-        height: 18px;
         width: 18px;
-        border-radius: 11px;
+        height: 18px;
+        margin: 4px;
         border: 2px solid white;
+        border-radius: 11px;
 
         &--fill{
           background-color: white;
@@ -105,20 +105,20 @@
     }
 
     .sprint-word {
-      font-size: 2rem;
       margin: 0;
+      font-size: 2rem;
     }
 
     .sprint-translating {
-      font-size: 2rem;
       margin: 0;
+      font-size: 2rem;
     }
 
     .sprint-buttons {
-      margin: 20px;
-      margin-top: 20px;
       display: flex;
       justify-content: space-around;
+      margin: 20px;
+      margin-top: 20px;
 
       .arrow-right-icon {
         display: inline-block;
@@ -144,7 +144,7 @@
 
   .sprint-results {
     display: flex;
-    
+
     .base-timer {
       padding-right: 0;
     }
@@ -159,37 +159,37 @@
 
         span {
           display: inline-block;
-          text-align: center;
-          padding: 2px;
-          margin: 2px;
           min-width: 15px;
+          margin: 2px;
+          padding: 2px;
+          text-align: center;
           border-radius: 3px;
 
           &.repeated {
             background-color: #9ea4e7;
           }
-  
+
           &.right {
             background-color: #73e48b;
           }
-  
+
           &.wrong {
             background-color: #e65d5d;
           }
-  
+
           &.in-a-row {
             background-color: #dfa271;
           }
         }
-        
+
       }
     }
   }
 
   .sprint-words-links {
+    overflow: auto;
     min-width: 330px;
     max-height: 250px;
-    overflow: auto;
 
     &::-webkit-scrollbar {
       width: 8px;
@@ -203,9 +203,9 @@
     }
 
     .sprint-words-links-header {
-      font-weight: bold;
-      font-size: 1.1rem;
       margin-top: 10px;
+      font-size: 1.1rem;
+      font-weight: bold;
 
       &.right {
         color: #73e48b;
@@ -223,10 +223,10 @@
       .sprint-audio-play {
         width: 20px;
         height: 20px;
+        margin: 5px;
         border: none;
         background: url('/src/assets/icons/audio.svg') no-repeat center;
         background-size: contain;
-        margin: 5px;
         cursor: pointer;
       }
 

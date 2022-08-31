@@ -2,23 +2,23 @@ $spinner-thickness: 15px;
 $animation-time: 1s;
 
 .loading-background {
-  background-color: rgba(0, 0, 0, 0.2);
   position: fixed;
-  left: 0;
   top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
   .spinner {
     position: absolute;
-    z-index: 1;
     top: calc(50% - 65px);
     left: calc(50% - 65px);
+    z-index: 1;
     width: 100px;
     height: 100px;
-    background-color: transparent;
     border: $spinner-thickness solid rgba(128, 128, 128, 0.5);
-    animation: rotate $animation-time infinite linear;
     border-radius: 50%;
+    background-color: transparent;
+    animation: rotate $animation-time infinite linear;
   }
   .spinner::before {
     content: '';

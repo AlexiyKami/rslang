@@ -1,15 +1,15 @@
 .page-nav {
   position: sticky;
   top: 0;
+  z-index: 2;
+  overflow: hidden;
   width: calc(24px + 1.6rem);
+  max-width: max-content;
   height: 100vh;
   white-space: nowrap;
-  overflow: hidden;
-  background-color: #172e54;
   color: white;
+  background-color: #172e54;
   transition: .3s;
-  z-index: 2;
-  max-width: max-content;
 
   &:hover {
     width: 200px;
@@ -17,18 +17,18 @@
 
   label {
     display: block;
+    height: calc(24px + 1.6rem);
+    padding-right: .8rem;
+    line-height: calc(24px + 1.6rem);
+    transition: .3s;
     cursor: pointer;
     user-select: none;
-    height: calc(24px + 1.6rem);
-    line-height: calc(24px + 1.6rem);
-    padding-right: .8rem;
-    transition: .3s;
 
     &::before {
-      line-height: normal;
       display: inline-block;
-      vertical-align: middle;
       margin: 0 .8rem;
+      line-height: normal;
+      vertical-align: middle;
     }
 
     &[for="radio-home"]::before {

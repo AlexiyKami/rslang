@@ -1,16 +1,20 @@
 @import "../variables.scss";
 
 .audio-challenge {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
+  padding: 20px 20px 60px 20px;
   background-color: #fdfdfd;
   gap: 20px;
-  padding: 20px 20px 60px 20px;
+
+  @media (max-width: $mobile767) {
+    padding: 10px 10px 50px 10px;
+  }
 }
 
 .audio-challenge__main-page,
@@ -19,6 +23,10 @@
   align-items: center;
   flex-direction: column;
   gap: 40px;
+
+  @media (max-width: $mobile767) {
+    gap: 15px;
+  }
 }
 
 .audio-challenge__difficulty-buttons {
@@ -28,6 +36,11 @@
   border-radius: 10px;
   box-shadow: 0 0 10px rgb(0 0 0 / 15%);
   gap: 15px;
+
+  @media (max-width: $mobile767) {
+    padding: 15px;
+    gap: 5px;
+  }
 }
 
 .audio-challenge__back-to-games-button {
@@ -57,18 +70,23 @@
   background: url('/src/assets/images/question.jpg') no-repeat center;
   background-size: contain;
   box-shadow: 0 0 10px rgb(0 0 0 / 30%);
+
+  @media (max-width: $mobile767) {
+    width: 200px;
+    height: 200px;
+  }
 }
 
 .audio-challenge__word-image {
   flex-shrink: 0;
   min-width: 100%;
   min-height: 100%;
-  opacity: 0;
   text-align: center;
+  opacity: 0;
 }
 
 .audio-challenge__play-button {
-  width: 30px;
+  min-width: 30px;
   height: 30px;
   border: none;
   background: transparent;
@@ -83,6 +101,10 @@
 
   @media (max-width: $tablet1023) {
     gap: 15px;
+  }
+
+  @media (max-width: $mobile767) {
+    flex-direction: column;
   }
 }
 
@@ -189,8 +211,14 @@
 .audio-challenge__word {
   font-size: 40px;
   font-weight: 700;
+  text-align: center;
   opacity: 0;
   user-select: none;
+
+  @media (max-width: $mobile767) {
+    font-size: 26px;
+  }
+
 }
 
 .audio-challenge__results-page {
@@ -198,8 +226,9 @@
   overflow-y: scroll;
   align-items: center;
   flex-direction: column;
-  width: 360px;
-  height: 280px;
+  box-sizing: border-box;
+  width: 420px;
+  height: 340px;
   padding: 30px;
   border-radius: 10px;
   background-color: #ffffff;
@@ -216,6 +245,13 @@
   &::-webkit-scrollbar-thumb {
     background-color: #223C5033;
   }
+
+  @media (max-width: $mobile767) {
+    width: 100%;
+    max-width: 360px;
+    height: 280px;
+    padding: 20px;
+  }
 }
 
 .audio-challenge__results-title {
@@ -231,7 +267,8 @@
 
 .audio-challenge__results-string {
   display: flex;
-  justify-content: right;
+  align-items: center;
+  justify-content: space-between;
   width: 100%;
   font-size: 28px;
   gap: 30px;

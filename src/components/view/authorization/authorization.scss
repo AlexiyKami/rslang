@@ -17,7 +17,7 @@
     margin: auto;
     max-width: 300px;
     height: max-content;
-    background-color: #5b67ed;
+    background-color: #23457a;
     border-radius: 5px;
     display: flex;
     flex-direction: column;
@@ -29,16 +29,15 @@
       .tab-btn {
         border: none;
         border-radius: 2px 2px 0 0;
-        background-color: #5b67ed;
+        background-color: #23457a;
         width: 100%;
-        padding-bottom: 5px;
         cursor: pointer;
         margin: 10px 10px 0;
         padding: 10px;
         color: white;
 
         &.active {
-          background-color: #9ea4e7;
+          background-color: #3367b7;
         }
 
         &.reg-disable {
@@ -48,7 +47,7 @@
     }
 
     .tab-content {
-      background-color: #9ea4e7;
+      background-color: #3367b7;
       padding: 5px;
       margin: 0 10px;
       border-radius: 0 0 2px 2px;
@@ -96,17 +95,17 @@
 }
 
 .log {
-  margin: 4px;
+  margin: 4px 0;
   padding: 0;
   display: flex;
   padding-right: 5px;
-  border-color: #5b67ed;
-  background-color: #5b67ed;
+  border-color: #23457a;
+  background-color: #23457a;
   z-index: 2;
 
   &:hover:not(:disabled) {
-    background-color: lighten($color: #5b67ed, $amount: 10);
-    border-color: lighten($color: #5b67ed, $amount: 10);
+    background-color: lighten($color: #23457a, $amount: 10);
+    border-color: lighten($color: #23457a, $amount: 10);
   }
 
   span {

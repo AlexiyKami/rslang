@@ -20,6 +20,7 @@ export default class Sprint {
 
   public renderStartPage(withMistake = false): void {
     this.view.changeAppTitle('Sprint');
+    this.view.hideFooter();
 
     let buttonsHTML = '';
     for (let i = 0; i <= settings.MAX_DIFFICULTY_LEVEL; i++) {

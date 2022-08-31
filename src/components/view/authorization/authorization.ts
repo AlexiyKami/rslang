@@ -111,7 +111,7 @@ export default class Authorization {
     regContentEl.append(this.regNameInp, this.regEmailInp, this.regPassInp, this.errRegContent);
 
     const signupBtn = document.createElement('button');
-    signupBtn.classList.add('sign-btn', 'flat-button', 'blue');
+    signupBtn.classList.add('sign-btn', 'flat-button', 'auth');
 
     if (this.authorizationController.token) signupBtn.innerText = 'Sign Out';
     else signupBtn.innerText = 'Sign In';

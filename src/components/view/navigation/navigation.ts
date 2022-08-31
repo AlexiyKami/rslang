@@ -167,6 +167,7 @@ export default class Navigation {
         navHolder?.addEventListener('click', () => {
           navHolder.remove();
           this.navEl.classList.remove('extend');
+          toggle.checked = false;
         });
       } else {
         document.querySelector('.nav-holder')?.remove();

@@ -126,18 +126,20 @@ class MainPage {
     `;
 
     (getElement('main-page__header-button') as HTMLButtonElement).addEventListener('click', () => {
-      this.view.dictionary.draw();
+      if (this.controller.dictionary.getDictionaryGroup() !== 6) this.view.dictionary.draw();
+      else this.controller.dictionary.setDictionaryGroup(0);
       this.controller.navController.curPage = 1;
     });
 
     (getElement('main-page__advantages-card-button_textbook') as HTMLButtonElement).addEventListener('click', () => {
-      this.view.dictionary.draw();
+      if (this.controller.dictionary.getDictionaryGroup() !== 6) this.view.dictionary.draw();
+      else this.controller.dictionary.setDictionaryGroup(0);
       this.controller.navController.curPage = 1;
     });
 
     (getElement('main-page__advantages-card-button_games') as HTMLButtonElement).addEventListener('click', () => {
       this.view.MinigamesPage.renderMinigamesPage();
-      this.controller.navController.curPage = 2;
+      this.controller.navController.curPage = 3;
     });
 
     (getElement('main-page__login-button') as HTMLButtonElement).addEventListener('click', () =>
@@ -146,7 +148,14 @@ class MainPage {
 
     (getElement('main-page__advantages-card-button_statistic') as HTMLButtonElement).addEventListener('click', () => {
       this.view.statisticsPage.draw();
-      this.controller.navController.curPage = 3;
+      this.controller.navController.curPage = 4;
+    });
+
+    (getElement('main-page__advantages-card-button_dictionary') as HTMLButtonElement).addEventListener('click', () => {
+      if (this.controller.isAuthorized()) {
+        this.controller.dictionary.setDictionaryGroup(6);
+        this.controller.navController.curPage = 2;
+      }
     });
   }
 }

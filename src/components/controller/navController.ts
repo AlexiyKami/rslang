@@ -10,10 +10,12 @@ export default class NavController {
   }
 
   set curPage(value: number) {
-    this._curPage = value;
-    this.baseController.model.state.curPage = value;
+    let correctValue = value;
+    if (!this.baseController.isAuthorized() && value === 2) correctValue = 1;
+    this._curPage = correctValue;
+    this.baseController.model.state.curPage = correctValue;
     this.baseController.model.saveState();
-    this.baseController.model.view.navigation.setCurPage(value);
+    this.baseController.model.view.navigation.setCurPage(correctValue);
   }
 
   get curPage() {

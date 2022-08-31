@@ -220,3 +220,9 @@ body {
     cursor: auto;
   }
 }
+
+@media screen and (max-width: 768px) {
+  .main-wrapper {
+    margin-left: 56px;
+  }
+}

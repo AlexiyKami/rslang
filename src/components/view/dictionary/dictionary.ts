@@ -77,7 +77,10 @@ class Dictionary {
     }
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
       elem.addEventListener('click', () => {
-        this.dictionaryController.setDictionaryGroup(+(elem.textContent as string) - 1);
+        const group = +(elem.textContent as string) - 1;
+        this.dictionaryController.setDictionaryGroup(group);
+        if (group === 6) this.baseController.navController.curPage = 2;
+        else this.baseController.navController.curPage = 1;
       });
     });
 
@@ -87,7 +90,7 @@ class Dictionary {
 
     if (this.dictionaryController.getDictionaryGroup() !== 6) {
       (document.querySelector('.sprint-link') as HTMLElement).addEventListener('click', () => {
-        this.baseController.navController.curPage = 2;
+        this.baseController.navController.curPage = 3;
         this.baseController.sprintController.initGame(
           this.dictionaryController.getDictionaryGroup(),
           true,
@@ -96,7 +99,7 @@ class Dictionary {
       });
       (document.querySelector('.audio-challenge-link') as HTMLElement).addEventListener('click', () => {
         this.view.loadingPopup.draw();
-        this.baseController.navController.curPage = 2;
+        this.baseController.navController.curPage = 3;
         this.baseController.audioChallengeController.initGameByGroupPage(
           this.dictionaryController.getDictionaryGroup(),
           this.dictionaryController.getDictionaryPage()

@@ -111,7 +111,7 @@
     display: none;
 
     &:checked + label:not(.menu-button-container) {
-      background-color: #4754e9;
+      background-color: #23457a;
     }
   }
   &.hide-nav {
@@ -134,3 +134,4 @@
     z-index: 2;
   }
 }
+

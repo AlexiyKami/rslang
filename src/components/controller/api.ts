@@ -457,9 +457,9 @@ export class Api {
       const wordsPerPageParams = wordsPerPage
         ? `wordsPerPage=${wordsPerPage}&`
         : `wordsPerPage=${settings.WORDS_PER_PAGE}&`;
-      const pageParams = page ? `page=${page}&` : ``;
+      const pageParams = page !== undefined ? `page=${page}&` : ``;
       const filterParams = filter ? `filter=${filter}&` : ``;
-      const groupParams = group ? `group=${group}&` : ``;
+      const groupParams = group !== undefined ? `group=${group}&` : ``;
       const response = await fetch(
         `${this.usersUrl}/${userId}/aggregatedWords?${groupParams}${pageParams}&${wordsPerPageParams}${filterParams}`,
         {

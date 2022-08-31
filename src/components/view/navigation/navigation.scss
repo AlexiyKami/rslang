@@ -10,7 +10,6 @@
   color: white;
   background-color: #172e54;
   transition: .3s;
- 
   &.extend {
     width: 200px;
   }
@@ -63,7 +62,12 @@
     transition: .3s;
     cursor: pointer;
     user-select: none;
- 
+
+    &.menu-button-container {
+      box-sizing: border-box;
+      padding: 26px 16px 0;
+      height: 56px;
+    }
 
     &.menu-button-container {
       box-sizing: border-box;
@@ -73,15 +77,11 @@
 
     &::before {
       display: inline-block;
- 
-   
       line-height: normal;
- 
       vertical-align: middle;
       margin: 0 16px;
       width: 24px;
       height: 24px;
- 
     }
 
     &[for="radio-home"]::before {

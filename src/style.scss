@@ -233,7 +233,8 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .main-wrapper {
-    margin-left: 56px;
+  body .main-wrapper header h1.app-title {
+    display: inline-block;
+    margin-left: 33px  ;
   }
 }

@@ -95,10 +95,9 @@ export default class Navigation {
 
     document.getElementsByTagName('body')[0].prepend(this.navEl);
 
-    const toggle = document.getElementById('menu-toggle') as HTMLElement;
-    toggle.addEventListener('change', (event: Event) => {
-      const target = event.target as HTMLInputElement;
-      if (target.checked) {
+    const toggle = document.getElementById('menu-toggle') as HTMLInputElement;
+    toggle.addEventListener('change', () => {
+      if (toggle.checked) {
         this.navEl.classList.add('extend');
         const wrapper = '<div class="nav-holder"></div>';
         document.body.insertAdjacentHTML('beforeend', wrapper);
@@ -133,6 +132,22 @@ export default class Navigation {
       <span class="copyright__year">2022</span>
     </div>
     `;
+
+    const navBtn = document.createElement('div');
+    navBtn.classList.add('nav-btn-small');
+    document.getElementsByTagName('header')[0].prepend(navBtn);
+
+    navBtn.addEventListener('click', () => {
+      toggle.checked = !toggle.checked;
+      if (toggle.checked) {
+        this.navEl.classList.add('extend');
+        const wrapper = '<div class="nav-holder"></div>';
+        document.body.insertAdjacentHTML('beforeend', wrapper);
+      } else {
+        document.querySelector('.nav-holder')?.remove();
+        this.navEl.classList.remove('extend');
+      }
+    });
   }
 
   public setCurPage(pageNum: number) {

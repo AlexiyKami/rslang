@@ -201,23 +201,25 @@ class Dictionary {
 
     document.querySelectorAll('.word-card').forEach((card) => {
       card.addEventListener('click', async (e: Event) => {
+        this.baseController.showLoadingPopup();
         const target = e.target as HTMLElement;
         const currTarget = e.currentTarget as HTMLElement;
         if (target.classList.contains('add-difficult-button')) {
           const id = currTarget.getAttribute('data-id') as string;
-          this.dictionaryController.updateUserWord(id, 'hard');
+          await this.dictionaryController.updateUserWord(id, 'hard');
           currTarget.classList.add('hard');
         }
         if (target.classList.contains('add-learned-button')) {
           const id = currTarget.getAttribute('data-id') as string;
           if (currTarget.classList.contains('learned')) {
-            this.dictionaryController.updateUserWord(id, 'easy');
+            await this.dictionaryController.updateUserWord(id, 'easy');
             currTarget.classList.remove('learned');
           } else {
-            this.dictionaryController.updateUserWord(id, 'learned');
+            await this.dictionaryController.updateUserWord(id, 'learned');
             currTarget.classList.add('learned');
           }
         }
+        this.baseController.hideLoadingPopup();
         this.checkForLearnedPage();
       });
     });

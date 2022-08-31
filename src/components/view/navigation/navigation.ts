@@ -163,6 +163,11 @@ export default class Navigation {
         this.navEl.classList.add('extend');
         const wrapper = '<div class="nav-holder"></div>';
         document.body.insertAdjacentHTML('beforeend', wrapper);
+        const navHolder = document.querySelector('.nav-holder');
+        navHolder?.addEventListener('click', () => {
+          navHolder.remove();
+          this.navEl.classList.remove('extend');
+        });
       } else {
         document.querySelector('.nav-holder')?.remove();
         this.navEl.classList.remove('extend');

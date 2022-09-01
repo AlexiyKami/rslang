@@ -22,7 +22,7 @@ class Dictionary {
   }
 
   draw(): void {
-    this.view.changeAppTitle('Dictionary');
+    this.view.changeAppTitle('Textbook');
     this.view.hideFooter(false);
     const isAuthorized = this.baseController.isAuthorized();
     const groupBtns = new Array(settings.MAX_DIFFICULTY_LEVEL + 2)
@@ -31,6 +31,7 @@ class Dictionary {
       .join('');
     let pagination: string;
     if (this.dictionaryController.getDictionaryGroup() === 6) {
+      this.view.changeAppTitle('Dictionary');
       pagination = '';
     } else {
       pagination = `

@@ -23,44 +23,70 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-bottom: 40px;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 100%;
+  padding: 20px 20px 60px 20px;
+  gap: 30px;
+
+  @media (max-width: $mobile767) {
+    padding-bottom: 100px;
+  }
 
   .statistics-title {
     font-size: 32px;
     font-weight: 400;
     color: gray;
-  }
 
-  @media (max-width: $mobile767) {
-    padding-bottom: 100px;
+    @media (max-width: $tablet1023) {
+      text-align: center;
+    }
   }
 }
 
 .today-statistics {
-  width: 760px;
-  height: 500px;
-  padding: 20px;
+  max-width: 760px;
+  //padding: 20px;
 
   .today-indicators {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
     margin-top: 20px;
     gap: 20px;
   }
 
-  .learned-words, .new-words, .accuracy {
+  .learned-words,
+  .new-words,
+  .accuracy {
     width: 200px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+
+    @media (max-width: $tablet1023) {
+      width: 170px;
+    }
+
+    @media (max-width: $mobile767) {
+      width: 240px;
+    }
   }
 
-  .sprint-indicator, .audio-challenge-indicator {
+  .sprint-indicator,
+  .audio-challenge-indicator {
     width: 330px;
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgb(0 0 0 / 15%);
+
+    @media (max-width: $tablet1023) {
+      width: 285px;
+    }
+
+    @media (max-width: $mobile767) {
+      width: 240px;
+    }
   }
 
   .learned-words, .new-words {
@@ -99,14 +125,16 @@
     }
   }
 
-  .sprint-indicator, .audio-challenge-indicator {
+  .sprint-indicator,
+  .audio-challenge-indicator {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 200px;
   }
 
-  .sprint-indicator-title, .audio-challenge-indicator-title {
+  .sprint-indicator-title,
+  .audio-challenge-indicator-title {
     display: flex;
     justify-content: center;
     height: 20%;
@@ -140,7 +168,12 @@
     height: 70%;
   }
 
-  .sprint-words, .sprint-accuracy, .sprint-in-row, .audio-challenge-words, .audio-challenge-accuracy, .audio-challenge-in-row {
+  .sprint-words,
+  .sprint-accuracy,
+  .sprint-in-row,
+  .audio-challenge-words,
+  .audio-challenge-accuracy,
+  .audio-challenge-in-row {
     display: flex;
     justify-content: space-between;
 
@@ -151,12 +184,30 @@
 }
 
 .alltime-statistics {
-  width: 900px;
-  height: 400px;
-  gap: 50px;
+  max-width: 900px;
+
+  @media (max-width: $mobile767) {
+    width: 100%;
+  }
 
   .alltime-statistics-charts {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    margin-top: 20px;
+    gap: 100px;
+
+    @media (max-width: $laptop1279) {
+      gap: 60px;
+    }
+
+    @media (max-width: $tablet1023) {
+      flex-direction: column;
+      gap: 30px;
+    }
+
+    @media (max-width: $mobile767) {
+      gap: 20px;
+    }
   }
 }
+

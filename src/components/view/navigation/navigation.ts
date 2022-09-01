@@ -107,12 +107,7 @@ export default class Navigation {
     } else if (this.controller.navController.curPage === 1) {
       this.view.dictionary.draw();
     } else if (this.controller.navController.curPage === 2) {
-      if (this.controller.isAuthorized()) {
-        this.controller.dictionary.setDictionaryGroup(6);
-      } else {
-        this.controller.dictionary.setDictionaryGroup(1);
-        this.controller.navController.curPage = 1;
-      }
+      this.controller.dictionary.setDictionaryGroup(this.controller.isAuthorized() ? 6 : 0);
     } else if (this.controller.navController.curPage === 3) {
       this.view.MinigamesPage.renderMinigamesPage();
     } else if (this.controller.navController.curPage === 4) {

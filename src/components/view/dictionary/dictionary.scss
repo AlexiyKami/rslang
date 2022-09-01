@@ -1,3 +1,5 @@
+@import "../variables.scss";
+
 .dictionary {
   display: flex;
   align-items: center;
@@ -8,6 +10,10 @@
   margin-top: -40px;
   background-color: #fdfdfd;
   gap: 40px;
+
+  @media (max-width: $mobile767) {
+    padding: 60px 20px 100px;
+  }
 }
 
 .dictionary.learned {

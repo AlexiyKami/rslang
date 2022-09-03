@@ -98,7 +98,7 @@ class MainPage {
             <a class="member-card__github-link" href="https://github.com/Aliseiko" target="_blank"></a>
             <p class="member-card__role">Developer</p>
             <p class="member-card__role-text">Work with API, develop main page, minigames page, Audio Challenge
-              minigame, some design</p>
+              minigame, design & styles</p>
           </div>
 
           <div class="member-card">
@@ -108,7 +108,7 @@ class MainPage {
             <h3 class="member-card__name">Alexey Matsyl</h3>
             <a class="member-card__github-link" href="https://github.com/AlexiyKami" target="_blank"></a>
             <p class="member-card__role">Developer</p>
-            <p class="member-card__role-text">Setting up environment, develop dictionary and textbook</p>
+            <p class="member-card__role-text">Setting up environment, develop dictionary and textbook, statistics page</p>
           </div>
 
           <div class="member-card">
@@ -118,7 +118,7 @@ class MainPage {
             <h3 class="member-card__name">Anton Shcherba</h3>
             <a class="member-card__github-link" href="https://github.com/Anton-Shcherba" target="_blank"></a>
             <p class="member-card__role">Developer</p>
-            <p class="member-card__role-text">Work with authorisation, develop navigation</p>
+            <p class="member-card__role-text">Work with authorisation, develop navigation, Sprint minigame</p>
           </div>
         </div>
       </section>

@@ -13,6 +13,7 @@
 
   @media (max-width: $mobile767) {
     padding: 60px 20px 100px;
+    gap: 20px;
   }
 }
 
@@ -41,7 +42,8 @@
   text-align: center;
   gap: 50px;
 
-  .audio-challenge-link, .sprint-link {
+  .audio-challenge-link,
+  .sprint-link {
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -53,6 +55,13 @@
     border-radius: 50%;
     background-color: rgb(240, 240, 240);
     cursor: pointer;
+
+    @media (max-width: $mobile767) {
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 20px;
+    }
   }
 
   img {
@@ -63,6 +72,10 @@
   h2 {
     height: 42px;
     font-size: 18px;
+
+    @media (max-width: $mobile767) {
+      display: none;
+    }
   }
 }
 
@@ -74,10 +87,15 @@
   min-height: 100vh;
   gap: 40px;
 
+  @media (max-width: $mobile767) {
+    gap: 20px;
+  }
+
   & .message {
     font-size: 32px;
     font-weight: 700;
     text-align: center;
+    gap: 40px;
   }
 }
 
@@ -108,6 +126,12 @@
   border-radius: 5px;
   box-shadow: gray 0 0 15px;
   gap: 25px;
+
+  @media (max-width: $mobile767) {
+    flex-direction: column;
+    padding: 15px;
+    gap: 10px;
+  }
 
   &.learned {
     background-color: rgb(230, 255, 231);
@@ -187,6 +211,12 @@
     justify-content: space-between;
     width: 445px;
     // padding: 10px;
+
+    @media (max-width: $mobile767) {
+      width: 100%;
+      gap: 10px;
+      font-size: 14px;
+    }
   }
 
   & .title {
@@ -194,6 +224,10 @@
     padding-left: 15px;
     font-size: 20px;
     border-left: 3px solid rgb(255, 203, 34);
+
+    @media (max-width: $mobile767) {
+      height: 2.6em;
+    }
   }
 
   & .word {
@@ -202,6 +236,17 @@
 
   & .translation {
     padding-top: 10px;
+
+    @media (max-width: $mobile767) {
+      padding-top: 0;
+      font-size: 14px;
+    }
+  }
+
+  & .text {
+    @media (max-width: $mobile767) {
+      font-size: 14px;
+    }
   }
 
   & > .image {
@@ -209,6 +254,12 @@
     height: 300px;
     object-fit: cover;
     object-position: center center;
+
+    @media (max-width: $mobile767) {
+      width: 100%;
+      height: 30%;
+      max-height: 300px;
+    }
   }
 
   .text-example, .text-meaning {
@@ -228,6 +279,10 @@
   .buttons {
     display: flex;
     justify-content: space-between;
+
+    @media (max-width: $mobile767) {
+      font-size: 12px;
+    }
   }
 
   .add-difficult-button {
@@ -235,6 +290,10 @@
     color: black;
     border-color: lighten($color: orange, $amount: 10);
     background-color: orange;
+
+    @media (max-width: $mobile767) {
+      font-size: inherit;
+    }
 
     &:hover {
       background-color: lighten($color: orange, $amount: 10);
@@ -245,6 +304,10 @@
     color: black;
     border-color: lighten($color: lightgreen, $amount: 10);
     background-color: lightgreen;
+
+    @media (max-width: $mobile767) {
+      font-size: inherit;
+    }
 
     &:hover {
       background-color: lighten($color: lightgreen, $amount: 10);

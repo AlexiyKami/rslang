@@ -6,8 +6,8 @@
   flex-direction: column;
   justify-content: space-between;
   min-height: 100vh;
-  padding: 60px 20px;
   margin-top: -40px;
+  padding: 60px 20px;
   background-color: #fdfdfd;
   gap: 40px;
 
@@ -26,9 +26,11 @@
   justify-content: center;
   height: 2rem;
   gap: 10px;
+
   button {
     cursor: pointer;
   }
+
   .dictionary-page-current.learned {
     color: green;
   }
@@ -38,6 +40,7 @@
   display: flex;
   text-align: center;
   gap: 50px;
+
   .audio-challenge-link, .sprint-link {
     display: flex;
     align-items: center;
@@ -51,10 +54,12 @@
     background-color: rgb(240, 240, 240);
     cursor: pointer;
   }
+
   img {
     width: 32px;
     height: 32px;
   }
+
   h2 {
     height: 42px;
     font-size: 18px;
@@ -68,6 +73,7 @@
   max-width: 800px;
   min-height: 100vh;
   gap: 40px;
+
   & .message {
     font-size: 32px;
     font-weight: 700;
@@ -81,6 +87,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 10px;
+
   & > span {
     font-weight: 700;
   }
@@ -104,6 +111,7 @@
 
   &.learned {
     background-color: rgb(230, 255, 231);
+
     & .add-learned-button::after {
       content: 'Remove from learned';
     }
@@ -119,6 +127,7 @@
 
   & > .audio-image {
     position: absolute;
+    top: 26px;
     right: 20px;
     width: 30px;
     height: 30px;
@@ -141,17 +150,32 @@
     align-items: center;
     justify-content: center;
     gap: 4em;
-    .right-answers, .wrong-answers {
+
+    @media (max-width: $tablet1023) {
+      top: 25px;
+      right: 65px;
+      gap: 1em;
+    }
+
+    .right-answers,
+    .wrong-answers {
       width: 40px;
       padding: 5px;
       font-size: 20px;
       text-align: center;
       background-color: rgb(240, 240, 240);
 
+      @media (max-width: $tablet1023) {
+        width: 30px;
+        font-size: 16px;
+        line-height: 1;
+      }
     }
+
     .right-answers {
       border: 3px solid lightgreen;
     }
+
     .wrong-answers {
       border: 3px solid lightcoral;
     }
@@ -162,7 +186,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 445px;
-    padding: 10px;
+    // padding: 10px;
   }
 
   & .title {
@@ -190,10 +214,12 @@
   .text-example, .text-meaning {
     display: flex;
     flex-direction: column;
+
     p {
       margin: 0;
       padding: 0;
     }
+
     & > .translation {
       color: gray;
     }
@@ -209,6 +235,7 @@
     color: black;
     border-color: lighten($color: orange, $amount: 10);
     background-color: orange;
+
     &:hover {
       background-color: lighten($color: orange, $amount: 10);
     }
@@ -218,9 +245,11 @@
     color: black;
     border-color: lighten($color: lightgreen, $amount: 10);
     background-color: lightgreen;
+
     &:hover {
       background-color: lighten($color: lightgreen, $amount: 10);
     }
+
     &::after {
       content: 'Learned';
     }

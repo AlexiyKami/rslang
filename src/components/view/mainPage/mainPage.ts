@@ -50,7 +50,7 @@ class MainPage {
             <h2 class="main-page__advantages-card-title">Dictionary</h2>
             <p class="main-page__advantages-card-text">The dictionary contains lists of studied words, words that do not
               need to be learned, as well as those that cause difficulties. The dictionary reflects statistics for each
-              section and student progress.</p>
+              section and student progress (for registered users only).</p>
             <button class="main-page__advantages-card-button main-page__advantages-card-button_dictionary marine flat-button" type="button">Go</button>
           </div>
 
@@ -124,6 +124,9 @@ class MainPage {
       </section>
     </div>
     `;
+
+    const dictionaryButton = getElement('main-page__advantages-card-button_dictionary') as HTMLButtonElement;
+    if (!this.controller.isAuthorized()) dictionaryButton.disabled = true;
 
     (getElement('main-page__header-button') as HTMLButtonElement).addEventListener('click', () => {
       window.scrollTo(0, 0);

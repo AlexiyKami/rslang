@@ -20,7 +20,7 @@ class MinigamesPageView {
     <div class="minigames-page">
       <div class="minigames-page__games-block">
         <div class="minigames-page__game-card">
-          <img class="minigames-page__game-card-img" src="./../../../assets/images/sprint.png"
+          <img class="minigames-page__game-card-img" src="./assets/images/sprint.png"
                alt="Audio Challenge game">
           <h2 class="minigames-page__game-card-title">Sprint</h2>
           <p class="minigames-page__game-card-text">Check how much points you can get in one minute, making educated
@@ -28,7 +28,7 @@ class MinigamesPageView {
           <button class="minigames-page__game-card-button minigames-page__game-card-button_sprint flat-button" type="button">Play</button>
         </div>
         <div class="minigames-page__game-card">
-          <img class="minigames-page__game-card-img" src="./../../../assets/images/audioChallenge.png"
+          <img class="minigames-page__game-card-img" src="./assets/images/audioChallenge.png"
                alt="Audio Challenge game">
           <h2 class="minigames-page__game-card-title">Audio challenge</h2>
           <p class="minigames-page__game-card-text">Check your listening skills, trying to pick the right meaning after

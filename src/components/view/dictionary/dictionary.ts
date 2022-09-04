@@ -53,11 +53,11 @@ class Dictionary {
           ? `
       <div class='dictionary-minigame-links'>
         <div class='sprint-link'>
-          <img src="./../../../assets/images/sprint.png" alt="Sprint game">
+          <img src="./assets/images/sprint.png" alt="Sprint game">
           <h2>Sprint</h2>
         </div>
         <div class='audio-challenge-link'>
-          <img src="./../../../assets/images/audioChallenge.png" alt="Audio Challenge game">
+          <img src="./assets/images/audioChallenge.png" alt="Audio Challenge game">
           <h2>Audio challenge</h2>
         </div>
       </div>

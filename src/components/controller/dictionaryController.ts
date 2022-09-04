@@ -27,7 +27,7 @@ class DictionaryController {
           `{"$or":[{ "userWord.difficulty": "hard"}]}`,
           this.difficultWordsPage
         );
-        this.setMaxDifficultWordsPage((response.data as GetAllUserAggregatedWordsData).totalCount[0].count);
+        this.setMaxDifficultWordsPage((response.data as GetAllUserAggregatedWordsData)?.totalCount[0]?.count);
         if (typeof response.data === 'string') {
           return `<p class='message'>${response.data}</p>`;
         }
@@ -93,7 +93,7 @@ class DictionaryController {
           response = await this.baseController.api.updateUserWord(
             userId,
             wordId,
-            'easy',
+            (getUserWord.data as UserWord).difficulty as string,
             { ...(getUserWord.data as UserWord).optional, isLearned: true },
             token
           );
@@ -196,7 +196,7 @@ class DictionaryController {
   }
 
   public setMaxDifficultWordsPage(value: number): void {
-    this.maxDifficultWordsPage = Math.ceil(value / settings.WORDS_PER_PAGE) - 1;
+    this.maxDifficultWordsPage = Math.ceil(value / settings.WORDS_PER_PAGE) - 1 || 0;
   }
 }
 

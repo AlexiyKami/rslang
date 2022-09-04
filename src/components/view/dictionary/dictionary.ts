@@ -156,10 +156,10 @@ class Dictionary {
             ${
               isAuthorized
                 ? `<div class='counters'>
-                    <div class='right-answers' title='Правильные ответы'>${
+                    <div class='right-answers' title='Right answers'>${
                       (word as AggregatedWord)?.userWord?.optional?.successfulAttempts || '0'
                     }</div>
-                    <div class='wrong-answers' title='Неправильные ответы'>${
+                    <div class='wrong-answers' title='Wrong answers'>${
                       (word as AggregatedWord)?.userWord?.optional?.failedAttempts || '0'
                     }</div>
                   </div>`

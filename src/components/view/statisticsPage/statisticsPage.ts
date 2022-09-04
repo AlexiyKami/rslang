@@ -47,28 +47,28 @@ class StatisticsPage {
       ${
         !isAuthorized
           ? `<div class='darkened-background'>
-              <h2>Прежде, чем посмотреть статистику, авторизуйтесь</h2>
+              <h2>Please login before viewing statistics</h2>
             </div>`
           : ''
       }
       <div class='statistics-page'>
         <div class='today-statistics'>
-          <h3 class='statistics-title'>Сегодня</h3>
+          <h3 class='statistics-title'>Today</h3>
           <div class='today-indicators'>
             <div class='learned-words'>
-              <h3 class='learned-words-title'>Изученных слов:</h3>
+              <h3 class='learned-words-title'>Learned words:</h3>
               <h3 class='learned-words-counter'>${
                 statistics?.optional.globalStatistics[new Date().toDateString()]?.learnedWords || 0
               }</h3>
             </div>
             <div class='new-words'>
-              <h3 class='new-words-title'>Новых слов:</h3>
+              <h3 class='new-words-title'>New words:</h3>
               <h3 class='new-words-counter'>${
                 statistics?.optional.globalStatistics[new Date().toDateString()]?.newWords || 0
               }</h3>
             </div>
             <div class='accuracy'>
-              <h3 class='accuracy-title'>Точность</h3>
+              <h3 class='accuracy-title'>Accuracy</h3>
               <h3 class='accuracy-counter'>${
                 (audioChallengeAccuracy + sprintAccuracy) /
                 ((((audioChallengeStatistics as GameStatistic)?.wrongWords && 1) || 0) +
@@ -76,41 +76,41 @@ class StatisticsPage {
               }%</h3>
             </div>
             <div class='sprint-indicator'>
-              <h3 class='sprint-indicator-title'>Спринт</h3>
+              <h3 class='sprint-indicator-title'>Sprint</h3>
               <div class='indicator-stats'>
                 <div class='sprint-words'>
-                  <span>Слов</span>
+                  <span>Words</span>
                   <span>${
                     (sprintStatistics as GameStatistic)?.rightWords + (sprintStatistics as GameStatistic)?.wrongWords ||
                     0
                   }</span>
                 </div>
                 <div class='sprint-accuracy'>
-                  <span>Точность</span>
+                  <span>Accuracy</span>
                   <span>${sprintAccuracy}%</span>
                 </div>
                 <div class='sprint-in-row'>
-                  <span>Угадано подряд</span>
+                  <span>Words in a row</span>
                   <span>${(sprintStatistics as GameStatistic)?.maxInRow || 0}</span>
                 </div>
               </div>
             </div>
             <div class='audio-challenge-indicator'>
-              <h3 class='audio-challenge-indicator-title'>Аудиовызов</h3>
+              <h3 class='audio-challenge-indicator-title'>Audio challenge</h3>
               <div class='indicator-stats'>
                 <div class='audio-challenge-words'>
-                  <span>Слов</span>
+                  <span>Words</span>
                   <span>${
                     (audioChallengeStatistics as GameStatistic)?.rightWords +
                       (audioChallengeStatistics as GameStatistic)?.wrongWords || 0
                   }</span>
                 </div>
                 <div class='audio-challenge-accuracy'>
-                  <span>Точность</span>
+                  <span>Accuracy</span>
                   <span>${audioChallengeAccuracy}%</span>
                 </div>
                 <div class='audio-challenge-in-row'>
-                  <span>Угадано подряд</span>
+                  <span>Words in a row</span>
                   <span>${(audioChallengeStatistics as GameStatistic)?.maxInRow || 0}</span>
                 </div>
               </div>
@@ -121,7 +121,7 @@ class StatisticsPage {
           isAuthorized
             ? `
           <div class='alltime-statistics'>
-            <h3 class='statistics-title'>Все время</h3>
+            <h3 class='statistics-title'>All time</h3>
             <div class='alltime-statistics-charts'>
               <div class='alltime-words'>
                 <canvas id='chart-words' width='400' height='300'></canvas>
@@ -171,7 +171,7 @@ class StatisticsPage {
           labels: dataLabels,
           datasets: [
             {
-              label: 'Слова',
+              label: 'Words',
               data: newWordsDataset,
               backgroundColor: 'orange',
               borderColor: 'lightcoral',
@@ -199,7 +199,7 @@ class StatisticsPage {
           plugins: {
             title: {
               display: true,
-              text: `Всего: ${newWordsDataset.reduce((total, curr) => total + curr)}`,
+              text: `Total: ${newWordsDataset.reduce((total, curr) => total + curr)}`,
               position: 'bottom',
             },
             legend: {
@@ -220,7 +220,7 @@ class StatisticsPage {
           labels: dataLabels,
           datasets: [
             {
-              label: 'Прогресс',
+              label: 'Progress',
               data: learnedWordsDataset,
               backgroundColor: 'green',
               borderColor: 'lightgreen',
@@ -247,7 +247,7 @@ class StatisticsPage {
           plugins: {
             title: {
               display: true,
-              text: `Всего: ${learnedWordsDataset.reduce((total, curr) => total + curr)}`,
+              text: `Total: ${learnedWordsDataset.reduce((total, curr) => total + curr)}`,
               position: 'bottom',
             },
             legend: {

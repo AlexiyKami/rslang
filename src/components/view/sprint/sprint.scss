@@ -1,13 +1,14 @@
 @import "../variables.scss";
 
 .sprint {
-  box-sizing: border-box;
   display: flex;
   align-items: center;
   flex-direction: column;
   justify-content: center;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
+  padding: 20px 20px 60px 20px;
   background-color: #fdfdfd;
   gap: 20px;
 
@@ -15,11 +16,15 @@
     padding: 20px 10px 100px 10px;
   }
 
-  .sprint__main-page{
+  .sprint__main-page {
     display: flex;
     align-items: center;
     flex-direction: column;
     gap: 40px;
+
+    @media (max-width: $mobile767) {
+      gap: 20px;
+    }
 
     .sprint-err {
       text-align: center;
@@ -33,6 +38,11 @@
       border-radius: 10px;
       box-shadow: 0 0 10px rgb(0 0 0 / 15%);
       gap: 15px;
+
+      @media (max-width: $mobile767) {
+        padding: 15px;
+        gap: 5px;
+      }
     }
 
     .sprint__back-to-games-button {
@@ -62,7 +72,13 @@
     border-radius: 10px;
     background-color: #5b67ed;
 
-    &.sprint-delay{
+    @media (max-width: $mobile767) {
+      width: 100%;
+      max-width: 350px;
+      min-width: auto;
+    }
+
+    &.sprint-delay {
       display: none;
     }
 
@@ -75,6 +91,7 @@
       background: url('/src/assets/icons/speaker.svg') no-repeat center;
       background-size: contain;
       cursor: pointer;
+
       &.mute {
         background: url('/src/assets/icons/speaker-mute.svg') no-repeat center;
       }
@@ -105,7 +122,7 @@
         border: 2px solid white;
         border-radius: 11px;
 
-        &--fill{
+        &--fill {
           background-color: white;
         }
       }
@@ -153,7 +170,7 @@
     display: flex;
 
     .base-timer {
-      padding-right: 0;
+      padding: 20px 0 20px 10px;
     }
 
     .sprint-word-result {
@@ -198,6 +215,12 @@
     min-width: 330px;
     max-height: 250px;
 
+    @media (max-width: $mobile767) {
+      min-width: auto;
+      width: 100%;
+      max-width: 330px;
+    }
+
     &::-webkit-scrollbar {
       width: 8px;
       border-radius: 4px;
@@ -210,7 +233,7 @@
     }
 
     .sprint-words-links-header {
-      margin-top: 10px;
+      margin: 10px 0;
       font-size: 1.1rem;
       font-weight: bold;
 
@@ -218,7 +241,7 @@
         color: #73e48b;
       }
 
-      &.wrong{
+      &.wrong {
         color: #e65d5d;
       }
     }
@@ -226,6 +249,7 @@
     .sprint-audio {
       display: flex;
       align-items: center;
+      gap: 10px;
 
       .sprint-audio-play {
         width: 20px;

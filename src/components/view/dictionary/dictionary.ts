@@ -133,11 +133,11 @@ class Dictionary {
                 <div class='translation'>${word.wordTranslate}</div>
               </div>
               <div class='text-example'>
-                <p>${word.textExample}</p>
+                <p  class='text'>${word.textExample}</p>
                 <p class='translation'>${word.textExampleTranslate}</p>
               </div>
               <div class='text-meaning'>
-                <p>${word.textMeaning}</p>
+                <p class='text'>${word.textMeaning}</p>
                 <p class='translation'>${word.textMeaningTranslate}</p>
               </div>
               ${

@@ -27,7 +27,7 @@ class MainPage {
       <img class="main-page__header-img" src="./../../../assets/images/main-page-1.jpg" alt="RSLang">
 
       <section class="main-page__advantages">
-        <h2 class="main-page__advantages-title">Why lern English with us?</h2>
+        <h2 class="main-page__advantages-title">Why learn English with us?</h2>
 
         <div class="main-page__advantages-cards">
           <div class="main-page__advantages-card">
@@ -82,7 +82,7 @@ class MainPage {
         <h2 class="main-page__login-title">Register</h2>
         <p class="main-page__login-text">If you want to see statistics for all time and have access to the dictionary,
           please log in or sign up first.</p>
-        <button class="main-page__login-button green flat-button" type="button">login / singup</button>
+        <button class="main-page__login-button green flat-button" type="button">Login / Sign up</button>
       </section>
 
       <img class="main-page__our-team-img" src="./../../../assets/images/main-page-2.jpg" alt="RSLang Team">

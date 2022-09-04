@@ -13,6 +13,7 @@ class AudioChallengeView {
   }
 
   public renderStartPage() {
+    window.scrollTo(0, 0);
     this.view.changeAppTitle('Audio Challenge');
     this.view.hideFooter();
 

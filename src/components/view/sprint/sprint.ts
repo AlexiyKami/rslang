@@ -19,6 +19,7 @@ export default class Sprint {
   }
 
   public renderStartPage(withMistake = false): void {
+    window.scrollTo(0, 0);
     this.view.changeAppTitle('Sprint');
     this.view.hideFooter();
 

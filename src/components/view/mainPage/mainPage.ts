@@ -24,7 +24,7 @@ class MainPage {
         <button class="main-page__header-button orange flat-button" type="button">Let's start</button>
       </section>
 
-      <img class="main-page__header-img" src="./../../../assets/images/main-page-1.jpg" alt="RSLang">
+      <img class="main-page__header-img" src="./assets/images/main-page-1.jpg" alt="RSLang">
 
       <section class="main-page__advantages">
         <h2 class="main-page__advantages-title">Why learn English with us?</h2>
@@ -85,7 +85,7 @@ class MainPage {
         <button class="main-page__login-button green flat-button" type="button">Login / Sign up</button>
       </section>
 
-      <img class="main-page__our-team-img" src="./../../../assets/images/main-page-2.jpg" alt="RSLang Team">
+      <img class="main-page__our-team-img" src="./assets/images/main-page-2.jpg" alt="RSLang Team">
 
       <section class="main-page__our-team">
         <h2 class="main-page__our-team-title">Our Team</h2>

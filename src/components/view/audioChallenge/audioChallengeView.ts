@@ -12,7 +12,7 @@ class AudioChallengeView {
     this.mainWindow = getElement('main-window') as HTMLElement;
   }
 
-  public renderStartPage() {
+  public renderStartPage(): void {
     window.scrollTo(0, 0);
     this.view.changeAppTitle('Audio Challenge');
     this.view.hideFooter();
@@ -67,7 +67,7 @@ class AudioChallengeView {
     if (audioChallengeBlock) audioChallengeBlock.append(errorMessageBlock);
   }
 
-  public renderGamePage(state: AudioChallengeModelState) {
+  public renderGamePage(state: AudioChallengeModelState): void {
     this.view.changeAppTitle('Audio Challenge');
     this.view.hideFooter();
     this.view.loadingPopup.clear();
@@ -118,12 +118,12 @@ class AudioChallengeView {
     this.controller.playStopAudio(currentWord.audio);
   }
 
-  private disableEnableWordsButtons(disable = true) {
+  private disableEnableWordsButtons(disable = true): void {
     const buttons = document.querySelectorAll('.audio-challenge__select-button');
     buttons.forEach((button) => ((button as HTMLButtonElement).disabled = disable));
   }
 
-  public updatePageOnWordSelect(state: AudioChallengeModelState, isRightAnswer: boolean) {
+  public updatePageOnWordSelect(state: AudioChallengeModelState, isRightAnswer: boolean): void {
     this.disableEnableWordsButtons();
     const currentWord = state.currentWords[state.currentWordIndex];
     const wordPrefix = isRightAnswer ? `&#10004;` : `&#10008;`;
@@ -146,7 +146,7 @@ class AudioChallengeView {
         : `<span class="space-icon"></span> Show results`;
   }
 
-  public updateGamePage(state: AudioChallengeModelState) {
+  public updateGamePage(state: AudioChallengeModelState): void {
     const currentWord = state.currentWords[state.currentWordIndex];
     (getElement('audio-challenge__progress-count') as HTMLElement).innerHTML = `${state.currentWordIndex + 1}`;
 
@@ -186,7 +186,7 @@ class AudioChallengeView {
     return audioBlock;
   }
 
-  public renderResultsPage(state: AudioChallengeModelState) {
+  public renderResultsPage(state: AudioChallengeModelState): void {
     this.controller.playStopAudio(settings.END_GAME_LINK, true, false);
 
     this.mainWindow.innerHTML = `

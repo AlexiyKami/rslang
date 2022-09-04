@@ -111,8 +111,7 @@
     .sprint-series {
       display: flex;
       justify-content: center;
-      margin: 10px;
-      margin-bottom: 20px;
+      margin: 10px 10px 20px;
 
       .sprint-series-marker {
         display: block;
@@ -142,7 +141,6 @@
       display: flex;
       justify-content: space-around;
       margin: 20px;
-      margin-top: 20px;
 
       .arrow-right-icon {
         display: inline-block;

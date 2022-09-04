@@ -1,17 +1,17 @@
-import Controller from '../controller';
-import AppModel from '../../app/app';
-import { getElement, getRandomNumber } from '../../utils/utils';
-import settings from '../../settings';
-import { AudioChallengeKeycodesToHandle } from '../../types/types';
+import Controller from './controller';
+import AppModel from '../app/app';
+import { getElement, getRandomNumber } from '../utils/utils';
+import settings from '../settings';
+import { AudioChallengeKeycodesToHandle } from '../types/types';
 
 class AudioChallengeController {
   constructor(private readonly controller: Controller, private readonly model: AppModel) {}
 
-  public initGame() {
+  public initGame(): void {
     this.model.audioChallengeModel.initGame();
   }
 
-  public async initGameByGroupPage(group: number, page: number) {
+  public async initGameByGroupPage(group: number, page: number): Promise<void> {
     let words;
 
     if (!this.controller.isAuthorized()) {
@@ -50,14 +50,14 @@ class AudioChallengeController {
     }
   }
 
-  public keyboardHandler(e: KeyboardEvent) {
+  public keyboardHandler(e: KeyboardEvent): void {
     if (Object.keys(AudioChallengeKeycodesToHandle).includes(e.code)) {
       const button = getElement(`audio-challenge-group-${e.code}`);
       if (button) button.click();
     }
   }
 
-  public async startPageHandler(e: Event) {
+  public async startPageHandler(e: Event): Promise<void> {
     const buttons = document.querySelectorAll('.audio-challenge__difficulty-button');
     buttons.forEach((button) => ((button as HTMLButtonElement).disabled = true));
     const target = e.target as HTMLElement;
@@ -74,7 +74,7 @@ class AudioChallengeController {
     }
   }
 
-  public gamePageWordsHandler(e: Event) {
+  public gamePageWordsHandler(e: Event): void {
     const audioChallengeModel = this.model.audioChallengeModel;
     const audioChallengeModelState = audioChallengeModel.state;
     if ((e.target as HTMLElement).classList.contains('audio-challenge__select-button')) {
@@ -86,7 +86,7 @@ class AudioChallengeController {
     }
   }
 
-  public gamePageNextButtonHandler() {
+  public gamePageNextButtonHandler(): void {
     this.controller.playStopAudio('', false);
     const state = this.model.audioChallengeModel.state;
     const nextButton = getElement('audio-challenge__submit-button') as HTMLButtonElement;
@@ -95,7 +95,7 @@ class AudioChallengeController {
     this.model.audioChallengeModel.onNextButtonClick(nextButtonText);
   }
 
-  public gameResultsHandler(e: Event) {
+  public gameResultsHandler(e: Event): void {
     if ((e.target as HTMLElement).classList.contains('audio-challenge__play-button')) {
       const audioLink = (e.target as HTMLButtonElement).dataset.audiolink || '';
       this.controller.playStopAudio(audioLink);

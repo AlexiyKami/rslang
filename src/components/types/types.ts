@@ -100,14 +100,6 @@ export interface CreateUserData extends ApiMethodsData {
   data: User | CreateUserErrors | string;
 }
 
-export interface GetUpdateUserData extends ApiMethodsData {
-  data: User | string;
-}
-
-export interface DeleteUserWordData extends ApiMethodsData {
-  data: string;
-}
-
 export interface GetUserTokensData extends ApiMethodsData {
   data: Auth | string;
 }
@@ -118,10 +110,6 @@ export interface GetAllUserWordsData extends ApiMethodsData {
 
 export interface UserWordData extends ApiMethodsData {
   data: UserWord | string;
-}
-
-export interface GetUserAggregatedWord extends ApiMethodsData {
-  data: AggregatedWord[] | string;
 }
 
 export interface GetUpsertStatistics extends ApiMethodsData {
@@ -175,9 +163,4 @@ export interface GameStatistic {
   rightWords: number;
   wrongWords: number;
   maxInRow: number;
-}
-
-export interface UserWordStatistic {
-  difficulty?: string;
-  optional?: WordOptional;
 }

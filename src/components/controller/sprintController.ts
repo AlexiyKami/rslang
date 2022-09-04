@@ -1,8 +1,8 @@
-import Controller from '../controller';
-import AppModel from '../../app/app';
-import { Word, UserWord, AudioChallengeKeycodesToHandle } from '../../types/types';
-import { getRandomNumber } from '../../utils/utils';
-import settings from '../../settings';
+import Controller from './controller';
+import AppModel from '../app/app';
+import { Word, UserWord, AudioChallengeKeycodesToHandle } from '../types/types';
+import { getRandomNumber } from '../utils/utils';
+import settings from '../settings';
 
 export default class SprintController {
   private words: Word[] = [];
@@ -56,10 +56,6 @@ export default class SprintController {
       } else this.model.view.sprint.renderStartPage(true);
       this.controller.hideLoadingPopup();
     });
-  }
-
-  public initStartPage() {
-    this.model.view.sprint.renderStartPage();
   }
 
   private async getWords(group: number, page: number, fromTextBook: boolean): Promise<Word[]> {

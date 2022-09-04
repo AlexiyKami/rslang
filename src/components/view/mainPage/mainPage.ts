@@ -9,7 +9,7 @@ import { getElement } from '../../utils/utils';
 class MainPage {
   constructor(private readonly view: View, private readonly controller: Controller) {}
 
-  public renderMainPage() {
+  public renderMainPage(): void {
     this.view.changeAppTitle('RSLang');
     this.view.hideFooter(false);
     const mainWindow = getElement('main-window') as HTMLElement;

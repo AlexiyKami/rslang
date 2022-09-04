@@ -176,7 +176,7 @@ export default class Navigation {
     });
   }
 
-  public setCurPage(pageNum: number) {
+  public setCurPage(pageNum: number): void {
     [...this.NavPageElMap.values()][!this.controller.isAuthorized() && pageNum > 1 ? pageNum - 1 : pageNum].checked =
       true;
   }

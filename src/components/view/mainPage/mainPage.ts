@@ -61,7 +61,7 @@ class MainPage {
             </svg>
             <h2 class="main-page__advantages-card-title">Games</h2>
             <p class="main-page__advantages-card-text">For learning words and reinforcing memorization, the application
-              has 2 games: Sprint and Audio Chalenge, which will help you to "pump" your
+              has 2 games: Sprint and Audio Challenge, which will help you to "pump" your
               vocabulary in a playful way.</p>
             <button class="main-page__advantages-card-button main-page__advantages-card-button_games orange flat-button" type="button">Play</button>
           </div>

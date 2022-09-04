@@ -29,18 +29,15 @@ class Dictionary {
       .fill('')
       .map((item, index) => `<button class='round-button group-${index + 1}'>${index + 1}</button>`)
       .join('');
-    let pagination: string;
+    const pagination = `
+    <div class='dictionary-pagination'>
+      <button class='rounded-button prev' disabled>Prev</button>
+      <h4 class="dictionary-page-number">1</h4>
+      <button class='rounded-button next'>Next</button>
+    </div>
+  `;
     if (this.dictionaryController.getDictionaryGroup() === 6) {
       this.view.changeAppTitle('Dictionary');
-      pagination = '';
-    } else {
-      pagination = `
-      <div class='dictionary-pagination'>
-        <button class='rounded-button prev' disabled>Prev</button>
-        <h4 class="dictionary-page-number">1</h4>
-        <button class='rounded-button next'>Next</button>
-      </div>
-    `;
     }
     (document.querySelector('.main-window') as HTMLElement).innerHTML = `
     <div class='dictionary'>
@@ -231,6 +228,9 @@ class Dictionary {
     if (isAuthorized) {
       this.checkForLearnedPage();
     }
+    if (this.dictionaryController.getDictionaryGroup() === 6) {
+      this.updatePagination();
+    }
     this.baseController.hideLoadingPopup();
   }
 
@@ -277,11 +277,20 @@ class Dictionary {
   private onPaginationClick(e: Event) {
     const target = e.target as HTMLElement;
     const page = this.dictionaryController.getDictionaryPage();
+    const difficultWordsPage = this.dictionaryController.getDifficultWordsPage();
     if (target.classList.contains('prev')) {
-      this.dictionaryController.setDictionaryPage(page - 1);
+      if (this.dictionaryController.getDictionaryGroup() !== 6) {
+        this.dictionaryController.setDictionaryPage(page - 1);
+      } else {
+        this.dictionaryController.setDifficultWordsPage(difficultWordsPage - 1);
+      }
     }
     if (target.classList.contains('next')) {
-      this.dictionaryController.setDictionaryPage(page + 1);
+      if (this.dictionaryController.getDictionaryGroup() !== 6) {
+        this.dictionaryController.setDictionaryPage(page + 1);
+      } else {
+        this.dictionaryController.setDifficultWordsPage(difficultWordsPage + 1);
+      }
     }
   }
 
@@ -290,20 +299,36 @@ class Dictionary {
     const next = document.querySelectorAll('.dictionary-pagination .next');
     prev.forEach((item) => ((item as HTMLButtonElement).disabled = false));
     next.forEach((item) => ((item as HTMLButtonElement).disabled = false));
-    if (this.dictionaryController.getDictionaryPage() <= 0) {
-      prev.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+    if (this.dictionaryController.getDictionaryGroup() === 6) {
+      if (this.dictionaryController.getDifficultWordsPage() <= 0) {
+        prev.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+      }
+      if (this.dictionaryController.getDifficultWordsPage() === this.dictionaryController.getMaxDifficultWordsPage()) {
+        next.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+      }
+    } else {
+      if (this.dictionaryController.getDictionaryPage() <= 0) {
+        prev.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+      }
+      if (this.dictionaryController.getDictionaryPage() === this.dictionaryController.getMaxDictionaryPage()) {
+        next.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+      }
     }
-    if (this.dictionaryController.getDictionaryPage() === this.dictionaryController.getMaxDictionaryPage()) {
-      next.forEach((item) => ((item as HTMLButtonElement).disabled = true));
+    if (this.dictionaryController.getDifficultWordsPage() > this.dictionaryController.getMaxDifficultWordsPage()) {
+      this.dictionaryController.setDifficultWordsPage(this.dictionaryController.getMaxDifficultWordsPage());
     }
     document
       .querySelectorAll('.dictionary-page-number')
       .forEach(
         (item) =>
           (item.innerHTML = `<span class='dictionary-page-current'>${
-            this.dictionaryController.getDictionaryPage() + 1
+            this.dictionaryController.getDictionaryGroup() !== 6
+              ? this.dictionaryController.getDictionaryPage() + 1
+              : this.dictionaryController.getDifficultWordsPage() + 1
           }</span><span> / </span><span class='dictionary-page-all'>${
-            this.dictionaryController.getMaxDictionaryPage() + 1
+            this.dictionaryController.getDictionaryGroup() !== 6
+              ? this.dictionaryController.getMaxDictionaryPage() + 1
+              : this.dictionaryController.getMaxDifficultWordsPage() + 1
           }</span>`)
       );
   }

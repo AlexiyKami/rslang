@@ -7,6 +7,8 @@ class DictionaryController {
   baseController: Controller;
   private dictionaryPage = 0;
   private dictionaryGroup = 0;
+  private difficultWordsPage = 0;
+  private maxDifficultWordsPage = 0;
   public onDictionaryUpdate: CallbackFunction[];
 
   constructor(controller: Controller) {
@@ -23,10 +25,9 @@ class DictionaryController {
           state.userId as string,
           state.token as string,
           `{"$or":[{ "userWord.difficulty": "hard"}]}`,
-          undefined,
-          undefined,
-          settings.COUNT_OF_WORDS()
+          this.difficultWordsPage
         );
+        this.setMaxDifficultWordsPage((response.data as GetAllUserAggregatedWordsData).totalCount[0].count);
         if (typeof response.data === 'string') {
           return `<p class='message'>${response.data}</p>`;
         }
@@ -175,11 +176,35 @@ class DictionaryController {
   public setDictionaryGroup(value: number) {
     this.dictionaryGroup = value;
     this.dictionaryPage = 0;
+    this.difficultWordsPage = 0;
     this.updateDictionary();
   }
 
   public getDictionaryGroup() {
     return this.dictionaryGroup;
+  }
+
+  public getDifficultWordsPage() {
+    return this.difficultWordsPage;
+  }
+
+  public setDifficultWordsPage(value: number) {
+    if (value < 0) {
+      this.difficultWordsPage = 0;
+    } else if (value > this.maxDifficultWordsPage) {
+      this.difficultWordsPage = this.maxDifficultWordsPage;
+    } else {
+      this.difficultWordsPage = value;
+    }
+    this.updateDictionary();
+  }
+
+  public getMaxDifficultWordsPage() {
+    return this.maxDifficultWordsPage;
+  }
+
+  public setMaxDifficultWordsPage(value: number) {
+    this.maxDifficultWordsPage = Math.ceil(value / settings.WORDS_PER_PAGE) - 1;
   }
 }
 

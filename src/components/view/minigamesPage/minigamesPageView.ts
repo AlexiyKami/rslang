@@ -11,7 +11,8 @@ class MinigamesPageView {
   constructor(private readonly controller: Controller, private readonly view: View) {
     this.mainWindow = getElement('main-window') as HTMLElement;
   }
-  public renderMinigamesPage() {
+
+  public renderMinigamesPage(): void {
     this.view.changeAppTitle('Games');
     this.view.hideFooter(false);
 

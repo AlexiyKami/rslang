@@ -6,13 +6,9 @@ import Chart from 'chart.js/auto';
 import { StatisticsData } from '../../types/types';
 
 class StatisticsPage {
-  controller: Controller;
-  view: View;
-  constructor(controller: Controller, view: View) {
-    this.controller = controller;
-    this.view = view;
-  }
-  async draw(): Promise<void> {
+  constructor(private readonly controller: Controller, private readonly view: View) {}
+
+  public async draw(): Promise<void> {
     this.controller.showLoadingPopup();
     await this.controller.statisticController.resetGamesDayStatistics();
     this.view.changeAppTitle('Statistics');
@@ -137,16 +133,6 @@ class StatisticsPage {
       </div>
     `;
     if (isAuthorized) {
-      // const words = await this.controller.api.getAllUserAggregatedWords(
-      //   state.userId as string,
-      //   state.token as string,
-      //   `{"$nor":[{ "userWord": null}]}`,
-      //   undefined,
-      //   undefined,
-      //   settings.COUNT_OF_WORDS()
-      // );
-      // console.log(words);
-      // console.log(statistics);
       const minDate = new Date(statistics?.optional.registrationDate as string).getTime();
       const maxDate = Math.max(
         ...Object.keys((statistics as StatisticsData).optional.globalStatistics).map((date) => new Date(date).getTime())

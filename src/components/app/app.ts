@@ -1,6 +1,6 @@
 import Controller from '../controller/controller';
 import View from '../view/view';
-import AudioChallengeModel from './audioChallengeModel/audioChallengeModel';
+import AudioChallengeModel from './audioChallengeModel';
 import { AppState } from '../types/types';
 
 class AppModel {
@@ -13,14 +13,10 @@ class AppModel {
     this.state = JSON.parse(localStorage.getItem('RSSLang-state') || '{}');
     this.controller = new Controller(this);
     this.view = new View(this.controller);
-    this.audioChallengeModel = new AudioChallengeModel(this.view, this);
+    this.audioChallengeModel = new AudioChallengeModel(this.view);
   }
 
-  async initApp(): Promise<void> {
-    await this.view.initRender();
-  }
-
-  saveState(): void {
+  public saveState(): void {
     localStorage.setItem('RSSLang-state', JSON.stringify(this.state));
   }
 }

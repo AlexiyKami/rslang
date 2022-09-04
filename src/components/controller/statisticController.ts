@@ -17,7 +17,7 @@ class StatisticController {
     this.userId = this.controller.authorizationController.userId as string;
   }
 
-  public async resetGamesDayStatistics() {
+  public async resetGamesDayStatistics(): Promise<void> {
     const token = this.controller.authorizationController.token as string;
     const userStat = await this.controller.api.getStatistics(this.userId, token);
     const date = new Date().toDateString();
@@ -45,7 +45,11 @@ class StatisticController {
     }
   }
 
-  private async saveWordStatistic(word: Word | AggregatedWord, isSuccessful: boolean, userWords: UserWord[]) {
+  private async saveWordStatistic(
+    word: Word | AggregatedWord,
+    isSuccessful: boolean,
+    userWords: UserWord[]
+  ): Promise<number> {
     const token = this.controller.authorizationController.token as string;
     let learnedWordsCount = 0;
     const wordStat = {
@@ -105,7 +109,7 @@ class StatisticController {
     return learnedWordsCount;
   }
 
-  private async saveWordsStatistic(gameState: GameState, userWords: UserWord[]) {
+  private async saveWordsStatistic(gameState: GameState, userWords: UserWord[]): Promise<number> {
     const promises: Promise<number>[] = [];
     gameState.rightWords.forEach((word) => promises.push(this.saveWordStatistic(word, true, userWords)));
     gameState.wrongWords.forEach((word) => promises.push(this.saveWordStatistic(word, false, userWords)));
@@ -113,7 +117,7 @@ class StatisticController {
     return numArr.reduce((acc, num) => acc + num, 0);
   }
 
-  private newWordsCount(gameState: GameState, userWords: UserWord[]) {
+  private newWordsCount(gameState: GameState, userWords: UserWord[]): number {
     let newWordsCount = 0;
     const gameWords = [...gameState.wrongWords, ...gameState.rightWords];
     const gameWordsIds = gameWords.map((word) => (word as Word).id || (word as AggregatedWord)._id);
@@ -131,7 +135,7 @@ class StatisticController {
     return newWordsCount;
   }
 
-  public async saveGameStatistic(gameName: 'sprint' | 'audioChallenge', gameState: GameState) {
+  public async saveGameStatistic(gameName: 'sprint' | 'audioChallenge', gameState: GameState): Promise<void> {
     const token = this.controller.authorizationController.token as string;
     const userWordsResponse = await this.controller.api.getAllUserWords(this.userId, token);
     const userWords = userWordsResponse.data;

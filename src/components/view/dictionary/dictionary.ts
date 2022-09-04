@@ -1,4 +1,4 @@
-import { AggregatedWord } from './../../types/types';
+import { AggregatedWord } from '../../types/types';
 import settings from '../../settings';
 import { Word } from '../../types/types';
 import './dictionary.scss';
@@ -109,7 +109,7 @@ class Dictionary {
     this.updateWords();
   }
 
-  async updateWords() {
+  async updateWords(): Promise<void> {
     this.baseController.showLoadingPopup();
     const isAuthorized = this.baseController.isAuthorized();
     const words = await this.dictionaryController.getWords();
@@ -122,7 +122,7 @@ class Dictionary {
           return `<div class='word-card ${(word as AggregatedWord)?.userWord?.optional?.isLearned ? 'learned' : ''} ${
             (word as AggregatedWord)?.userWord?.difficulty === 'hard' ? 'hard' : ''
           }' data-id=${(word as Word).id ? (word as Word).id : (word as AggregatedWord)._id}>
-            <img class='image' src='${settings.DATABASE_URL}/${word.image}'>
+            <img class='image' src='${settings.DATABASE_URL}/${word.image}' alt="Word image">
             <div class='description'>
               <div class='title'>
                 <span class='word'>${word.word.charAt(0).toUpperCase() + word.word.slice(1)}</span>
@@ -254,7 +254,7 @@ class Dictionary {
     }
   }
 
-  private audioHandler(currTarget: HTMLElement, audioFile: string) {
+  private audioHandler(currTarget: HTMLElement, audioFile: string): void {
     if (!currTarget.classList.contains('playing')) {
       this.baseController.playStopAudio(audioFile as string);
       document.querySelectorAll('.audio-image.playing').forEach((img) => img.classList.remove('playing'));
@@ -265,16 +265,14 @@ class Dictionary {
     }
   }
 
-  private updateGroupButtons() {
+  private updateGroupButtons(): void {
     (document.querySelector('.group-buttons') as HTMLElement).childNodes.forEach((elem) => {
-      (elem as HTMLButtonElement).disabled = false;
-      if (+(elem.textContent as string) === this.dictionaryController.getDictionaryGroup() + 1) {
-        (elem as HTMLButtonElement).disabled = true;
-      }
+      (elem as HTMLButtonElement).disabled =
+        +(elem.textContent as string) === this.dictionaryController.getDictionaryGroup() + 1;
     });
   }
 
-  private onPaginationClick(e: Event) {
+  private onPaginationClick(e: Event): void {
     const target = e.target as HTMLElement;
     const page = this.dictionaryController.getDictionaryPage();
     const difficultWordsPage = this.dictionaryController.getDifficultWordsPage();
@@ -294,7 +292,7 @@ class Dictionary {
     }
   }
 
-  private updatePagination() {
+  private updatePagination(): void {
     const prev = document.querySelectorAll('.dictionary-pagination .prev');
     const next = document.querySelectorAll('.dictionary-pagination .next');
     prev.forEach((item) => ((item as HTMLButtonElement).disabled = false));

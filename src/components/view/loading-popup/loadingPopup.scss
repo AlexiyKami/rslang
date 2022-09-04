@@ -8,6 +8,7 @@ $animation-time: 1s;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.2);
+
   .spinner {
     position: absolute;
     top: calc(50% - 65px);
@@ -20,6 +21,7 @@ $animation-time: 1s;
     background-color: transparent;
     animation: rotate $animation-time infinite linear;
   }
+
   .spinner::before {
     content: '';
     position: absolute;
@@ -31,8 +33,13 @@ $animation-time: 1s;
     border-left: $spinner-thickness solid transparent;
     border-radius: 50%;
   }
+
   @keyframes rotate {
-    from {transform: rotate(0deg);}
-    to {transform: rotate(360deg);}
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
   }
 }

@@ -18,7 +18,7 @@ export default class NavController {
     this.baseController.model.view.navigation.setCurPage(correctValue);
   }
 
-  get curPage() {
+  get curPage(): number {
     return this._curPage;
   }
 }

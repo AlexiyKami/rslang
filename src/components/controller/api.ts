@@ -1,10 +1,7 @@
 import settings from '../settings';
 import {
   CreateUserData,
-  DeleteUserWordData,
   GetUpsertStatistics,
-  GetUpdateUserData,
-  GetUserAggregatedWord,
   GetUserTokensData,
   UserWordData,
   Word,
@@ -36,15 +33,6 @@ export class Api {
       return await response.json();
     } catch {
       return `Sorry. Can't load words.`;
-    }
-  }
-
-  public async getWord(id: string): Promise<Word | string> {
-    try {
-      const response = await fetch(`${this.wordsUrl}/${id}`);
-      return await response.json();
-    } catch {
-      return `Sorry. Can't load word.`;
     }
   }
 
@@ -123,107 +111,6 @@ export class Api {
       return {
         code: 0,
         data: `Can't create User (Server Error)`,
-      };
-    }
-  }
-
-  public async getUser(userId: string, token: string): Promise<GetUpdateUserData> {
-    try {
-      const response = await fetch(`${this.usersUrl}/${userId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-
-      let responseData;
-      if (response.status === 200) {
-        responseData = await response.json();
-      } else if (response.status === 401) {
-        responseData = 'Access token is missing or invalid';
-      } else if (response.status === 404) {
-        responseData = 'User not found';
-      } else {
-        responseData = `Can't get User`;
-      }
-      return {
-        code: response.status,
-        data: responseData,
-      };
-    } catch {
-      return {
-        code: 0,
-        data: `Can't get User (Server Error)`,
-      };
-    }
-  }
-
-  public async updateUser(userId: string, email: string, password: string, token: string): Promise<GetUpdateUserData> {
-    try {
-      const params = {
-        email,
-        password,
-      };
-      const response = await fetch(`${this.usersUrl}/${userId}`, {
-        method: 'PUT',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(params),
-      });
-
-      let responseData;
-      if (response.status === 200) {
-        responseData = await response.json();
-      } else if (response.status === 401) {
-        responseData = 'Access token is missing or invalid';
-      } else if (response.status === 400) {
-        responseData = 'Bad request';
-      } else {
-        responseData = `Can't update User`;
-      }
-      return {
-        code: response.status,
-        data: responseData,
-      };
-    } catch {
-      return {
-        code: 0,
-        data: `Can't update User (Server Error)`,
-      };
-    }
-  }
-
-  public async deleteUser(userId: string, token: string): Promise<DeleteUserWordData> {
-    try {
-      const response = await fetch(`${this.usersUrl}/${userId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-
-      let responseData;
-      if (response.status === 204) {
-        responseData = 'The user has been deleted';
-      } else if (response.status === 401) {
-        responseData = 'Access token is missing or invalid';
-      } else {
-        responseData = `Can't delete User`;
-      }
-      return {
-        code: response.status,
-        data: responseData,
-      };
-    } catch {
-      return {
-        code: 0,
-        data: `Can't delete User (Server Error)`,
       };
     }
   }
@@ -412,37 +299,6 @@ export class Api {
     }
   }
 
-  public async deleteUserWord(userId: string, wordId: string, token: string): Promise<DeleteUserWordData> {
-    try {
-      const response = await fetch(`${this.usersUrl}/${userId}/words/${wordId}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-
-      let responseData;
-      if (response.status === 204) {
-        responseData = 'The user word has been deleted';
-      } else if (response.status === 401) {
-        responseData = 'Access token is missing or invalid';
-      } else {
-        responseData = `Can't delete User Word`;
-      }
-      return {
-        code: response.status,
-        data: responseData,
-      };
-    } catch {
-      return {
-        code: 0,
-        data: `Can't delete User Word (Server Error)`,
-      };
-    }
-  }
-
   // USERS/AggregatedWords
 
   public async getAllUserAggregatedWords(
@@ -487,38 +343,6 @@ export class Api {
       return {
         code: 0,
         data: `Can't get get All User Aggregated Words (Server Error)`,
-      };
-    }
-  }
-
-  public async getUserAggregatedWord(userId: string, wordId: string, token: string): Promise<GetUserAggregatedWord> {
-    try {
-      const response = await fetch(`${this.usersUrl}/${userId}/aggregatedWords/${wordId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-      });
-
-      let responseData;
-      if (response.status === 200) {
-        responseData = await response.json();
-      } else if (response.status === 401) {
-        responseData = `Access token is missing or invalid`;
-      } else if (response.status === 404) {
-        responseData = `User's word not found`;
-      } else {
-        responseData = `Can't get User Aggregated Word`;
-      }
-      return {
-        code: response.status,
-        data: responseData,
-      };
-    } catch {
-      return {
-        code: 0,
-        data: `Can't get User Aggregated Word (Server Error)`,
       };
     }
   }

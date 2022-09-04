@@ -1,4 +1,4 @@
-import { GetAllUserAggregatedWordsData, UserWord, StatisticsData } from './../types/types';
+import { GetAllUserAggregatedWordsData, UserWord, StatisticsData } from '../types/types';
 import settings from '../settings';
 import { CallbackFunction } from '../types/types';
 import Controller from './controller';
@@ -49,14 +49,6 @@ class DictionaryController {
       return `<p class='message'>${response}</p>`;
     }
     return response;
-  }
-
-  public async getUserWords() {
-    const state = this.baseController.getState();
-    const userId = state.userId as string;
-    const token = state.token as string;
-    const response = await this.baseController.api.getAllUserWords(userId, token);
-    return response.data;
   }
 
   public async updateUserWord(wordId: string, difficulty: string) {
@@ -130,7 +122,7 @@ class DictionaryController {
     return response;
   }
 
-  public async updateStatistics(userId: string, token: string, count: number) {
+  public async updateStatistics(userId: string, token: string, count: number): Promise<void> {
     const statistics = (await this.baseController.api.getStatistics(userId, token)).data as StatisticsData;
     if (statistics.optional.globalStatistics[new Date().toDateString()]) {
       (statistics.optional.globalStatistics[new Date().toDateString()].learnedWords as number) += count;
@@ -148,13 +140,13 @@ class DictionaryController {
     );
   }
 
-  public updateDictionary() {
+  public updateDictionary(): void {
     this.onDictionaryUpdate.forEach((fn) => {
       fn();
     });
   }
 
-  public setDictionaryPage(value: number) {
+  public setDictionaryPage(value: number): void {
     if (value < 0) {
       this.dictionaryPage = 0;
     } else if (value > settings.MAX_DICTIONARY_PAGES) {
@@ -165,30 +157,30 @@ class DictionaryController {
     this.updateDictionary();
   }
 
-  public getDictionaryPage() {
+  public getDictionaryPage(): number {
     return this.dictionaryPage;
   }
 
-  public getMaxDictionaryPage() {
+  public getMaxDictionaryPage(): number {
     return settings.MAX_DICTIONARY_PAGES;
   }
 
-  public setDictionaryGroup(value: number) {
+  public setDictionaryGroup(value: number): void {
     this.dictionaryGroup = value;
     this.dictionaryPage = 0;
     this.difficultWordsPage = 0;
     this.updateDictionary();
   }
 
-  public getDictionaryGroup() {
+  public getDictionaryGroup(): number {
     return this.dictionaryGroup;
   }
 
-  public getDifficultWordsPage() {
+  public getDifficultWordsPage(): number {
     return this.difficultWordsPage;
   }
 
-  public setDifficultWordsPage(value: number) {
+  public setDifficultWordsPage(value: number): void {
     if (value < 0) {
       this.difficultWordsPage = 0;
     } else if (value > this.maxDifficultWordsPage) {
@@ -199,11 +191,11 @@ class DictionaryController {
     this.updateDictionary();
   }
 
-  public getMaxDifficultWordsPage() {
+  public getMaxDifficultWordsPage(): number {
     return this.maxDifficultWordsPage;
   }
 
-  public setMaxDifficultWordsPage(value: number) {
+  public setMaxDifficultWordsPage(value: number): void {
     this.maxDifficultWordsPage = Math.ceil(value / settings.WORDS_PER_PAGE) - 1 || 0;
   }
 }

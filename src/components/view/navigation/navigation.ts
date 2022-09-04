@@ -54,6 +54,7 @@ export default class Navigation {
 
       if (entry[1] === 'Textbook')
         radioLabelEl.addEventListener('click', () => {
+          window.scrollTo(0, 0);
           toggle.checked = false;
           document.querySelector('.nav-holder')?.remove();
           this.navEl.classList.remove('extend');
@@ -64,6 +65,7 @@ export default class Navigation {
         });
       else if (entry[1] === 'Dictionary')
         radioLabelEl.addEventListener('click', () => {
+          window.scrollTo(0, 0);
           toggle.checked = false;
           document.querySelector('.nav-holder')?.remove();
           this.navEl.classList.remove('extend');
@@ -73,6 +75,7 @@ export default class Navigation {
         });
       else if (entry[1] === 'Minigames')
         radioLabelEl.addEventListener('click', () => {
+          window.scrollTo(0, 0);
           toggle.checked = false;
           document.querySelector('.nav-holder')?.remove();
           this.navEl.classList.remove('extend');
@@ -82,6 +85,7 @@ export default class Navigation {
         });
       else if (entry[1] === 'Home')
         radioLabelEl.addEventListener('click', () => {
+          window.scrollTo(0, 0);
           toggle.checked = false;
           document.querySelector('.nav-holder')?.remove();
           this.navEl.classList.remove('extend');
@@ -91,6 +95,7 @@ export default class Navigation {
         });
       else if (entry[1] === 'Statistics')
         radioLabelEl.addEventListener('click', () => {
+          window.scrollTo(0, 0);
           toggle.checked = false;
           document.querySelector('.nav-holder')?.remove();
           this.navEl.classList.remove('extend');
@@ -171,7 +176,7 @@ export default class Navigation {
     });
   }
 
-  public setCurPage(pageNum: number) {
+  public setCurPage(pageNum: number): void {
     [...this.NavPageElMap.values()][!this.controller.isAuthorized() && pageNum > 1 ? pageNum - 1 : pageNum].checked =
       true;
   }

@@ -19,6 +19,7 @@ export default class Sprint {
   }
 
   public renderStartPage(withMistake = false): void {
+    window.scrollTo(0, 0);
     this.view.changeAppTitle('Sprint');
     this.view.hideFooter();
 
@@ -54,7 +55,7 @@ export default class Sprint {
 
     document.addEventListener('keyup', this.controller.sprintController.keyboardHandler);
   }
-  // section: number, page?: number
+
   public renderSprintGame(): void {
     this.mainWindow.innerHTML = `
     <div class="sprint">
@@ -98,7 +99,7 @@ export default class Sprint {
     this.startSprintTimer();
   }
 
-  private renderCircle(value: string) {
+  private renderCircle(value: string): void {
     (document.getElementById('sprint-circle') as HTMLElement).innerHTML = `
     <div class="base-timer">
       <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
@@ -122,7 +123,7 @@ export default class Sprint {
     `;
   }
 
-  private renderSprintResult() {
+  private renderSprintResult(): void {
     const mistakes = [...this.controller.sprintController.wrongWords];
     const correct = [...this.controller.sprintController.rightWords];
     const rightAnswers = this.controller.sprintController.rightAnswers;
@@ -191,7 +192,7 @@ export default class Sprint {
     );
   }
 
-  public renderEarlyResult() {
+  public renderEarlyResult(): void {
     clearInterval(this.timerInterval);
     this.renderSprintResult();
     this.controller.sprintController.setStatistic();
@@ -226,14 +227,14 @@ export default class Sprint {
     }
   }
 
-  private setCircleDasharray() {
+  private setCircleDasharray(): void {
     const circleDasharray = `${(this.calculateTimeFraction() * this.FULL_DASH_ARRAY).toFixed(0)} ${
       this.FULL_DASH_ARRAY
     }`;
     document.getElementById('base-timer-path-remaining')?.setAttribute('stroke-dasharray', circleDasharray);
   }
 
-  private startSprintTimer() {
+  private startSprintTimer(): void {
     document.removeEventListener('keyup', this.controller.sprintController.keyboardHandler);
     clearInterval(this.timerInterval);
     this.timeLeft = this.TIME_LIMIT;
@@ -269,23 +270,23 @@ export default class Sprint {
     }, 1000);
   }
 
-  public setWord(word: string) {
+  public setWord(word: string): void {
     (document.getElementById('sprint-word') as HTMLElement).textContent = word;
   }
 
-  public setTranslate(word: string) {
+  public setTranslate(word: string): void {
     (document.getElementById('sprint-translating') as HTMLElement).textContent = word;
   }
 
-  public setResult(result: number) {
+  public setResult(result: number): void {
     (document.getElementById('sprint-result') as HTMLElement).textContent = `${result}`;
   }
 
-  public setPoints(points: number) {
+  public setPoints(points: number): void {
     (document.getElementById('sprint-points') as HTMLElement).textContent = `+${points} points per word`;
   }
 
-  public setSeries(series: 0 | 1 | 2 | 3) {
+  public setSeries(series: 0 | 1 | 2 | 3): void {
     const seriesOne = document.getElementById('series-one') as HTMLElement;
     const seriesTwo = document.getElementById('series-two') as HTMLElement;
     const seriesThree = document.getElementById('series-three') as HTMLElement;

@@ -1,12 +1,11 @@
-import AppModel from '../app';
-import { AggregatedWord, AudioChallengeModelState, Word } from '../../types/types';
-import View from '../../view/view';
-import { getRandomNumber } from '../../utils/utils';
+import { AggregatedWord, AudioChallengeModelState, Word } from '../types/types';
+import View from '../view/view';
+import { getRandomNumber } from '../utils/utils';
 
 class AudioChallengeModel {
   state: AudioChallengeModelState;
 
-  constructor(private readonly view: View, private readonly model: AppModel) {
+  constructor(private readonly view: View) {
     this.state = {
       currentWords: [],
       currentWordIndex: 0,
@@ -18,12 +17,12 @@ class AudioChallengeModel {
     };
   }
 
-  public initGame() {
+  public initGame(): void {
     this.resetState();
     this.view.audioChallenge.renderStartPage();
   }
 
-  private shuffleWords<T>(array: T[]) {
+  private shuffleWords<T>(array: T[]): void {
     for (let i = array.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [array[i], array[j]] = [array[j], array[i]];
@@ -56,7 +55,7 @@ class AudioChallengeModel {
     this.view.audioChallenge.renderOnWordsLoadErrorMessage(errorMessage);
   }
 
-  public onWordsLoad(words: Word[] | AggregatedWord[]) {
+  public onWordsLoad(words: Word[] | AggregatedWord[]): void {
     this.resetState();
     this.state.currentWords = words;
     this.shuffleWords(this.state.currentWords);
@@ -64,7 +63,7 @@ class AudioChallengeModel {
     this.view.audioChallenge.renderGamePage(this.state);
   }
 
-  public onWordSelected(word: Word | AggregatedWord, isRightAnswer: boolean) {
+  public onWordSelected(word: Word | AggregatedWord, isRightAnswer: boolean): void {
     const rightOrWrong = isRightAnswer ? 'rightWords' : 'wrongWords';
     this.state[rightOrWrong].push(word);
     if (isRightAnswer) {
@@ -77,7 +76,7 @@ class AudioChallengeModel {
     this.view.audioChallenge.updatePageOnWordSelect(this.state, isRightAnswer);
   }
 
-  public onNextButtonClick(nextButtonText: string | null) {
+  public onNextButtonClick(nextButtonText: string | null): void {
     if (nextButtonText === `Show results`) {
       this.view.audioChallenge.renderResultsPage(this.state);
     } else {

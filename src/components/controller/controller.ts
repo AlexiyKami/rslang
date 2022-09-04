@@ -3,9 +3,9 @@ import AppModel from '../app/app';
 import settings from '../settings';
 import { getElement } from '../utils/utils';
 import DictionaryController from './dictionaryController';
-import { AppState, CallbackFunction } from '../types/types';
-import AudioChallengeController from './audioChallengeController/audioChallengeController';
-import SprintController from './sprintController/sprintController';
+import { AppState, CallbackFunction, Word } from '../types/types';
+import AudioChallengeController from './audioChallengeController';
+import SprintController from './sprintController';
 import AuthorizationController from './authorizationController';
 import NavController from './navController';
 import StatisticController from './statisticController';
@@ -36,7 +36,7 @@ class Controller {
     this.statisticController = new StatisticController(this);
   }
 
-  public playStopAudio(fileName: string, startPlay = true, isOnServer = true) {
+  public playStopAudio(fileName: string, startPlay = true, isOnServer = true): void {
     const audio = getElement('app-audio') as HTMLAudioElement;
     if (startPlay) {
       audio.src = isOnServer ? `${settings.DATABASE_URL}/${fileName}` : fileName;
@@ -47,12 +47,12 @@ class Controller {
     }
   }
 
-  public onAudioEnded(cb: CallbackFunction) {
+  public onAudioEnded(cb: CallbackFunction): void {
     const audio = getElement('app-audio') as HTMLAudioElement;
     audio.onended = cb;
   }
 
-  public async getWords(group: number, page: number) {
+  public async getWords(group: number, page: number): Promise<string | Word[]> {
     const response = await this.api.getWords(group, page);
     return response;
   }

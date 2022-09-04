@@ -9,7 +9,7 @@ import { getElement } from '../../utils/utils';
 class MainPage {
   constructor(private readonly view: View, private readonly controller: Controller) {}
 
-  public renderMainPage() {
+  public renderMainPage(): void {
     this.view.changeAppTitle('RSLang');
     this.view.hideFooter(false);
     const mainWindow = getElement('main-window') as HTMLElement;
@@ -126,18 +126,21 @@ class MainPage {
     `;
 
     (getElement('main-page__header-button') as HTMLButtonElement).addEventListener('click', () => {
+      window.scrollTo(0, 0);
       if (this.controller.dictionary.getDictionaryGroup() !== 6) this.view.dictionary.draw();
       else this.controller.dictionary.setDictionaryGroup(0);
       this.controller.navController.curPage = 1;
     });
 
     (getElement('main-page__advantages-card-button_textbook') as HTMLButtonElement).addEventListener('click', () => {
+      window.scrollTo(0, 0);
       if (this.controller.dictionary.getDictionaryGroup() !== 6) this.view.dictionary.draw();
       else this.controller.dictionary.setDictionaryGroup(0);
       this.controller.navController.curPage = 1;
     });
 
     (getElement('main-page__advantages-card-button_games') as HTMLButtonElement).addEventListener('click', () => {
+      window.scrollTo(0, 0);
       this.view.MinigamesPage.renderMinigamesPage();
       this.controller.navController.curPage = 3;
     });
@@ -147,12 +150,14 @@ class MainPage {
     );
 
     (getElement('main-page__advantages-card-button_statistic') as HTMLButtonElement).addEventListener('click', () => {
+      window.scrollTo(0, 0);
       this.view.statisticsPage.draw();
       this.controller.navController.curPage = 4;
     });
 
     (getElement('main-page__advantages-card-button_dictionary') as HTMLButtonElement).addEventListener('click', () => {
       if (this.controller.isAuthorized()) {
+        window.scrollTo(0, 0);
         this.controller.dictionary.setDictionaryGroup(6);
         this.controller.navController.curPage = 2;
       }

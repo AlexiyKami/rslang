@@ -33,21 +33,11 @@ class View {
     this.sprint = new Sprint(this.controller, this);
   }
 
-  public async initRender() {
-    // if (this.controller.isAuthorized()) await this.controller.statisticController.resetGamesDayStatistics();
-    // this.mainPage.renderMainPage();
-    // this.dictionary.draw();
-    // this.controller.audioChallengeController.initAudioChallengeGame();
-    // this.MinigamesPage.renderMinigamesPage();
-    // this.authorization.draw();
-    // this.sprint.renderStartPage();
-  }
-
   public changeAppTitle(title: string): void {
     (getElement('app-title') as HTMLTitleElement).textContent = title;
   }
 
-  public hideFooter(hide = true) {
+  public hideFooter(hide = true): void {
     const footer = getElement('footer') as HTMLElement;
     const action = hide ? 'add' : 'remove';
     footer.classList[action]('hidden');

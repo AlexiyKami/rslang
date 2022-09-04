@@ -1,0 +1,155 @@
+@import "../variables.scss";
+
+.authorization-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+
+  .authorization {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    max-width: 300px;
+    height: max-content;
+    margin: auto;
+    border-radius: 5px;
+    background-color: #23457a;
+
+    .tabs {
+      display: flex;
+      flex-direction: row;
+
+      .tab-btn {
+        width: 100%;
+        margin: 10px 10px 0;
+        padding: 10px;
+        color: white;
+        border: none;
+        border-radius: 2px 2px 0 0;
+        background-color: #23457a;
+        cursor: pointer;
+
+        &.active {
+          background-color: #3367b7;
+        }
+
+        &.reg-disable {
+          color: #bdbdbd;
+        }
+      }
+    }
+
+    .tab-content {
+      display: flex;
+      flex-direction: column;
+      margin: 0 10px;
+      padding: 5px;
+      border-radius: 0 0 2px 2px;
+      background-color: #3367b7;
+
+      .authorization-input {
+        margin: 5px;
+        padding: 10px;
+        border: none;
+        outline: none;
+      }
+
+      .authorization-input:placeholder-shown {
+        color: #bdbdbd;
+        border-radius: 2px;
+      }
+
+      p {
+        font-size: 0.8rem;
+        text-align: center;
+        color: rgb(231, 14, 14);
+      }
+
+      .authorized-user {
+        margin: 5px;
+        padding: 10px;
+        border-radius: 2px;
+        background-color: white;
+
+        p {
+          font-size: 1rem;
+
+          color: black;
+        }
+      }
+    }
+
+    .sign-btn {
+      align-self: center;
+      width: fit-content;
+      margin: 10px 0;
+    }
+  }
+}
+
+.log {
+  z-index: 2;
+  display: flex;
+  margin: 4px 0;
+  padding: 0;
+  padding-right: 5px;
+  border-color: #23457a;
+  background-color: #23457a;
+
+  @media (max-width: $mobile767) {
+    padding-right: 0;
+  }
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #23457a, $amount: 10);
+    background-color: lighten($color: #23457a, $amount: 10);
+  }
+
+  span {
+    align-self: center;
+    text-align: right;
+
+    &.icon {
+      float: left;
+      width: 24px;
+      height: 24px;
+      margin-right: 5px;
+      background: url(/src/assets/icons/human-head.svg) no-repeat;
+
+      @media (max-width: $mobile767) {
+        margin-right: 0;
+      }
+    }
+
+    &.email {
+      @media (max-width: $mobile767) {
+        display: none;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

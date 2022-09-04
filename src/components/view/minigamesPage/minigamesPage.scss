@@ -1,0 +1,84 @@
+@import "../variables.scss";
+
+.minigames-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding: 20px 20px 60px 20px;
+  background-color: #fdfdfd;
+
+  @media (max-width: $mobile767) {
+    padding-bottom: 100px;
+  }
+}
+
+.minigames-page__games-block {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+
+  @media (max-width: $mobile767) {
+    gap: 20px;
+  }
+}
+
+.minigames-page__game-card {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 360px;
+  height: 280px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 0 4px rgb(0 0 0 / 15%);
+  gap: 20px;
+
+  @media (max-width: $mobile767) {
+    width: 100%;
+    max-width: 360px;
+    height: auto;
+    padding: 15px;
+  }
+}
+
+.minigames-page__game-card-img {
+  width: 56px;
+  height: 56px;
+}
+
+.minigames-page__game-card-title {
+  padding-top: 20px;
+
+  @media (max-width: $mobile767) {
+    padding-top: 0;
+  }
+}
+
+.minigames-page__game-card-text {
+  text-align: center;
+}
+
+.minigames-page__game-card-button_audiochallenge {
+  border-color: #fa5833ff;
+  background-color: #fa5833ff;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #fa5833ff, $amount: 10);
+    background-color: lighten($color: #fa5833ff, $amount: 10);
+  }
+}
+
+.minigames-page__game-card-button_sprint {
+  border-color: #0252ccff;
+  background-color: #0252ccff;
+
+  &:hover:not(:disabled) {
+    border-color: lighten($color: #0252ccff, $amount: 10);
+    background-color: lighten($color: #0252ccff, $amount: 10);
+  }
+}

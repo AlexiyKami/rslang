@@ -47,7 +47,7 @@ class StatisticsPage {
       ${
         !isAuthorized
           ? `<div class='darkened-background'>
-              <h2>Прежде, чем посмотреть статистику, авторизуйтесь</h2>
+              <h2>Please login before viewing statistics</h2>
             </div>`
           : ''
       }

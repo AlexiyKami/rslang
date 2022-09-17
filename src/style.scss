@@ -125,16 +125,6 @@ body {
     padding: 5px 20px;
   }
 
-  &:hover:not(:disabled) {
-    background-color: lighten($color: black, $amount: 10);
-  }
-
-  &:disabled {
-    color: $disabled-color;
-    border-color: $disabled-color;
-    background-color: transparent;
-  }
-
   &.blue {
     border-color: #9ea4e7;
     background-color: #9ea4e7;
@@ -174,6 +164,16 @@ body {
       border-color: lighten($color: #3367b7, $amount: 10);
       background-color: lighten($color: #3367b7, $amount: 10);
     }
+  }
+
+  &:hover:not(:disabled) {
+    background-color: lighten($color: black, $amount: 10);
+  }
+
+  &:disabled {
+    color: $disabled-color;
+    border-color: $disabled-color;
+    background-color: transparent;
   }
 }
 

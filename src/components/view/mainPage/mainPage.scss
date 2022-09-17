@@ -197,7 +197,7 @@
       border-color: $orange;
       background-color: $orange;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: lighten($color: $orange, $amount: 10);
         background-color: lighten($color: $orange, $amount: 10);
       }
@@ -207,7 +207,7 @@
       border-color: $red;
       background-color: $red;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: lighten($color: $red, $amount: 10);
         background-color: lighten($color: $red, $amount: 10);
       }
@@ -217,7 +217,7 @@
       border-color: $blue;
       background-color: $blue;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: lighten($color: $blue, $amount: 10);
         background-color: lighten($color: $blue, $amount: 10);
       }
@@ -227,7 +227,7 @@
       border-color: $green;
       background-color: $green;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: lighten($color: $green, $amount: 10);
         background-color: lighten($color: $green, $amount: 10);
       }
@@ -237,10 +237,17 @@
       border-color: $marine;
       background-color: $marine;
 
-      &:hover {
+      &:hover:not(:disabled) {
         border-color: lighten($color: $marine, $amount: 10);
         background-color: lighten($color: $marine, $amount: 10);
       }
+    }
+
+    &:disabled {
+      color: #b4b4b4ff;
+      border-color: #b4b4b4ff;
+      background-color: transparent;
+      cursor: auto;
     }
   }
 

@@ -21,7 +21,6 @@ class StatisticController {
     const token = this.controller.authorizationController.token as string;
     const userStat = await this.controller.api.getStatistics(this.userId, token);
     const date = new Date().toDateString();
-    // console.log('current date:', date);
     const gameDefaultStat: GameStatistic = {
       date: date,
       newWords: 0,
@@ -31,12 +30,18 @@ class StatisticController {
     };
 
     if (typeof userStat.data !== 'string') {
-      // console.log('stat date:', userStat.data.optional.audioChallengeStatistics?.date);
       const learnedWords = userStat.data.learnedWords;
       const optional = userStat.data.optional;
-      if (optional.audioChallengeStatistics?.date !== date) optional.audioChallengeStatistics = gameDefaultStat;
-      if (optional.sprintStatistics?.date !== date) optional.sprintStatistics = gameDefaultStat;
-      await this.controller.api.upsertStatistics(this.userId, learnedWords, optional, token);
+      let isNeedUpdate = false;
+      if (optional.audioChallengeStatistics?.date !== date) {
+        optional.audioChallengeStatistics = gameDefaultStat;
+        isNeedUpdate = true;
+      }
+      if (optional.sprintStatistics?.date !== date) {
+        optional.sprintStatistics = gameDefaultStat;
+        isNeedUpdate = true;
+      }
+      if (isNeedUpdate) await this.controller.api.upsertStatistics(this.userId, learnedWords, optional, token);
     }
   }
 

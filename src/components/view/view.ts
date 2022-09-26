@@ -34,7 +34,7 @@ class View {
   }
 
   public async initRender() {
-    if (this.controller.isAuthorized()) await this.controller.statisticController.resetGamesDayStatistics();
+    // if (this.controller.isAuthorized()) await this.controller.statisticController.resetGamesDayStatistics();
     // this.mainPage.renderMainPage();
     // this.dictionary.draw();
     // this.controller.audioChallengeController.initAudioChallengeGame();

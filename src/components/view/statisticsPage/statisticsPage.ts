@@ -14,6 +14,7 @@ class StatisticsPage {
   }
   async draw(): Promise<void> {
     this.controller.showLoadingPopup();
+    await this.controller.statisticController.resetGamesDayStatistics();
     this.view.changeAppTitle('Statistics');
     const state = this.controller.getState();
     const isAuthorized = this.controller.isAuthorized();
